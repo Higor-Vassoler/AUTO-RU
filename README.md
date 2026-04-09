@@ -6,4 +6,4 @@ Realizado por:
 - Eduardo Cordeiro Pedrozo;
 - Higor Pelozatto Reis Vassoler;
 - Pedro Antonio Siqueira;
-- João M.;
+- João Manoel Nascimento;
