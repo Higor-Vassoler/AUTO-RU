@@ -9,7 +9,7 @@
 - [Pedro Antonio Siqueira](https://github.com/pas-pedroa)
 
 ## **Descrição do Projeto:**
-- Ainda estamos conversando sobre.
+- Um site similar aos totem de fastfood, onde o usuario realiza o pedido e retira no caixa
 
 ## **Arquitetura:**
 - MVC (Model-View-Controller).
