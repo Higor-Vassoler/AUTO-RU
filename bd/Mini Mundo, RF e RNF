@@ -1,0 +1,39 @@
+## **Historia de Usario (Mini-Mundo)**
+
+-Eu como gerente da cantina da UTFPr gostaria de um site similar ao totem das lanchonetes
+de fastfood de Campo Mourão, a cantina da faculdade sofre com grandes filas nos horários
+de pico
+atrasando a entrada dos alunos para as suas respectivas aulas. A maneira que os alunos
+compram
+nos dias de hoje é da seguinte maneira: o aluno solicita um item e nossos atendentes
+informam o valor a ser pago e perguntam a maneira de pagamento ( crédito, débito, dinheiro
+ou pix) o aluno também pode pagar com créditos dentro do próprio site onde eles podem
+carregar créditos via pix e cartão, a parte mais demorada desse processo é o pagamento e
+a retirada do item solicitado, com a criação do site, acredito que além de diminuir as filas do
+RU, as nossas vendas também iriam alavancar.
+Quero que o site funciona da seguinte maneira: O aluno informa o seu RA e senha do
+aluno no site
+e seleciona os itens desejados, o site calcula o valor total dos itens e encaminha o aluno a
+forma de pagamento, após o aluno realizar o pagamento, é gerado um ticket com as
+informações do aluno e os itens solicitados, após isso o aluno apresenta o ticket e retira na
+cantina do RU, o usuário precisa também verificar se o item está disponível na cantina, para
+evitar que os alunos fiquem sem o seu lanche, o usuário pode verificar a disponibilidade do
+item selecionado, caso o item não esteja disponível, o item vai ficar marcado como “fora de
+estoque” impedindo o aluno de realizar a compra, para o funcionário terá que manter um
+histórico diário dos itens, atualizando se ele está disponível ou não.
+
+
+## *1. Requisitos Funcionais (RF):*
+Os RFs definem as operações que o banco deve suportar para a lógica do site.
+    • RF01 - Autenticação Acadêmica: O banco deve validar as credenciais (RA e Senha) integrando-se ou replicando a base de usuários da instituição.
+    • RF02 - Gestão de Saldo Interno: O sistema deve manter uma tabela de "Carteira Digital" vinculada ao RA, permitindo operações de crédito (recarga) e débito (compra).
+    • RF03 - Controle de Estoque em Tempo Real: O banco deve decrementar a quantidade disponível de um item no momento da confirmação do pagamento.
+    • RF04 - Bloqueio de Venda (Out of Stock): O sistema deve impedir a inserção de um item no "Carrinho" ou a finalização da venda caso o campo *status_disponibilidade* seja falso ou *quantidade* seja zero.
+    • RF05 - Geração de Ticket/Comprovante: Após a confirmação da transação, o banco deve gerar um registro único (UUID) contendo os itens, dados do aluno e timestamp para conferência na retirada.
+    • RF06 - Histórico Diário de Operações: O banco deve registrar logs de todas as alterações de estoque feitas pelos funcionários para auditoria, mostrando quem editou, oque removel e a data_hora da remoção
+
+## *2. Requisitos Não Funcionais (RNF):*
+Os RNFs tratam da segurança, integridade e performance do banco de dados.
+    • RNF01 - Integridade Transacional (ACID): O banco deve garantir que, em uma compra com créditos internos, o débito no saldo do aluno e a reserva do item no estoque ocorram simultaneamente. Se um falhar, ambos devem ser revertidos.
+    • RNF02 - Consistência de Dados: O sistema deve implementar Locks (travas) de linha no banco de dados para evitar a "venda fantasma" (dois alunos comprando o último salgado ao mesmo tempo).
+    • RNF03 - Persistência e Backup: O histórico de vendas diárias deve ser persistido e ter backup automatizado, garantindo que o fechamento de caixa do funcionário seja confiavel, pratico e rapido
