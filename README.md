@@ -20,4 +20,5 @@
 - JavaScript
 - React.js
 - Node.js
-- Next.js
+- Express.js
+- MySql
