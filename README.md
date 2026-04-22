@@ -15,10 +15,13 @@
 - MVC (Model-View-Controller).
 
 ## **Tecnologias que pretendemos estudar para aplicarmos no projeto:**
+### *Fron-End*
 - HTML
 - CSS
 - JavaScript
 - React.js
+### *Back-End*
 - Node.js
 - Express.js
+### *Banco de Dados*
 - MySql
