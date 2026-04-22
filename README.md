@@ -9,7 +9,7 @@
 - [Pedro Antonio Siqueira](https://github.com/pas-pedroa)
 
 ## **Descrição do Projeto:**
-- Um site similar aos totem de fastfood, onde o usuario realiza o pedido e retira no caixa
+- O projeto se trata da criação de um sistema web de autoatendimento inspirado diretamente em totens de autoatendimento frequentemente encontrados nas redes de fast-food. Esta aplicação permite ao usuário que realize pedidos de maneira autônoma, isso incluí: seleção de produtos, customização e revisão do pedido. Após a finalização, o pedido é levado para o caixa físico onde ocorre a retirada do mesmo.
 
 ## **Arquitetura:**
 - MVC (Model-View-Controller).
