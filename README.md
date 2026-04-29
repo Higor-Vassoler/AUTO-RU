@@ -1,3 +1,10 @@
+![JavaScript](https://img.shields.io/badge/language-JavaScript-blue)
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-blue)
+![Sequelize](https://img.shields.io/badge/ORM-Sequelize-blue)
+![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
+---
+
 # **Engenharia-de-Software**
 - Trabalho realizado para a matéria de Engenharia de Software.
 - Orientador: [Igor Wiese](https://github.com/igorwiese).
