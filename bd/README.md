@@ -1,4 +1,4 @@
-# Sistema de Gestão
+# Sistema de Auto RU
 
 Este projeto utiliza um banco de dados relacional MySQL.
 
