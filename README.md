@@ -1,3 +1,14 @@
+![JavaScript](https://img.shields.io/badge/Language-JavaScript-F7DF1E)
+![React](https://img.shields.io/badge/Frontend-React-61DAFB)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-339933)
+![Express](https://img.shields.io/badge/Framework-Express-000000)
+![Sequelize](https://img.shields.io/badge/ORM-Sequelize-52B0E7)
+![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1)
+
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![License](https://img.shields.io/badge/license-MIT-green)
+---
+
 # **Engenharia-de-Software**
 - Trabalho realizado para a matéria de Engenharia de Software.
 - Orientador: [Igor Wiese](https://github.com/igorwiese).
