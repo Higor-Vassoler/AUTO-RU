@@ -16,7 +16,7 @@
 ## **Realizado por:**
 - [Eduardo Cordeiro Pedrozo](https://github.com/EdCordeiros)
 - [Higor Pelozatto Reis Vassoler](https://github.com/Higor-Vassoler)
-- [João Manoel Nascimento](https://github.com/linux1234-boop)
+- [João Manoel Nascimento Ferreira](https://github.com/linux1234-boop)
 - [Pedro Antonio Siqueira](https://github.com/pas-pedroa)
 
 ## **Descrição do Projeto:**
