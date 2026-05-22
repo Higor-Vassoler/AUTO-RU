@@ -8,11 +8,11 @@ import Cadastro from './pages/cadastro/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrouserRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro />} />
       </Routes>
-    </BrouserRouter>
+    </BrowserRouter>
   </StrictMode>,
 )
