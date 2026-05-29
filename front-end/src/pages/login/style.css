@@ -23,7 +23,7 @@ body {
 
 /* Formulário */
 
-#registration {
+#login {
     background-color: var(--cor5);
     display: flex;
     flex-direction: column;
@@ -48,7 +48,11 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 10px; 
+}
+
+#StayLoggedDiv {
+    align-self: flex-start;
 }
 
 input {
@@ -64,12 +68,6 @@ input:focus {
 label:hover {
     cursor: pointer;
 }
-
-#hasRA {
-    display: flex;
-    justify-content: start;
-}
-
 
 /* Botão de Cadastrar */
 
