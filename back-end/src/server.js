@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import sequelize from './config/database.js';
 
-import cadastroRoutes from './routes/cadastroRoutes.js'
+import "./models/index.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,12 +10,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/api", cadastroRoutes);
-
 async function iniciarServidor() {
     try {
-        await sequelize.authenticate();
-        console.log("✅ Banco de Dados conectado!");
+        await sequelize.sync({ alter: true }); // alter:true
+        console.log("✅ Banco de Dados conectado e tabelas sincronizadas!");
 
         app.listen(PORT, () => {
             console.log(`🚀 Aplicação Rodando na porta ${PORT}.`);
