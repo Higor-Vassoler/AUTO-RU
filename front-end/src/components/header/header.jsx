@@ -16,6 +16,7 @@ export default function Header() {
       </div>
 
       <nav className="header__nav">
+        {/* lembrar de colocar o caminho de cada link aqui mais tarde, para redirecionamento */}
         <a href="/">Catálogo</a>
         <a href="/">Cardápio</a>
         <a href="/">Sobre o RU</a>
