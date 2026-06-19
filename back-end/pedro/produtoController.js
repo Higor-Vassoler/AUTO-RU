@@ -1,4 +1,4 @@
-const ProdutoModel = require("./produtoModel");
+const Produto = require("./produto");
 
 const ProdutoController = {
   cadastrar: async (req, res) => {
@@ -16,7 +16,7 @@ const ProdutoController = {
         quantidade_estoque: parseInt(estoque),
       };
 
-      await ProdutoModel.salvar(novoProduto);
+      await Produto.salvar(novoProduto);
 
       // Responde ao React com sucesso
       return res

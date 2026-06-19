@@ -2,7 +2,7 @@
 // Agora ele sai de 'cadastro-produtos', sai de 'back-end' e entra em 'bd'
 const db = require("../../bd/cadastro-produtos/db");
 
-const ProdutoModel = {
+const Produto = {
   salvar: async (produto) => {
     const query = `
       INSERT INTO Produto (id_produto, nome, descricao, preco_unitario, quantidade_estoque)
@@ -22,4 +22,4 @@ const ProdutoModel = {
   },
 };
 
-module.exports = ProdutoModel;
+module.exports = Produto;
