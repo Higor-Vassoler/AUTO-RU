@@ -1,4 +1,4 @@
-import "./Header.css";
+import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 
 export default function Header() {
