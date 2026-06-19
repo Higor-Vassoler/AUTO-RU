@@ -30,7 +30,15 @@ export default function Sidebar() {
 
         <li className="active">
           <Package size={20} />
-          Produtos
+
+          <div>
+            <span>Produtos</span>
+
+            <div className="submenu">
+              <p className="submenu-item active">Cadastrar produto</p>
+              <p className="submenu-item">Produtos salvos</p>
+            </div>
+          </div>
         </li>
       </ul>
 
