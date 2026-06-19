@@ -1,4 +1,3 @@
-/* Configuração Global */
 body {
   font-family: system-ui, sans-serif;
   background-color: #f8fafc;
@@ -8,7 +7,6 @@ body {
   justify-content: center;
 }
 
-/* Container Principal */
 fieldset {
   background-color: #ffffff;
   border: 1px solid #e0c63f;
@@ -18,7 +16,6 @@ fieldset {
   width: 100%;
 }
 
-/* Topo / Cabeçalho */
 .topo {
   border-bottom: 1px solid #f5e4a6;
   padding-bottom: 20px;
@@ -37,11 +34,12 @@ fieldset {
   color: #64748b;
 }
 
-/* O Layout de 2 Colunas super simples */
-.coluna_pai {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+@media (max-width: 600px) {
+  .coluna_pai {
+    /* display: grid; */
+    grid-template-columns: 1fr 1fr;
+    /* gap: 32px; */
+  }
 }
 
 h2 {
@@ -52,7 +50,6 @@ h2 {
   margin: 0 0 20px 0;
 }
 
-/* Campos de entrada genéricos */
 .campo {
   margin-bottom: 20px;
 }
@@ -89,7 +86,6 @@ small {
   margin-top: 6px;
 }
 
-/* Rodapé e Botões */
 .botoes {
   border-top: 1px solid #f5e4a6;
   padding-top: 24px;
@@ -99,7 +95,7 @@ small {
   gap: 12px;
 }
 
-#salvar {
+.btn-primario {
   background-color: #e09e3f;
   color: #ffffff;
   border: none;
@@ -110,7 +106,7 @@ small {
   cursor: pointer;
 }
 
-#cancelar {
+.btn-secundario {
   background: none;
   border: none;
   color: #e09e3f;
@@ -118,4 +114,21 @@ small {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+}
+
+#salvar:hover {
+  background-color: #c98a30;
+}
+
+#cancelar:hover {
+  background-color: #fef9ec;
+  border-radius: 6px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #e09e3f;
+  box-shadow: 0 0 0 3px rgba(224, 158, 63, 0.2);
 }

@@ -1,5 +1,3 @@
-// Antes era: const db = require('./db');
-// Agora ele sai de 'cadastro-produtos', sai de 'back-end' e entra em 'bd'
 const db = require("../../bd/cadastro-produtos/db");
 
 const ProdutoModel = {

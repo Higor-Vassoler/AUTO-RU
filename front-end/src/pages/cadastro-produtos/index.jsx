@@ -1,13 +1,12 @@
-import "./style.css"; // Seu CSS continua exatamente o mesmo!
+import "./style.css";
 
 export default function CadastroProduto() {
-  // Função que lida com o envio do formulário
   const handleSubmit = (event) => {
-    event.preventDefault(); // Impede o refresh da página
+    event.preventDefault();
 
     alert("Produto salvo com sucesso!");
 
-    event.currentTarget.reset(); // Limpa todos os campos nativamente
+    event.currentTarget.reset();
   };
 
   return (
@@ -29,7 +28,7 @@ export default function CadastroProduto() {
                 id="id_produto"
                 name="id"
                 pattern="[0-9]{13}"
-                placeholder="789 123456 789 0"
+                placeholder="7891234567890"
                 required
               />
             </div>
@@ -99,10 +98,15 @@ export default function CadastroProduto() {
         </div>
 
         <div className="botoes">
-          <button type="reset" id="cancelar">
+          <button type="reset" className="btn-secundario">
             Cancelar
           </button>
-          <button type="submit" id="salvar" name="salvar" value="salvo">
+          <button
+            type="submit"
+            className="btn-primario"
+            name="salvar"
+            value="salvo"
+          >
             Salvar
           </button>
         </div>
