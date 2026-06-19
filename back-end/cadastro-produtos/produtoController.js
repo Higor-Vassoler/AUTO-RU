@@ -5,7 +5,6 @@ const ProdutoController = {
     try {
       const { id, nome, venda, estoque, descricao } = req.body;
 
-      // Tratamento simples: converte a vírgula do preço em ponto para o MySQL
       const precoFormatado = parseFloat(venda.replace(",", "."));
 
       const novoProduto = {
@@ -18,7 +17,6 @@ const ProdutoController = {
 
       await ProdutoModel.salvar(novoProduto);
 
-      // Responde ao React com sucesso
       return res
         .status(201)
         .json({ mensagem: "Produto cadastrado com sucesso!" });
