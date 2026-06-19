@@ -2,11 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import sequelize from './config/database.js';
 
+import cadastroRoutes from './routes/cadastroRoutes.js'
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api", cadastroRoutes);
 
 async function iniciarServidor() {
     try {
