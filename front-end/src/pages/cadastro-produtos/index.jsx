@@ -1,13 +1,12 @@
-import "./style.css"; // Seu CSS continua exatamente o mesmo!
+import "./style.css";
 
 export default function CadastroProduto() {
-  // Função que lida com o envio do formulário
   const handleSubmit = (event) => {
-    event.preventDefault(); // Impede o refresh da página
+    event.preventDefault();
 
     alert("Produto salvo com sucesso!");
 
-    event.currentTarget.reset(); // Limpa todos os campos nativamente
+    event.currentTarget.reset();
   };
 
   return (
@@ -102,7 +101,12 @@ export default function CadastroProduto() {
           <button type="reset" className="btn-secundario">
             Cancelar
           </button>
-          <button type="submit" className="btn-primario" name="salvar" value="salvo">
+          <button
+            type="submit"
+            className="btn-primario"
+            name="salvar"
+            value="salvo"
+          >
             Salvar
           </button>
         </div>
