@@ -1,4 +1,4 @@
-import Layout from "../components/layout/layout.jsx";
+import Layout from "../../components/layout/layout.jsx";
 
 import InformacoesProduto from "./informacoes-produto.jsx";
 import ProdutosSalvos from "./produtos-salvos.jsx";
