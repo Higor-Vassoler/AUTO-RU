@@ -26,7 +26,8 @@ export default function Header() {
       <div className="header__actions">
         <div className="cart">
           <ShoppingCart size={28} />
-          <span className="cart-badge">2</span>
+          {/*comentei o codigo abaixo pq ele adiciona uma contagem de itens no carrinho, na qual se der tempo mais tarde iremos automatizar essa contagem, por enquanto ele se mantem sem contagem*/}
+          {/* <span className="cart-badge">2</span> */}
         </div>
 
         <UserCircle size={42} />
