@@ -11,7 +11,7 @@ export default function InformacoesProduto() {
   };
 
   return (
-    <section>
+    <section className="product-card">
       <div className="product-header">
         <div className="product-icon">
           <Package size={28} />
@@ -67,7 +67,7 @@ export default function InformacoesProduto() {
           <button type="reset" className="btn-cancel">
             Cancelar
           </button>
-          
+
           <button type="submit" className="btn-save">
             Salvar
           </button>
