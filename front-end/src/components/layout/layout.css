@@ -1,0 +1,22 @@
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #FAF8F3;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.page-content {
+    flex: 1;
+}
+
+
