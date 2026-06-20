@@ -160,7 +160,7 @@
 }
 
 .help-card {
-  margin-top: auto;
+  /* margin-top: auto; */
   background: #fffbf0;
   border: 1.5px solid #f0d98a;
   border-radius: 14px;
