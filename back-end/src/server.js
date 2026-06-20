@@ -12,7 +12,7 @@ app.use(express.json());
 
 async function iniciarServidor() {
     try {
-        await sequelize.sync({ alter: true }); // alter:true
+        await sequelize.sync({ alter: true }); // alter:true || force:true
         console.log("✅ Banco de Dados conectado e tabelas sincronizadas!");
 
         app.listen(PORT, () => {

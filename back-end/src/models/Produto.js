@@ -13,7 +13,7 @@ const Produto = sequelize.define("Produto", {
     },
     descricao: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: false
     },
     preco_unitario: {
         type: DataTypes.DECIMAL(10, 2),
