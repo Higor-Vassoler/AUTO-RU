@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import './index.css'
 import Home from './pages/home/index.jsx'
-import Cadastro from './pages/cadastro/index.jsx'
+import Cadastro from './pages/cadastro/indesHIGOR.jsx'
 import Login from './pages/login/index.jsx'
 
 createRoot(document.getElementById('root')).render(

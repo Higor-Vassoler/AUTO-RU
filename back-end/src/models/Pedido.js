@@ -16,8 +16,8 @@ const Pedido = sequelize.define("Pedido", {
             key: "id"
         }
     },
-    id_forma_pagamento: {
-        type: DataTypes.INTEGER,
+    forma_pagamento: {
+        type: DataTypes.ENUM("Pix", "Cartão", "Presencial"),
         allowNull: false
     },
     preco_total: {
