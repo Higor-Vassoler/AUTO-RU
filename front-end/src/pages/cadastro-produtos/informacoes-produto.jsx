@@ -47,7 +47,7 @@ export default function InformacoesProduto() {
 
           <div className="field">
             <label>Quantidade *</label>
-            <input type="number" placeholder="Ex.: 50" />
+            <input type="number" min="1" placeholder="Ex.: 50" />
           </div>
         </div>
 
