@@ -1,6 +1,6 @@
-import Layout from "../../components/layout/layout.jsx";
-import InformacoesProduto from "./informacoes-produto.jsx";
-import ProdutosSalvos from "./produtos-salvos.jsx";
+import Layout from "../../../components/layout/layout.jsx";
+import InformacoesProduto from "../informacoes-produtos/informacoes-produto.jsx";
+import ProdutosSalvos from "../produtos-salvos/produtos-salvos.jsx";
 
 {
   /* Implementar logica de backend para injetar os valores de "produtos" do banco de dados na tabela do arquivo "produtos-salvos.jsx" */
