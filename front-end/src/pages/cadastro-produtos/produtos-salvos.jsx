@@ -1,5 +1,4 @@
 import "./style.css";
-
 import { Pencil, Trash2 } from "lucide-react";
 
 {
@@ -15,48 +14,52 @@ export default function ProdutosSalvos({ produtos }) {
     <section className="saved-products-card">
       <h2>Produtos salvos</h2>
 
-      <table className="products-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {produtos.length === 0 ? (
+      <div className="table-wrapper">
+        <table className="products-table">
+          <thead>
             <tr>
-              <td colSpan="6" className="empty-state">
-                Nenhum produto cadastrado.
-              </td>
+              <th>ID do produto</th>
+              <th>Nome do produto</th>
+              <th>Categoria</th>
+              <th>Preço</th>
+              <th>Quantidade</th>
+              <th>Ações</th>
             </tr>
-          ) : (
-            produtos.map((produto) => (
-              <tr key={produto.id}>
-                <td>{produto.id}</td>
-                <td>{produto.nome}</td>
-                <td>{produto.categoria}</td>
-                <td>R$ {produto.preco}</td>
-                <td>{produto.quantidade}</td>
+          </thead>
 
-                <td className="actions-column">
-                  <button className="edit-btn">
-                    <Pencil size={16} />
-                  </button>
-
-                  <button className="delete-btn">
-                    <Trash2 size={16} />
-                  </button>
+          <tbody>
+            {produtos.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="empty-state">
+                  Nenhum produto cadastrado.
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              produtos.map((produto) => (
+                <tr key={produto.id}>
+                  <td>{produto.id}</td>
+                  <td>{produto.nome}</td>
+                  <td>{produto.categoria}</td>
+                  <td>R$ {produto.preco}</td>
+                  <td>{produto.quantidade}</td>
+
+                  <td className="actions-column">
+                    <button className="edit-btn">
+                      <Pencil size={16} />
+                    </button>
+
+                    <button className="delete-btn">
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <p className="table-info">Mostrando {produtos.length} produto(s)</p>
     </section>
   );
 }
