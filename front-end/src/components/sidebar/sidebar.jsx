@@ -1,5 +1,5 @@
 import "./sidebar.css";
-
+import { useEffect, useState } from "react";
 import {
   User,
   Shield,
@@ -11,6 +11,29 @@ import {
 } from "lucide-react";
 
 export default function Sidebar() {
+  const [activeSection, setActiveSection] = useState("cadastrar-produto");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const cadastro = document.getElementById("cadastrar-produto");
+      const salvos = document.getElementById("produtos-salvos");
+
+      if (!cadastro || !salvos) return;
+
+      const salvosTop = salvos.getBoundingClientRect().top;
+
+      if (salvosTop < 250) {
+        setActiveSection("produtos-salvos");
+      } else {
+        setActiveSection("cadastrar-produto");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <aside className="sidebar">
       <nav className="sidebar-nav">
@@ -45,12 +68,36 @@ export default function Sidebar() {
         </button>
 
         <div className="submenu">
-          <button className="submenu-item submenu-item--active">
+          <button
+            onClick={() =>
+              document.getElementById("cadastrar-produto")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+            className={
+              activeSection === "cadastrar-produto"
+                ? "submenu-item submenu-item--active"
+                : "submenu-item"
+            }
+          >
             <span className="submenu-bullet" />
             <span className="submenu-label">Cadastrar produto</span>
           </button>
 
-          <button className="submenu-item">
+          <button
+            onClick={() =>
+              document.getElementById("produtos-salvos")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+            className={
+              activeSection === "produtos-salvos"
+                ? "submenu-item submenu-item--active"
+                : "submenu-item"
+            }
+          >
             <span className="submenu-bullet" />
             <span className="submenu-label">Produtos salvos</span>
           </button>
