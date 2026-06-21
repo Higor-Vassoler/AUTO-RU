@@ -1,20 +1,12 @@
 import "./style.css";
-import { Package } from "lucide-react";
+import { Package, Save, X } from "lucide-react";
 
 export default function InformacoesProduto() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    alert("Produto salvo com sucesso!");
-
-    event.currentTarget.reset();
-  };
-
   return (
     <section className="product-card">
       <div className="product-header">
         <div className="product-icon">
-          <Package size={28} />
+          <Package size={24} />
         </div>
 
         <div>
@@ -23,7 +15,7 @@ export default function InformacoesProduto() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="row">
           <div className="field flex-2">
             <label>Nome do produto *</label>
@@ -45,7 +37,8 @@ export default function InformacoesProduto() {
           <div className="field">
             <label>Categoria *</label>
             <select>
-              <option>Selecione a categoria</option> <option>Bebidas</option>
+              <option>Selecione a categoria</option>
+              <option>Bebidas</option>
               <option>Lanches</option>
               <option>Doces</option>
               <option>Refeições</option>
@@ -60,15 +53,25 @@ export default function InformacoesProduto() {
 
         <div className="field">
           <label>Descrição *</label>
-          <textarea placeholder="Descreva o produto, ingredientes, características e demais informações." />
+
+          <div className="textarea-wrapper">
+            <textarea
+              maxLength={500}
+              placeholder="Descreva o produto, seus ingredientes, características, etc."
+            />
+
+            <span className="char-counter">0/500</span>
+          </div>
         </div>
 
         <div className="actions">
           <button type="reset" className="btn-cancel">
+            <X size={18} />
             Cancelar
           </button>
 
           <button type="submit" className="btn-save">
+            <Save size={18} />
             Salvar
           </button>
         </div>
