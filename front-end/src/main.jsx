@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./style.css";
 import Home from "./pages/home/index.jsx";
-import Produtos from "./pages/cadastro-produtos/produtos.jsx";
+import Produtos from "./pages/cadastro-produtos/produtos/produtos.jsx";
 import Cadastro from "./pages/cadastro/index.jsx";
 import Login from "./pages/login/index.jsx";
 
