@@ -19,6 +19,10 @@ const Usuario = sequelize.define('Usuario', {
     senha: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    ra: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     }
 }, {
     tableName: "usuarios"

@@ -29,8 +29,7 @@ const Pedido = sequelize.define("Pedido", {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
-    },
-
+    }
 }, {
     tableName: "pedidos"
 });
