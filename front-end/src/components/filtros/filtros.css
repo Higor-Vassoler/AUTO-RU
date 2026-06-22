@@ -1,0 +1,48 @@
+.filtros {
+  display: flex;
+  align-items: end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filtro-grupo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.filtro-grupo select {
+  min-width: 220px;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.filtro-grupo select:focus {
+  border-color: #f6b756;
+}
+
+@media (max-width: 768px) {
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtro-grupo select {
+    width: 100%;
+    min-width: unset;
+  }
+}
