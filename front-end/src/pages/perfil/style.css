@@ -1,0 +1,142 @@
+.perfil-container{
+    width: 100%;
+    padding: 30px;
+}
+
+.perfil-container h1{
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.perfil-subtitulo{
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.card-perfil{
+    background: white;
+    border: 1px solid #ececec;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.titulo-card{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.dados-grid{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:20px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+}
+
+.campo label{
+    margin-bottom:6px;
+    font-weight:600;
+}
+
+.campo input{
+    height:50px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:0 15px;
+}
+
+.btn-editar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    background:#e6ab08;
+    color:black;
+
+    border:none;
+    border-radius:10px;
+
+    padding:12px 20px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.btn-senha{
+    margin-top:20px;
+
+    background:#e6ab08;
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+.card-excluir{
+    background:white;
+
+    border:1px solid #f3d0d0;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn-excluir{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    background:#fff0f0;
+    color:#d93025;
+
+    border:1px solid #d93025;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+.acoes-edicao {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-salvar {
+    background: #e6ab08;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-cancelar {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+}
