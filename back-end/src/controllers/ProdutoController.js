@@ -23,7 +23,7 @@ export const criarProduto = async (req, res) => {
         console.error(`Erro ao criar produto: ${erro}`);
         return res.status(500).json({ erro: "Erro interno no servidor." });
     };
-}
+};
 
 export const listarProdutos = async (req, res) => {
     try {
