@@ -1,0 +1,34 @@
+.footer {
+  width: 100%;
+  background: #fff8eb;
+  border-top: 1px solid #eee;
+  padding: 25px 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-icon {
+  color: #d89b00;
+  flex-shrink: 0;
+}
+
+.footer-item h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+.footer-item p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+}
