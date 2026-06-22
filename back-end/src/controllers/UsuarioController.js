@@ -1,20 +1,11 @@
-import Usuario from "../models/Usuario.js";
-import jwt from "jsonwebtoken";
+import { criarUsuarioService, listarUsuariosService, loginService } from "../services/UsuarioService.js";
 
 // CREATE
 export const criarUsuario = async (req, res) => {
     try {
-        const { nome, email, senha } = req.body;
+        const { nome, email, senha, ra } = req.body;
 
-        if (!nome || !email || !senha) {
-            return res.status(400).json({ erro: "Nome, email e senha são obrigatórios." });
-        }
-
-        const novoUsuario = await Usuario.create({
-            nome: nome,
-            email: email,
-            senha: senha
-        });
+        const novoUsuario = await criarUsuarioService(nome, email, senha, ra);
 
         return res.status(201).json({
             mensagem: "Usuario cadastrado com sucesso.",
@@ -29,7 +20,7 @@ export const criarUsuario = async (req, res) => {
 // LISTAR
 export const listarUsuarios = async (req, res) => {
     try {
-        const usuarios = await Usuario.findAll();
+        const usuarios = await listarUsuariosService();
         return res.status(200).json(usuarios);
     } catch (erro) {
         console.error(`Erro ao buscar usuários: ${erro}`);
@@ -37,17 +28,13 @@ export const listarUsuarios = async (req, res) => {
     }
 };
 
+
+// LOGIN
 export const login = async (req, res) => {
     try {
         const { email, senha } = req.body;
 
-        const usuario = await Usuario.findOne({ where: { email } });
-
-        if (!usuario || usuario.senha !== senha) {
-            return res.status(401).json({ erro: "E-mail ou senha inválidos." });
-        }
-
-        const token = jwt.sign({ id: usuario.id }, "SENHA", { expiresIn: "1h" });
+        const token = await loginService(email, senha);
 
         return res.status(200).json({
             mensagem: "Login realizado com sucesso.",

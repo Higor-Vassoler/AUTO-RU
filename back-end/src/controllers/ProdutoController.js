@@ -1,19 +1,10 @@
-import Produto from "../models/Produto.js";
+import { criarProdutoService, listarProdutosService } from "../services/ProdutoService.js";
 
 export const criarProduto = async (req, res) => {
     try {
         const { nome, descricao, preco_unitario, quantidade_estoque } = req.body;
 
-        if (!nome || !descricao || !preco_unitario || !quantidade_estoque) {
-            return res.status(400).json({ erro: "Nome, descrição, preço e quantidade são obrigatórios." });
-        }
-
-        const novoProduto = await Produto.create({
-            nome: nome,
-            descricao: descricao,
-            preco_unitario: preco_unitario,
-            quantidade_estoque: quantidade_estoque
-        });
+        const novoProduto = await criarProdutoService(nome, descricao, preco_unitario, quantidade_estoque);
 
         return res.status(201).json({
             mensagem: "Produto cadastrado com sucesso.",
@@ -27,7 +18,7 @@ export const criarProduto = async (req, res) => {
 
 export const listarProdutos = async (req, res) => {
     try {
-        const produtos = await Produto.findAll();
+        const produtos = await listarProdutosService();
         return res.status(200).json(produtos);
     } catch (erro) {
         console.erro(`Erro ao buscar produtos: ${erro}`);

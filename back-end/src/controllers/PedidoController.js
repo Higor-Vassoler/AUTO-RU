@@ -1,19 +1,11 @@
-import Pedido from "../models/Pedido.js";
+import { criarPedidoService, listarPedidosService } from "../services/PedidoService.js";
 
 export const criarPedido = async (req, res) => {
     try {
         const id_usuario = req.id_usuario;
         const { forma_pagamento, preco_total } = req.body;
 
-        if (!forma_pagamento || !preco_total) {
-            return res.status(400).json({ erro: "Forma de pagamento e preço são obrigatórios." });
-        }
-
-        const novoPedido = await Pedido.create({
-            id_usuario: id_usuario,
-            forma_pagamento: forma_pagamento,
-            preco_total: preco_total
-        });
+        const novoPedido = await criarPedidoService(id_usuario, forma_pagamento, preco_total);
 
         return res.status(201).json({
             mensagem: "Pedido realizado com sucesso.",
@@ -29,9 +21,7 @@ export const listarPedidos = async (req, res) => {
     try {
         const id_usuario = req.id_usuario;
 
-        const pedidos = await Pedido.findAll({
-            where: { id_usuario: id_usuario }
-        });
+        const pedidos = await listarPedidosService(id_usuario);
 
         return res.status(200).json(pedidos);
     } catch (erro) {
