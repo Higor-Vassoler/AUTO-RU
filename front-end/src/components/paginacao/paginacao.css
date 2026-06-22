@@ -1,0 +1,45 @@
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.pagina-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.pagina-btn:hover:not(:disabled) {
+  border-color: #f6b756;
+}
+
+.pagina-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagina-btn.ativa {
+  background-color: #f6b756;
+  border-color: #f6b756;
+  color: white;
+}
+
+.reticencias {
+  width: 40px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+}
