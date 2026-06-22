@@ -1,11 +1,16 @@
 .header {
   height: 90px;
+  padding: 0 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
   background: #f5b81f;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.header__logo-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .header__logo {
@@ -17,11 +22,11 @@
 .logo-circle {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  border: 3px solid white;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 3px solid white;
+  border-radius: 50%;
   color: white;
 }
 
@@ -32,41 +37,69 @@
 }
 
 .logo-text h1 {
-  font-size: 48px;
   margin: 0;
+  font-size: 52px;
   line-height: 1;
 }
 
-.logo-text span {
-  font-size: 20px;
-  font-weight: 500;
+.logo-subtitle {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-subtitle span {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .header__nav {
   display: flex;
-  gap: 50px;
+  gap: 20px;
 }
 
-.header__nav a {
+.nav-link {
+  padding: 14px 24px;
+  border-radius: 12px;
   text-decoration: none;
   color: #222;
-  font-weight: 500;
   font-size: 18px;
+  font-weight: 600;
+  transition: background 0.2s ease;
 }
 
-.header__nav a:hover {
-  opacity: 0.7;
+.nav-link:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.nav-link--active {
+  background: rgba(0, 0, 0, 0.1);
+  font-weight: 700;
 }
 
 .header__actions {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 16px;
 }
 
-.cart {
-  position: relative;
-  cursor: pointer;
+.header-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  color: #222;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.header-link:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.header-link--active {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .cart-badge {
@@ -75,12 +108,12 @@
   right: -10px;
   width: 20px;
   height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   background: #d58a00;
   color: white;
   font-size: 12px;
   font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

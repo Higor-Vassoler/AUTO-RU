@@ -11,7 +11,7 @@ import { Pencil, Trash2 } from "lucide-react";
 
 export default function ProdutosSalvos({ produtos }) {
   return (
-    <section className="saved-products-card">
+    <section id="produtos-salvos" className="saved-products-card">
       <h2>Produtos salvos</h2>
 
       <div className="table-wrapper">

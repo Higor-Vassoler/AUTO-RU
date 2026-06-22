@@ -1,36 +1,66 @@
 import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
 
 export default function Header() {
+  const location = useLocation();
+  const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");
+
   return (
     <header className="header">
-      <div className="header__logo">
-        <div className="logo-circle">
-          <UtensilsCrossed size={28} />
-        </div>
+      <NavLink to="/" className="header__logo-link">
+        <div className="header__logo">
+          <div className="logo-circle">
+            <UtensilsCrossed size={28} />
+          </div>
 
-        <div className="logo-text">
-          <h1>RU</h1>
-          <span>Refeitório Universitário</span>
+          <div className="logo-text">
+            <h1>RU</h1>
+
+            <div className="logo-subtitle">
+              <span>Refeitório</span>
+              <span>Universitário</span>
+            </div>
+          </div>
         </div>
-      </div>
+      </NavLink>
 
       <nav className="header__nav">
-        {/* lembrar de colocar o caminho de cada link aqui mais tarde, para redirecionamento */}
-        <a href="/">Catálogo</a>
-        <a href="/">Cardápio</a>
-        <a href="/">Sobre o RU</a>
-        <a href="/">Contato</a>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "nav-link nav-link--active" : "nav-link"
+          }
+        >
+          Catálogo
+        </NavLink>
+
+        <NavLink to="/cardapio" className="nav-link">
+          Cardápio
+        </NavLink>
+
+        <NavLink to="/sobre" className="nav-link">
+          Sobre o RU
+        </NavLink>
+
+        <NavLink to="/contato" className="nav-link">
+          Contato
+        </NavLink>
       </nav>
 
       <div className="header__actions">
-        <div className="cart">
+        <NavLink to="/carrinho" className="header-link">
           <ShoppingCart size={28} />
-          {/*comentei o codigo abaixo pq ele adiciona uma contagem de itens no carrinho, na qual se der tempo mais tarde iremos automatizar essa contagem, por enquanto ele se mantem sem contagem*/}
-          {/* <span className="cart-badge">2</span> */}
-        </div>
+        </NavLink>
 
-        <UserCircle size={42} />
+        <NavLink
+          to="/cadastro-produtos"
+          className={
+            isPerfilArea ? "header-link header-link--active" : "header-link"
+          }
+        >
+          <UserCircle size={42} />
+        </NavLink>
       </div>
     </header>
   );

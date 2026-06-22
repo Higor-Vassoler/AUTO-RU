@@ -3,7 +3,7 @@ import { Package, Save, X } from "lucide-react";
 
 export default function InformacoesProduto() {
   return (
-    <section className="product-card">
+    <section id="cadastrar-produto" className="product-card">
       <div className="product-header">
         <div className="product-icon">
           <Package size={24} />
