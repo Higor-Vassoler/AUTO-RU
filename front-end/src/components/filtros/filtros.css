@@ -35,6 +35,34 @@
   border-color: #f6b756;
 }
 
+.categorias-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.categoria-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #ece5db;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.categoria-btn:hover {
+  border-color: #f4b942;
+}
+
+.categoria-btn.ativo {
+  background: #f4b942;
+  border-color: #f4b942;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .filtros {
     flex-direction: column;
