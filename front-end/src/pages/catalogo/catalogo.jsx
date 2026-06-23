@@ -58,8 +58,9 @@ export default function Catalogo() {
 
     return produtos;
   }, [valorBusca, categoriaSelecionada, ordenacao]);
-  const totalPaginas = Math.ceil(
-    produtosFiltrados.length / PRODUTOS_POR_PAGINA,
+  const totalPaginas = Math.max(
+    1,
+    Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA),
   );
   const indiceInicial = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
   const indiceFinal = indiceInicial + PRODUTOS_POR_PAGINA;
