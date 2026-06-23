@@ -1,4 +1,44 @@
 import "./filtros.css";
+import {
+  LayoutGrid,
+  UtensilsCrossed,
+  Soup,
+  CupSoda,
+  CakeSlice,
+  Sandwich,
+  Leaf,
+} from "lucide-react";
+
+const categorias = [
+  {
+    nome: "Todas",
+    icone: <LayoutGrid size={16} />,
+  },
+  {
+    nome: "Pratos Principais",
+    icone: <UtensilsCrossed size={16} />,
+  },
+  {
+    nome: "Acompanhamentos",
+    icone: <Soup size={16} />,
+  },
+  {
+    nome: "Bebidas",
+    icone: <CupSoda size={16} />,
+  },
+  {
+    nome: "Sobremesas",
+    icone: <CakeSlice size={16} />,
+  },
+  {
+    nome: "Lanches",
+    icone: <Sandwich size={16} />,
+  },
+  {
+    nome: "Outros",
+    icone: <Leaf size={16} />,
+  },
+];
 
 function Filtros({
   categoriaSelecionada,
@@ -9,24 +49,24 @@ function Filtros({
 }) {
   return (
     <div className="filtros">
-      <div className="filtro-grupo">
-        <label>Filtrar por categoria</label>
-
-        <select
-          value={categoriaSelecionada}
-          onChange={(e) => {
-            setCategoriaSelecionada(e.target.value);
-            setPaginaAtual(1);
-          }}
-        >
-          <option value="Todas">Todas</option>
-          <option value="Pratos Principais">Pratos Principais</option>
-          <option value="Acompanhamentos">Acompanhamentos</option>
-          <option value="Bebidas">Bebidas</option>
-          <option value="Sobremesas">Sobremesas</option>
-          <option value="Lanches">Lanches</option>
-          <option value="Outros">Outros</option>
-        </select>
+      <div className="categorias-container">
+        {categorias.map((categoria) => (
+          <button
+            key={categoria.nome}
+            className={
+              categoriaSelecionada === categoria.nome
+                ? "categoria-btn ativo"
+                : "categoria-btn"
+            }
+            onClick={() => {
+              setCategoriaSelecionada(categoria.nome);
+              setPaginaAtual(1);
+            }}
+          >
+            {categoria.icone}
+            <span>{categoria.nome}</span>
+          </button>
+        ))}
       </div>
 
       <div className="filtro-grupo">
