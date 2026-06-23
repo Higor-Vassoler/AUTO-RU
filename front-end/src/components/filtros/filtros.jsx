@@ -3,6 +3,7 @@ import "./filtros.css";
 function Filtros({
   categoriaSelecionada,
   setCategoriaSelecionada,
+  setPaginaAtual,
   ordenacao,
   setOrdenacao,
 }) {
@@ -13,7 +14,10 @@ function Filtros({
 
         <select
           value={categoriaSelecionada}
-          onChange={(e) => setCategoriaSelecionada(e.target.value)}
+          onChange={(e) => {
+            setCategoriaSelecionada(e.target.value);
+            setPaginaAtual;
+          }}
         >
           <option value="Todas">Todas</option>
           <option value="Pratos Principais">Pratos Principais</option>
@@ -30,7 +34,10 @@ function Filtros({
 
         <select
           value={ordenacao}
-          onChange={(e) => setOrdenacao(e.target.value)}
+          onChange={(e) => {
+            setOrdenacao(e.target.value);
+            setPaginaAtual;
+          }}
         >
           <option value="relevancia">Mais relevantes</option>
           <option value="az">A → Z</option>
