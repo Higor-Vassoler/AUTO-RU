@@ -16,7 +16,7 @@ function Filtros({
           value={categoriaSelecionada}
           onChange={(e) => {
             setCategoriaSelecionada(e.target.value);
-            setPaginaAtual;
+            setPaginaAtual(1);
           }}
         >
           <option value="Todas">Todas</option>
@@ -36,7 +36,7 @@ function Filtros({
           value={ordenacao}
           onChange={(e) => {
             setOrdenacao(e.target.value);
-            setPaginaAtual;
+            setPaginaAtual(1);
           }}
         >
           <option value="relevancia">Mais relevantes</option>
