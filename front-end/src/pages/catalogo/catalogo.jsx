@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import Layout from "../../components/layout/layout.jsx";
 import "./catalogo.css";
 import produtosFake from "./data/produtos-fake.js";
-import BarraPesquisa from "./components/barra-pesquisa/barra-pesquisa.jsx";
-import Filtros from "./components/filtros/filtros.jsx";
-import Alternador from "./components/alternador/alternador.jsx";
-import ProdutoCard from "./components/produto-card/produto-card.jsx";
-import ProdutoItem from "./components/produto-item/produto-item.jsx";
-import Paginacao from "./components/paginacao/paginacao.jsx";
+import BarraPesquisa from "../../components/barra-pesquisa/barra-pesquisa.jsx";
+import Filtros from "../../components/filtros/filtros.jsx";
+import Alternador from "../../components/alternador/alternador.jsx";
+import ProdutoCard from "../../components/produto-card/produto-card.jsx";
+import ProdutoItem from "../../components/produto-item/produto-item.jsx";
+import Paginacao from "../../components/paginacao/paginacao.jsx";
 
 export default function Catalogo() {
   const [valorBusca, setValorBusca] = useState("");
@@ -70,7 +70,7 @@ export default function Catalogo() {
   );
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <div className="catalogo-container">
         <div className="catalogo-topo">
           <div className="catalogo-titulos">
