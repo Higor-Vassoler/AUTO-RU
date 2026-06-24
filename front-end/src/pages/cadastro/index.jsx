@@ -1,16 +1,52 @@
 import { useState } from 'react'
 import './style.css'
 
+
+
 function Cadastro() {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [hasRA, setHasRA] = useState(false)
   const [ra, setRa] = useState("")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const dadosUsuario = {
+      nome: nome,
+      email: email,
+      senha: senha,
+      ra: ra
+    };
+
+    try {
+      const resposta = await fetch("http://localhost:5000/api/usuarios", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dadosUsuario)
+      });
+
+      const dadosResposta = await resposta.json();
+
+      if (resposta.ok) {
+        console.log(`Sucesso: ${dadosResposta.mensagem}`);
+      } else {
+        console.error(`Erro do servidor: ${dadosResposta.erro}`);
+      }
+    } catch (erro) {
+      console.error(`Erro ao conectar com o back-end: ${erro}`);
+    }
+  };
 
   return (
     <>
       <main>
         <div id="registration">
           <h1>CADASTRO</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div id="nameForm">
               <label>Nome:
                 <br />

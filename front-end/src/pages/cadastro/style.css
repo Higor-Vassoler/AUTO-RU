@@ -10,7 +10,8 @@
     --cor6: #F4F1EA;
 }
 
-* {
+#registration,
+#registration * {
     margin: 0;
     padding: 0;
     font-size: 14pt;
@@ -39,11 +40,11 @@ body {
     padding: 10px;
 
     & h1 {
-        font-size: 30pt;        
+        font-size: 30pt;
     }
 }
 
-form {
+#registration form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,17 +52,17 @@ form {
     gap: 10px;
 }
 
-input {
+#registration input {
     border: none;
     padding: 3px;
 }
 
-input:focus {
+#registration input:focus {
     outline: none;
     background-color: rgb(223, 223, 223);
 }
 
-label:hover {
+#registration label:hover {
     cursor: pointer;
 }
 
