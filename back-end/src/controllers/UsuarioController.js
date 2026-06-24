@@ -47,6 +47,12 @@ export const login = async (req, res) => {
             token: token
         });
     } catch (erro) {
-        return res.status(400).json({ erro: erro.message });
+        console.error(`Erro no login: ${erro}`);
+
+        if (erro.message === "E-mail ou senha inválidos.") {
+            return res.status(401).json({ erro: erro.message });
+        }
+
+        return res.status(500).json({ erro: "Erro interno no servidor." });
     }
 };
