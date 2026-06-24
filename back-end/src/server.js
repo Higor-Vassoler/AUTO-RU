@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import sequelize from './config/database.js';
-import "./models/index.js"
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
