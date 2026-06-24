@@ -31,16 +31,29 @@ export default function Login() {
     });
   };
 
-  const fazerLogin = () => {
+  const fazerLogin = async () => {
+    try {
+      const { email, senha } = dados;
 
-    if (!dados.email || !dados.senha) {
-      alert("Preencha todos os campos.");
-      return;
+      const resposta = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, senha })
+      });
+
+      const dadosResposta = await resposta.json();
+
+      if (!resposta.ok) {
+        alert(dadosResposta.erro || "Falha no login");
+        return;
+      }
+
+      localStorage.setItem("token", dadosResposta.token);
+      alert("Bem-vindo!");
+
+    } catch (err) {
+      alert("Servidor fora do ar.");
     }
-
-    console.log(dados);
-
-    alert("Login realizado!");
   };
 
   return (
