@@ -20,7 +20,7 @@ O banco foi modelado para um sistema de gestão com usuários, pedidos e produto
 - id_usuario (PK, FK → Usuario.id)
 - ra
 
-### Professor
+### Professor ----------
 
 - id_usuario (PK, FK → Usuario.id)
 - cod_prof

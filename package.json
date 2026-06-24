@@ -1,0 +1,26 @@
+{
+  "name": "auto-ru",
+  "version": "1.0.0",
+  "description": "![JavaScript](https://img.shields.io/badge/Language-JavaScript-F7DF1E)\r ![React](https://img.shields.io/badge/Frontend-React-61DAFB)\r ![Node.js](https://img.shields.io/badge/Backend-Node.js-339933)\r ![Express](https://img.shields.io/badge/Framework-Express-000000)\r ![Sequelize](https://img.shields.io/badge/ORM-Sequelize-52B0E7)\r ![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1)",
+  "main": "index.js",
+  "scripts": {
+    "back": "npm run dev --prefix back-end/",
+    "front": "npm run dev --prefix front-end/",
+    "dev": "concurrently \"npm run back\" \"npm run front\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Higor-Vassoler/AUTO-RU.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Higor-Vassoler/AUTO-RU/issues"
+  },
+  "homepage": "https://github.com/Higor-Vassoler/AUTO-RU#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
