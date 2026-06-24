@@ -1,0 +1,46 @@
+.alternador {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.alternador-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.alternador-btn:hover {
+  background-color: #f9fafb;
+}
+
+.alternador-btn.ativo {
+  background-color: #f6b756;
+  color: #ffffff;
+}
+
+.alternador-btn svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .alternador {
+    width: 100%;
+  }
+
+  .alternador-btn {
+    flex: 1;
+  }
+}
