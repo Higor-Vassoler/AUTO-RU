@@ -133,22 +133,6 @@ export default function Cadastro() {
             <div className="beneficio">
 
               <div className="beneficio-icone">
-                <Heart size={24} />
-              </div>
-
-              <div>
-                <h3>Salve favoritos</h3>
-                <p>
-                  Salve seus pratos e itens
-                  preferidos para depois.
-                </p>
-              </div>
-
-            </div>
-
-            <div className="beneficio">
-
-              <div className="beneficio-icone">
                 <Ticket size={24} />
               </div>
 

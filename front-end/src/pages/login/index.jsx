@@ -81,19 +81,6 @@ export default function Login() {
             <div className="beneficio">
 
               <div className="beneficio-icone">
-                <Heart size={24} />
-              </div>
-
-              <div>
-                <h3>Seus favoritos</h3>
-                <p>Salve e acesse seus pratos preferidos.</p>
-              </div>
-
-            </div>
-
-            <div className="beneficio">
-
-              <div className="beneficio-icone">
                 <Ticket size={24} />
               </div>
 
