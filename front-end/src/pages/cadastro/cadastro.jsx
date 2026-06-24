@@ -36,7 +36,7 @@ export default function Cadastro() {
     });
   };
 
-  const cadastrarUsuario = () => {
+  const cadastrarUsuario = async () => {
 
     if (
       !formData.nome ||
@@ -54,9 +54,42 @@ export default function Cadastro() {
       return;
     }
 
-    console.log(formData);
+    try {
+      const resposta = await fetch("http://localhost:5000/api/usuarios", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nome: formData.nome,
+          email: formData.email,
+          senha: formData.senha,
+          confirmarSenha: formData.confirmarSenha,
+          ra: formData.matricula
+        })
+      });
 
-    alert("Conta criada com sucesso!");
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        alert(dados.erro || "Ocorreu um erro ao realizar o cadastro.");
+        return;
+      }
+
+      alert(dados.mensagem || "Conta criada com sucesso!");
+
+      setFormData({
+        nome: "",
+        matricula: "",
+        email: "",
+        senha: "",
+        confirmarSenha: ""
+      });
+
+    } catch (erro) {
+      console.error("Erro na comunicação com o servidor:", erro);
+      alert("Não foi possível conectar ao servidor. Certifique-se de que o back-end está rodando.");
+    }
   };
 
   return (
