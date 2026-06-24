@@ -1,0 +1,168 @@
+.cadastro-container{
+    display:flex;
+    justify-content:center;
+    padding:40px;
+}
+
+.cadastro-card{
+    width:1100px;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:350px 1fr;
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+}
+
+.cadastro-info{
+    background:#fff8eb;
+    padding:35px;
+}
+
+.icone-principal{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#fff1c7;
+    color:#e6ab08;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-bottom:20px;
+}
+
+.cadastro-info h1{
+    margin-bottom:10px;
+}
+
+.cadastro-info > p{
+    color:#666;
+    margin-bottom:30px;
+}
+
+.beneficio{
+    display:flex;
+    gap:15px;
+    margin-bottom:25px;
+    align-items: center;
+}
+
+.beneficio-icone{
+    width:55px;
+    height:55px;
+    border-radius:12px;
+    background:#fff1c7;
+    color:#d89d00;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+}
+
+.beneficio h3{
+    margin-bottom:5px;
+}
+
+.beneficio p{
+    color:#666;
+    font-size:14px;
+}
+
+.cadastro-formulario{
+    padding:40px;
+}
+
+.subtitulo{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.duas-colunas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:20px;
+}
+
+.campo label{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.campo input{
+    height:50px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:0 15px;
+    font-size:15px;
+}
+
+.senha-wrapper{
+    position:relative;
+}
+
+.senha-wrapper input{
+    width:95%;
+    padding-right:50px;
+}
+
+.btn-olho{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:none;
+    cursor:pointer;
+}
+
+.seguranca-box{
+    display:flex;
+    gap:15px;
+    padding:18px;
+    border-radius:12px;
+    background:#fff8eb;
+    margin-bottom:25px;
+}
+
+.seguranca-box p{
+    margin-top:4px;
+    color:#666;
+    font-size:14px;
+}
+
+.btn-cadastrar{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:10px;
+    background:#e6ab08;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn-cadastrar:hover{
+    background:#d89d00;
+}
+
+.login-link{
+    margin-top:25px;
+    text-align:center;
+}
+
+.login-link a{
+    color:#d89d00;
+    text-decoration:none;
+    font-weight:600;
+}
