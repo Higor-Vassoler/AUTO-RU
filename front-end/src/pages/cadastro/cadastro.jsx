@@ -192,7 +192,7 @@ export default function Cadastro() {
               <input
                 type="email"
                 name="email"
-                placeholder="seu.nome@email.com"
+                placeholder="nome@email.com"
                 value={formData.email}
                 onChange={handleChange}
               />
