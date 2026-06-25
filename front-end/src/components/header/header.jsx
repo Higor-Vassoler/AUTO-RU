@@ -1,10 +1,23 @@
+import React, { useState } from "react";
 import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
+import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
 
 export default function Header() {
   const location = useLocation();
   const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");
+
+
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+
+  const [cartItems, setCartItems] = useState([
+    { id: 1, name: "Prato Feito Tradicional", price: 16.50, quantity: 1, image: "https://via.placeholder.com/50" },
+    { id: 2, name: "Suco de Laranja", price: 5.50, quantity: 1, image: "https://via.placeholder.com/50" },
+    { id: 3, name: "Batata Frita", price: 7.50, quantity: 1, image: "https://via.placeholder.com/50" },
+  ]);
+
 
   return (
     <header className="header">
@@ -16,7 +29,6 @@ export default function Header() {
 
           <div className="logo-text">
             <h1>RU</h1>
-
             <div className="logo-subtitle">
               <span>Refeitório</span>
               <span>Universitário</span>
@@ -49,9 +61,20 @@ export default function Header() {
       </nav>
 
       <div className="header__actions">
-        <NavLink to="/carrinho" className="header-link">
-          <ShoppingCart size={28} />
-        </NavLink>
+        {}
+        <button 
+          className="header-link header-link--cart" 
+          onClick={() => setIsCartOpen(!isCartOpen)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        >
+          <div style={{ position: 'relative' }}>
+            <ShoppingCart size={28} />
+            {}
+            {cartItems.length > 0 && (
+              <span className="cart-badge">{cartItems.reduce((acc, item) => acc + item.quantity, 0)}</span>
+            )}
+          </div>
+        </button>
 
         <NavLink
           to="/cadastro-produtos"
@@ -62,6 +85,13 @@ export default function Header() {
           <UserCircle size={42} />
         </NavLink>
       </div>
+
+      {}
+      <CartModal 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+        cartItems={cartItems}
+      />
     </header>
   );
 }
