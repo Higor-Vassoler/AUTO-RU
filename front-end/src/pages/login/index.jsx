@@ -57,7 +57,7 @@ export default function Login() {
   };
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
 
       <div className="login-container">
 
@@ -87,19 +87,6 @@ export default function Login() {
               <div>
                 <h3>Pedidos rápidos</h3>
                 <p>Peça seus pratos favoritos em poucos cliques.</p>
-              </div>
-
-            </div>
-
-            <div className="beneficio">
-
-              <div className="beneficio-icone">
-                <Heart size={24} />
-              </div>
-
-              <div>
-                <h3>Seus favoritos</h3>
-                <p>Salve e acesse seus pratos preferidos.</p>
               </div>
 
             </div>

@@ -93,7 +93,7 @@ export default function Cadastro() {
   };
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
 
       <div className="cadastro-container">
 
@@ -125,22 +125,6 @@ export default function Cadastro() {
                 <p>
                   Peça seus pratos favoritos
                   de forma rápida e prática.
-                </p>
-              </div>
-
-            </div>
-
-            <div className="beneficio">
-
-              <div className="beneficio-icone">
-                <Heart size={24} />
-              </div>
-
-              <div>
-                <h3>Salve favoritos</h3>
-                <p>
-                  Salve seus pratos e itens
-                  preferidos para depois.
                 </p>
               </div>
 
@@ -208,7 +192,7 @@ export default function Cadastro() {
               <input
                 type="email"
                 name="email"
-                placeholder="seu.nome@email.com"
+                placeholder="nome@email.com"
                 value={formData.email}
                 onChange={handleChange}
               />
