@@ -1,0 +1,221 @@
+.cardapio-ru {
+    color: #222;
+    width: 100%;
+    padding-bottom: 40px;
+  }
+  
+  /* CABEÇALHO */
+  .cardapio-ru__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .cardapio-ru__title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+  }
+  
+  .cardapio-ru__subtitle {
+    margin: 0;
+    color: #555;
+    font-size: 16px;
+  }
+  
+  .cardapio-ru__date-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f5b81f; /* Cor amarela padrão do Header[cite: 4] */
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(245, 184, 31, 0.2);
+  }
+  
+  /* CONTAINER PRINCIPAL DO CARDÁPIO */
+  .cardapio-ru__container {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .cardapio-ru__meal-section {
+    flex: 2 1 500px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+  }
+  
+  /* Caixa preta igual ao botão "Almoço" da imagem original */
+  .cardapio-ru__meal-title {
+    background-color: #111111;
+    color: #ffffff;
+    text-align: center;
+    padding: 16px;
+  }
+  
+  .cardapio-ru__meal-title h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* LISTA DE ITENS */
+  .cardapio-ru__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cardapio-ru__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid #f7f7f7;
+    transition: background-color 0.2s;
+  }
+  
+  .cardapio-ru__item:last-child {
+    border-bottom: none;
+  }
+  
+  .cardapio-ru__item:hover {
+    background-color: #fffbf4; /* Destaque suave ao passar o mouse */
+  }
+  
+  .cardapio-ru__item-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* TAGS E ALERTAS */
+  .cardapio-ru__tags {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+  
+  .tag--cg {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  
+  .tag--cl {
+    background-color: #fff3e0;
+    color: #ef6c00;
+  }
+  
+  .tag--v {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+
+  .cardapio-ru__sidebar-info {
+    flex: 1 1 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cardapio-ru__info-card {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+  }
+  
+  .cardapio-ru__info-card h4 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .cardapio-ru__legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .cardapio-ru__legend-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cardapio-ru__info-card--warning {
+    background-color: #fffdf6;
+    border-color: #fce8b2;
+  }
+  
+  .cardapio-ru__info-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: #d58a00;
+  }
+
+  .cardapio-ru__info-card-header h4 {
+    margin: 0;
+    line-height: 1;
+    display: inline-block;
+  }
+  
+  .cardapio-ru__info-card--warning p {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #721c24;
+    line-height: 1;
+  }
+  
+  .cardapio-ru__instagram-link {
+    color: #d58a00;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  
+  .cardapio-ru__instagram-link:hover {
+    text-decoration: underline;
+  }
+  
+
+  .cardapio-ru__footer-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+  }
