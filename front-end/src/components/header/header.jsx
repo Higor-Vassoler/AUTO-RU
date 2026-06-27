@@ -75,7 +75,7 @@ export default function Header() {
         </NavLink>
 
         <NavLink to="/sobre" className="nav-link">
-          Sobre o RU
+          Sobre o AutoRU
         </NavLink>
 
         <NavLink to="/contato" className="nav-link">
