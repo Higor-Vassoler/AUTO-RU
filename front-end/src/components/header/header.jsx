@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
