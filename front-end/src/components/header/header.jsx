@@ -8,16 +8,31 @@ export default function Header() {
   const location = useLocation();
   const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");
 
-
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Prato Feito Tradicional", price: 16.50, quantity: 1, image: "https://via.placeholder.com/50" },
-    { id: 2, name: "Suco de Laranja", price: 5.50, quantity: 1, image: "https://via.placeholder.com/50" },
-    { id: 3, name: "Batata Frita", price: 7.50, quantity: 1, image: "https://via.placeholder.com/50" },
+    {
+      id: 1,
+      name: "Prato Feito Tradicional",
+      price: 16.5,
+      quantity: 1,
+      image: "https://via.placeholder.com/50",
+    },
+    {
+      id: 2,
+      name: "Suco de Laranja",
+      price: 5.5,
+      quantity: 1,
+      image: "https://via.placeholder.com/50",
+    },
+    {
+      id: 3,
+      name: "Batata Frita",
+      price: 7.5,
+      quantity: 1,
+      image: "https://via.placeholder.com/50",
+    },
   ]);
-
 
   return (
     <header className="header">
@@ -62,22 +77,29 @@ export default function Header() {
 
       <div className="header__actions">
         {}
-        <button 
-          className="header-link header-link--cart" 
+        <button
+          className="header-link header-link--cart"
           onClick={() => setIsCartOpen(!isCartOpen)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: 0,
+          }}
         >
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: "relative" }}>
             <ShoppingCart size={28} />
             {}
             {cartItems.length > 0 && (
-              <span className="cart-badge">{cartItems.reduce((acc, item) => acc + item.quantity, 0)}</span>
+              <span className="cart-badge">
+                {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+              </span>
             )}
           </div>
         </button>
 
         <NavLink
-          to="/cadastro-produtos"
+          to="/perfil"
           className={
             isPerfilArea ? "header-link header-link--active" : "header-link"
           }
@@ -87,9 +109,9 @@ export default function Header() {
       </div>
 
       {}
-      <CartModal 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
       />
     </header>
