@@ -1,6 +1,5 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("produtos", {
@@ -10,25 +9,36 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      codigo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
       nome: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      preco: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false
+      },
+      categoria: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      quantidade: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       },
       descricao: {
         type: Sequelize.TEXT,
         allowNull: false
       },
-      preco_unitario: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false,
-        defaultValue: 0.00
+      imagem: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
-      quantidade_estoque: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-      },
-      // Campos obrigatórios do Sequelize
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

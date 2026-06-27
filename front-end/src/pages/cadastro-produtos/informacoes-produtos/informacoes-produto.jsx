@@ -3,18 +3,25 @@ import { useState, useEffect } from "react";
 import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
 
 export default function InformacoesProduto() {
-  const [description, setDescription] = useState("");
+  const [nome, setNome] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [preco, setPreco] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [quantidade, setQuantidade] = useState("");
+  const [descricao, setDescricao] = useState("");
+
+  const [imagemArquivo, setImagemArquivo] = useState(null);
   const [productImage, setProductImage] = useState(null);
 
   function handleImageChange(event) {
     const file = event.target.files?.[0];
-
     if (!file) return;
 
     if (productImage) {
       URL.revokeObjectURL(productImage);
     }
 
+    setImagemArquivo(file);
     setProductImage(URL.createObjectURL(file));
   }
 
@@ -22,8 +29,13 @@ export default function InformacoesProduto() {
     if (productImage) {
       URL.revokeObjectURL(productImage);
     }
-
-    setDescription("");
+    setNome("");
+    setCodigo("");
+    setPreco("");
+    setCategoria("");
+    setQuantidade("");
+    setDescricao("");
+    setImagemArquivo(null);
     setProductImage(null);
   }
 
@@ -35,71 +47,128 @@ export default function InformacoesProduto() {
     };
   }, [productImage]);
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("nome", nome);
+    formData.append("codigo", codigo);
+    formData.append("preco", preco);
+    formData.append("categoria", categoria);
+    formData.append("quantidade", quantidade);
+    formData.append("descricao", descricao);
+
+    if (imagemArquivo) {
+      formData.append("imagem", imagemArquivo);
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/produtos", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Produto cadastrado com sucesso!");
+        handleReset();
+      } else {
+        alert("Erro ao cadastrar: " + (data.erro || "Verifique os dados."));
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      alert("Erro ao conectar com o servidor.");
+    }
+  }
+
   return (
     <section id="cadastrar-produto" className="product-card">
       <div className="product-header">
         <div className="product-icon">
           <Package size={24} />
         </div>
-
         <div>
           <h2>Informações do produto</h2>
           <p>Informe os dados do produto que será cadastrado.</p>
         </div>
       </div>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="product-content">
           <div className="product-main">
             <div className="row">
               <div className="field flex-2">
                 <label>Nome do produto *</label>
-                <input type="text" placeholder="Ex.: Suco de Laranja Natural" />
+                <input
+                  type="text"
+                  placeholder="Ex.: Suco de Laranja Natural"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="field">
                 <label>ID do produto *</label>
-                <input type="text" placeholder="Ex.: SUC001" />
+                <input
+                  type="text"
+                  placeholder="Ex.: SUC001"
+                  value={codigo}
+                  onChange={(e) => setCodigo(e.target.value)}
+                  required
+                />
               </div>
             </div>
 
             <div className="row">
               <div className="field">
                 <label>Preço *</label>
-                <input type="text" placeholder="R$ 0,00" />
+                <input
+                  type="number"
+                  step="0.01"
+                  placeholder="Ex.: 15.50"
+                  value={preco}
+                  onChange={(e) => setPreco(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="field">
                 <label>Categoria *</label>
-
-                <select>
-                  <option>Selecione a categoria</option>
-                  <option>Bebidas</option>
-                  <option>Lanches</option>
-                  <option>Doces</option>
-                  <option>Refeições</option>
+                <select value={categoria} onChange={(e) => setCategoria(e.target.value)} required>
+                  <option value="">Selecione a categoria</option>
+                  <option value="Bebidas">Bebidas</option>
+                  <option value="Lanches">Lanches</option>
+                  <option value="Doces">Doces</option>
+                  <option value="Refeições">Refeições</option>
                 </select>
               </div>
 
               <div className="field">
                 <label>Quantidade *</label>
-
-                <input type="number" min="1" placeholder="Ex.: 50" />
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Ex.: 50"
+                  value={quantidade}
+                  onChange={(e) => setQuantidade(e.target.value)}
+                  required
+                />
               </div>
             </div>
 
             <div className="field">
               <label>Descrição *</label>
-
               <div className="textarea-wrapper">
                 <textarea
                   maxLength={500}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
                   placeholder="Descreva o produto, ingredientes e características."
+                  required
                 />
-
-                <span className="char-counter">{description.length}/500</span>
+                <span className="char-counter">{descricao.length}/500</span>
               </div>
             </div>
           </div>
@@ -112,7 +181,6 @@ export default function InformacoesProduto() {
                 hidden
                 onChange={handleImageChange}
               />
-
               {productImage ? (
                 <>
                   <img
@@ -120,7 +188,6 @@ export default function InformacoesProduto() {
                     alt="Preview do produto"
                     className="preview-image"
                   />
-
                   <span className="change-image">Trocar imagem</span>
                 </>
               ) : (
@@ -128,11 +195,8 @@ export default function InformacoesProduto() {
                   <div className="upload-icon">
                     <ImagePlus size={38} />
                   </div>
-
                   <h3>Adicionar imagem</h3>
-
                   <p>Clique para selecionar uma imagem</p>
-
                   <span className="upload-button">
                     <Upload size={16} />
                     Selecionar arquivo
@@ -144,11 +208,10 @@ export default function InformacoesProduto() {
         </div>
 
         <div className="actions">
-          <button type="reset" className="btn-cancel" onClick={handleReset}>
+          <button type="button" className="btn-cancel" onClick={handleReset}>
             <X size={18} />
             Cancelar
           </button>
-
           <button type="submit" className="btn-save">
             <Save size={18} />
             Salvar
