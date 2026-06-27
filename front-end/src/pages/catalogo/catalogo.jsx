@@ -7,6 +7,7 @@ import Filtros from "../../components/filtros/filtros.jsx";
 import Alternador from "../../components/alternador/alternador.jsx";
 import ProdutoCard from "../../components/produto-card/produto-card.jsx";
 import ProdutoItem from "../../components/produto-item/produto-item.jsx";
+import ModalProduto from "../../components/modal-produtos/modal-produtos.jsx";
 import Paginacao from "../../components/paginacao/paginacao.jsx";
 
 export default function Catalogo() {
@@ -16,6 +17,19 @@ export default function Catalogo() {
   const [modoVisualizacao, setModoVisualizacao] = useState("grade");
   const [paginaAtual, setPaginaAtual] = useState(1);
   const PRODUTOS_POR_PAGINA = 8;
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [modalAberto, setModalAberto] = useState(false);
+
+  function abrirModal(produto) {
+    setProdutoSelecionado(produto);
+    setModalAberto(true);
+  }
+
+  function fecharModal() {
+    setModalAberto(false);
+    setProdutoSelecionado(null);
+  }
+
   const handleBuscar = () => {
     setPaginaAtual(1);
   };
@@ -109,13 +123,21 @@ export default function Catalogo() {
         {modoVisualizacao === "grade" ? (
           <div className="catalogo-grade">
             {produtosPaginaAtual.map((produto) => (
-              <ProdutoCard key={produto.id_produto} produto={produto} />
+              <ProdutoCard
+                key={produto.id_produto}
+                produto={produto}
+                onClick={() => abrirModal(produto)}
+              />
             ))}
           </div>
         ) : (
           <div className="catalogo-lista">
             {produtosPaginaAtual.map((produto) => (
-              <ProdutoItem key={produto.id_produto} produto={produto} />
+              <ProdutoItem
+                key={produto.id_produto}
+                produto={produto}
+                onClick={() => abrirModal(produto)}
+              />
             ))}
           </div>
         )}
@@ -127,6 +149,13 @@ export default function Catalogo() {
             onPaginaChange={setPaginaAtual}
           />
         )}
+
+        <ModalProduto
+          key={produtoSelecionado?.id_produto}
+          produto={produtoSelecionado}
+          aberto={modalAberto}
+          onClose={fecharModal}
+        />
       </div>
     </Layout>
   );
