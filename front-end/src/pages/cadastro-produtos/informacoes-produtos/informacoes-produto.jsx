@@ -2,7 +2,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
 
-export default function InformacoesProduto() {
+export default function InformacoesProduto({ onProdutoSalvo }) {
   const [nome, setNome] = useState("");
   const [codigo, setCodigo] = useState("");
   const [preco, setPreco] = useState("");
@@ -73,6 +73,10 @@ export default function InformacoesProduto() {
       if (response.ok) {
         alert("Produto cadastrado com sucesso!");
         handleReset();
+
+        if (onProdutoSalvo) {
+          onProdutoSalvo();
+        }
       } else {
         alert("Erro ao cadastrar: " + (data.erro || "Verifique os dados."));
       }
