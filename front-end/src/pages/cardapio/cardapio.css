@@ -3,8 +3,7 @@
     width: 100%;
     padding-bottom: 40px;
   }
-  
-  /* CABEÇALHO */
+
   .cardapio-ru__header {
     display: flex;
     justify-content: space-between;
@@ -30,7 +29,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: #f5b81f; /* Cor amarela padrão do Header[cite: 4] */
+    background-color: #f5b81f; 
     padding: 12px 24px;
     border-radius: 12px;
     font-weight: 700;
@@ -38,7 +37,7 @@
     box-shadow: 0 2px 8px rgba(245, 184, 31, 0.2);
   }
   
-  /* CONTAINER PRINCIPAL DO CARDÁPIO */
+
   .cardapio-ru__container {
     display: flex;
     gap: 40px;
@@ -54,7 +53,7 @@
     overflow: hidden;
   }
   
-  /* Caixa preta igual ao botão "Almoço" da imagem original */
+
   .cardapio-ru__meal-title {
     background-color: #111111;
     color: #ffffff;
@@ -70,7 +69,7 @@
     letter-spacing: 1px;
   }
   
-  /* LISTA DE ITENS */
+
   .cardapio-ru__list {
     list-style: none;
     padding: 0;
@@ -91,7 +90,7 @@
   }
   
   .cardapio-ru__item:hover {
-    background-color: #fffbf4; /* Destaque suave ao passar o mouse */
+    background-color: #fffbf4; 
   }
   
   .cardapio-ru__item-name {
