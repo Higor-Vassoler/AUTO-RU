@@ -1,15 +1,32 @@
 import "./style.css";
 import { Pencil, Trash2 } from "lucide-react";
 
-{
-  /*
-    Aqui iria os produtos que eu salvei, mas n possuimos backend ainda, a injeção dos valores se daria pela logica do backend que em "informacoes-produtos.jsx" ao salvar um produto que vc cadastrou, ele enviaria e salvaria os dados para o banco de dados e a variavel "produtos" que consta nesse arquivo buscaria os valores no banco de dados para injetar nesta tabela.
+export default function ProdutosSalvos({ produtos, onProdutoDeletado }) {
+  async function handleDelete(id, nome) {
+    const confirmar = window.confirm(`Deseja realmente remover o produto "${nome}"?`);
+    if (!confirmar) return;
 
-    Se ficar muito fudido da para nos tirar esse arquivo e só deixar "informacoes-produtos.jsx" msm, mas dai nos n confirmariamos se o produto foi salvo no banco ou não, para isso que serve esse arquivo, para pegar os dados do banco e jogar na tela.
-*/
-}
+    try {
+      const response = await fetch(`http://localhost:5000/api/produtos/${id}/ocultar`, {
+        method: "PATCH",
+      });
 
-export default function ProdutosSalvos({ produtos }) {
+      const data = await response.json().catch(() => ({ erro: "Não foi possível ler o JSON do backend" }));
+
+      if (response.ok) {
+        if (onProdutoDeletado) {
+          onProdutoDeletado();
+        }
+      } else {
+        console.error("Erro reportado pelo backend:", data);
+        alert(`Erro do backend: ${data.erro || data.message || "Erro desconhecido"}`);
+      }
+    } catch (error) {
+      console.error("Erro no momento do fetch:", error);
+      alert("Erro na comunicação com o servidor. Abra o console (F12) para ver.");
+    }
+  }
+
   return (
     <section id="produtos-salvos" className="saved-products-card">
       <h2>Produtos salvos</h2>
@@ -48,7 +65,7 @@ export default function ProdutosSalvos({ produtos }) {
                       <Pencil size={16} />
                     </button>
 
-                    <button className="delete-btn">
+                    <button className="delete-btn" onClick={() => handleDelete(produto.id, produto.nome)}>
                       <Trash2 size={16} />
                     </button>
                   </td>

@@ -36,6 +36,11 @@ const Produto = sequelize.define('Produto', {
     imagem: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    ativo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: "produtos"
