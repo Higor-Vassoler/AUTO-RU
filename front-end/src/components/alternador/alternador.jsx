@@ -1,28 +1,32 @@
 import "./alternador.css";
 import { Grid3X3, List } from "lucide-react";
 
-function Alternador({ modoVisualizacao, setModoVisualizacao }) {
+const OPCOES_VISUALIZACAO = [
+  {
+    id: "grade",
+    label: "Grade",
+    icon: Grid3X3,
+  },
+  {
+    id: "lista",
+    label: "Lista",
+    icon: List,
+  },
+];
+
+function Alternador({ modoVisualizacao, onModoChange }) {
   return (
     <div className="alternador">
-      <button
-        className={`alternador-btn ${
-          modoVisualizacao === "grade" ? "ativo" : ""
-        }`}
-        onClick={() => setModoVisualizacao("grade")}
-      >
-        <Grid3X3 size={18} />
-        Grade
-      </button>
-
-      <button
-        className={`alternador-btn ${
-          modoVisualizacao === "lista" ? "ativo" : ""
-        }`}
-        onClick={() => setModoVisualizacao("lista")}
-      >
-        <List size={18} />
-        Lista
-      </button>
+      {OPCOES_VISUALIZACAO.map(({ id, label, icon: Icon }) => (
+        <button
+          key={id}
+          className={`alternador-btn ${modoVisualizacao === id ? "alternador-btn--ativo" : ""}`}
+          onClick={() => onModoChange(id)}
+        >
+          <Icon size={18} />
+          {label}
+        </button>
+      ))}
     </div>
   );
 }
