@@ -1,18 +1,39 @@
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
 
 export default function InformacoesProduto() {
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const [productImage, setProductImage] = useState(null);
 
   function handleImageChange(event) {
     const file = event.target.files?.[0];
 
     if (!file) return;
 
-    setImage(URL.createObjectURL(file));
+    if (productImage) {
+      URL.revokeObjectURL(productImage);
+    }
+
+    setProductImage(URL.createObjectURL(file));
   }
+
+  function handleReset() {
+    if (productImage) {
+      URL.revokeObjectURL(productImage);
+    }
+
+    setDescription("");
+    setProductImage(null);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (productImage) {
+        URL.revokeObjectURL(productImage);
+      }
+    };
+  }, [productImage]);
 
   return (
     <section id="cadastrar-produto" className="product-card">
@@ -92,10 +113,10 @@ export default function InformacoesProduto() {
                 onChange={handleImageChange}
               />
 
-              {image ? (
+              {productImage ? (
                 <>
                   <img
-                    src={image}
+                    src={productImage}
                     alt="Preview do produto"
                     className="preview-image"
                   />
@@ -123,7 +144,7 @@ export default function InformacoesProduto() {
         </div>
 
         <div className="actions">
-          <button type="reset" className="btn-cancel">
+          <button type="reset" className="btn-cancel" onClick={handleReset}>
             <X size={18} />
             Cancelar
           </button>
