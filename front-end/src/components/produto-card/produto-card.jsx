@@ -1,10 +1,10 @@
 import "./produto-card.css";
 
-function ProdutoCard({ produto }) {
+function ProdutoCard({ produto, onClick }) {
   const semEstoque = produto.quantidade_estoque <= 0;
 
   return (
-    <article className="produto-card">
+    <article className="produto-card" onClick={onClick}>
       <div className="produto-imagem-container">
         <img
           src={produto.imagem}
