@@ -87,8 +87,6 @@ export default function Sidebar() {
             isActive ? "nav-item nav-item--active" : "nav-item"
           }
         >
-          <span className="nav-indicator" />
-
           <Package size={24} className="nav-icon" />
 
           <span className="nav-label">Produtos</span>
