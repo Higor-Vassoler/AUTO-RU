@@ -8,6 +8,7 @@ import Cadastro from "./pages/cadastro/cadastro.jsx";
 import Login from "./pages/login/index.jsx";
 import Perfil from "./pages/perfil/perfil.jsx";
 import Catalogo from "./pages/catalogo/catalogo.jsx";
+import SobreRU from "./pages/sobre/sobre.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -18,6 +19,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/sobre" element={<SobreRU />} />
+        
       </Routes>
     </BrowserRouter>
   </StrictMode>,
