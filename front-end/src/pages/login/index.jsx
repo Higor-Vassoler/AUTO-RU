@@ -57,7 +57,7 @@ export default function Login() {
   };
 
   return (
-    <Layout showSidebar={false}>
+    <Layout showSidebar={false} showHeader={false}>
 
       <div className="login-container">
 

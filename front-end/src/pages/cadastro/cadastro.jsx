@@ -93,7 +93,7 @@ export default function Cadastro() {
   };
 
   return (
-    <Layout showSidebar={false}>
+    <Layout showSidebar={false} showHeader={false}>
 
       <div className="cadastro-container">
 
