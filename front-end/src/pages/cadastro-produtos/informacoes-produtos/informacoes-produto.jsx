@@ -1,7 +1,19 @@
 import "./style.css";
-import { Package, Save, X } from "lucide-react";
+import { useState } from "react";
+import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
 
 export default function InformacoesProduto() {
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+
+  function handleImageChange(event) {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    setImage(URL.createObjectURL(file));
+  }
+
   return (
     <section id="cadastrar-produto" className="product-card">
       <div className="product-header">
@@ -16,51 +28,97 @@ export default function InformacoesProduto() {
       </div>
 
       <form>
-        <div className="row">
-          <div className="field flex-2">
-            <label>Nome do produto *</label>
-            <input type="text" placeholder="Ex.: Suco de Laranja Natural" />
+        <div className="product-content">
+          <div className="product-main">
+            <div className="row">
+              <div className="field flex-2">
+                <label>Nome do produto *</label>
+                <input type="text" placeholder="Ex.: Suco de Laranja Natural" />
+              </div>
+
+              <div className="field">
+                <label>ID do produto *</label>
+                <input type="text" placeholder="Ex.: SUC001" />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="field">
+                <label>Preço *</label>
+                <input type="text" placeholder="R$ 0,00" />
+              </div>
+
+              <div className="field">
+                <label>Categoria *</label>
+
+                <select>
+                  <option>Selecione a categoria</option>
+                  <option>Bebidas</option>
+                  <option>Lanches</option>
+                  <option>Doces</option>
+                  <option>Refeições</option>
+                </select>
+              </div>
+
+              <div className="field">
+                <label>Quantidade *</label>
+
+                <input type="number" min="1" placeholder="Ex.: 50" />
+              </div>
+            </div>
+
+            <div className="field">
+              <label>Descrição *</label>
+
+              <div className="textarea-wrapper">
+                <textarea
+                  maxLength={500}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Descreva o produto, ingredientes e características."
+                />
+
+                <span className="char-counter">{description.length}/500</span>
+              </div>
+            </div>
           </div>
 
-          <div className="field">
-            <label>ID do produto *</label>
-            <input type="text" placeholder="Ex.: SUC001" />
-          </div>
-        </div>
+          <div className="image-upload">
+            <label className="upload-area">
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleImageChange}
+              />
 
-        <div className="row">
-          <div className="field">
-            <label>Preço *</label>
-            <input type="text" placeholder="R$ 0,00" />
-          </div>
+              {image ? (
+                <>
+                  <img
+                    src={image}
+                    alt="Preview do produto"
+                    className="preview-image"
+                  />
 
-          <div className="field">
-            <label>Categoria *</label>
-            <select>
-              <option>Selecione a categoria</option>
-              <option>Bebidas</option>
-              <option>Lanches</option>
-              <option>Doces</option>
-              <option>Refeições</option>
-            </select>
-          </div>
+                  <span className="change-image">Trocar imagem</span>
+                </>
+              ) : (
+                <>
+                  <div className="upload-icon">
+                    <ImagePlus size={38} />
+                  </div>
 
-          <div className="field">
-            <label>Quantidade *</label>
-            <input type="number" min="1" placeholder="Ex.: 50" />
-          </div>
-        </div>
+                  <h3>Adicionar imagem</h3>
 
-        <div className="field">
-          <label>Descrição *</label>
+                  <p>Clique para selecionar uma imagem</p>
 
-          <div className="textarea-wrapper">
-            <textarea
-              maxLength={500}
-              placeholder="Descreva o produto, seus ingredientes, características, etc."
-            />
-
-            <span className="char-counter">0/500</span>
+                  <span className="upload-button">
+                    <Upload size={16} />
+                    Selecionar arquivo
+                  </span>
+                </>
+              )}
+            </label>
           </div>
         </div>
 
