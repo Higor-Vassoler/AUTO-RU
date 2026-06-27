@@ -1,0 +1,182 @@
+.contato-ru {
+    color: #222;
+    width: 100%;
+    padding-bottom: 40px;
+  }
+  
+  .contato-ru__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .contato-ru__title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+  }
+  
+  .contato-ru__subtitle {
+    margin: 0;
+    color: #555;
+    font-size: 16px;
+  }
+  
+  .contato-ru__search-box {
+    display: flex;
+  }
+  
+  .contato-ru__search-input {
+    padding: 10px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px 0 0 6px;
+    width: 250px;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .contato-ru__search-button {
+    background-color: #f5b81f; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 0 6px 6px 0;
+    font-weight: 600;
+    cursor: pointer;
+    color: #222;
+    font-size: 16px;
+    transition: background-color 0.2s;
+  }
+  
+  .contato-ru__search-button:hover {
+    background-color: #d58a00;
+  }
+  
+
+  .contato-ru__content {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+  
+  .contato-ru__image-wrapper {
+    flex: 1 1 450px;
+  }
+  
+  .contato-ru__image {
+    width: 100%;
+    height: 480px;
+    background-color: #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    
+    background-image: url('../../components/assets/ru.jpg');
+    
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .contato-ru__info-wrapper {
+    flex: 1 1 450px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contato-ru__heading {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 0 15px 0;
+  }
+  
+  .contato-ru__description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+
+  .contato-ru__cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .contato-ru__card {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border: 1px solid #f0f0f0;
+  }
+  
+  .contato-ru__card-icon {
+    background-color: #fff8eb; 
+    color: #d89b00; 
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .contato-ru__card-text h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .contato-ru__card-text p {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a202c;
+  }
+  
+  .contato-ru__card-text span {
+    font-size: 13px;
+    color: #666;
+    display: block;
+  }
+  
+  .contato-ru__divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px 0;
+  }
+
+  .contato-ru__faq-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .contato-ru__faq-list {
+    padding-left: 20px;
+    margin: 0;
+  }
+  
+  .contato-ru__faq-list li {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+  
+  .contato-ru__faq-list a {
+    color: #d58a00;
+    font-weight: 600;
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+  }
+  
+  .contato-ru__faq-list a:hover {
+    text-decoration: underline;
+  }

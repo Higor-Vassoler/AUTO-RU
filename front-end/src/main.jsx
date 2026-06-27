@@ -9,6 +9,7 @@ import Login from "./pages/login/index.jsx";
 import Perfil from "./pages/perfil/perfil.jsx";
 import Catalogo from "./pages/catalogo/catalogo.jsx";
 import SobreRU from "./pages/sobre/sobre.jsx";
+import ContatoRU from "./pages/contato/contato.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/sobre" element={<SobreRU />} />
         
+        <Route path="/contato" element={<ContatoRU />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
