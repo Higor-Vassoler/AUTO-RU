@@ -24,6 +24,19 @@ export const criarProdutoService = async (codigo, nome, preco, categoria, quanti
 };
 
 export const listarProdutosService = async () => {
-    const produtos = await Produto.findAll();
+    const produtos = await Produto.findAll({ where: { ativo: true } });
     return produtos;
+};
+
+export const ocultarProdutoService = async (id) => {
+    const produto = await Produto.findByPk(id);
+
+    if (!produto) {
+        throw new Error("Produto não encontrado.");
+    }
+
+    produto.ativo = false;
+    await produto.save();
+
+    return produto;
 };

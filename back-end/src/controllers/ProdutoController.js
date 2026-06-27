@@ -1,4 +1,4 @@
-import { criarProdutoService, listarProdutosService } from "../services/ProdutoService.js";
+import { criarProdutoService, listarProdutosService, ocultarProdutoService } from "../services/ProdutoService.js";
 
 export const criarProduto = async (req, res) => {
     try {
@@ -30,5 +30,17 @@ export const listarProdutos = async (req, res) => {
         return res.status(200).json(produtos);
     } catch (erro) {
         return res.status(500).json({ erro: "Erro ao buscar produtos: " + erro.message });
+    }
+};
+
+export const ocultarProduto = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await ocultarProdutoService(id);
+
+        return res.status(200).json({ mensagem: "Produto ocultado com sucesso!" });
+    } catch (erro) {
+        return res.status(400).json({ erro: erro.message });
     }
 };
