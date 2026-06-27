@@ -98,7 +98,7 @@ export default function Catalogo() {
 
           <Alternador
             modoVisualizacao={modoVisualizacao}
-            setModoVisualizacao={setModoVisualizacao}
+            onModoChange={setModoVisualizacao}
           />
         </div>
 
