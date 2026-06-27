@@ -1,7 +1,7 @@
 import React from 'react';
 import './CarrinhoModal.css'; 
 
-const CartModal = ({ isOpen, onClose, cartItems}) => {
+const CartModal = ({ isOpen, onClose, cartItems, onUpdateQuantity }) => {
 
   if (!isOpen) return null;
 
@@ -29,9 +29,9 @@ const CartModal = ({ isOpen, onClose, cartItems}) => {
                 <p className="item-price">x{item.quantity} - R$ {(item.price * item.quantity).toFixed(2)}</p>
               </div>
               <div className="quantity-controls">
-                <div className="quantity-display" style={{ fontWeight: '600', color: '#666' }}>
-                Qtd: {item.quantity}
-                </div>
+                <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}>-</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>+</button>
               </div>
             </div>
           ))}

@@ -18,6 +18,13 @@ export default function Header() {
     { id: 3, name: "Batata Frita", price: 7.50, quantity: 1, image: "https://via.placeholder.com/50" },
   ]);
 
+  const handleUpdateQuantity = (id, newQuantity) => {
+    if (newQuantity <= 0) {
+      setCartItems(cartItems.filter(item => item.id !== id));
+    } else {
+      setCartItems(cartItems.map(item => item.id === id ? { ...item, quantity: newQuantity } : item));
+    }
+  };
 
   return (
     <header className="header">
@@ -91,6 +98,7 @@ export default function Header() {
         isOpen={isCartOpen} 
         onClose={() => setIsCartOpen(false)} 
         cartItems={cartItems}
+        onUpdateQuantity={handleUpdateQuantity}
       />
     </header>
   );
