@@ -97,7 +97,7 @@ export default function CardapioRU() {
                 <h4>Siga o Campus para receber o cardapio da semana!</h4>
             </div>
               <a 
-                href={`https://instagram.com/${cardapioDoDia.instagram.replace('@', '')}`} 
+                href={`https://instagram.com/utfprcm`} 
                 target="_blank" 
                 rel="noreferrer"
                 className="cardapio-ru__instagram-link"
