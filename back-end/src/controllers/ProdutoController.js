@@ -1,4 +1,4 @@
-import { criarProdutoService } from "../services/ProdutoService.js";
+import { criarProdutoService, listarProdutosService } from "../services/ProdutoService.js";
 
 export const criarProduto = async (req, res) => {
     try {
@@ -21,5 +21,14 @@ export const criarProduto = async (req, res) => {
         });
     } catch (erro) {
         return res.status(400).json({ erro: erro.message });
+    }
+};
+
+export const listarProdutos = async (req, res) => {
+    try {
+        const produtos = await listarProdutosService();
+        return res.status(200).json(produtos);
+    } catch (erro) {
+        return res.status(500).json({ erro: "Erro ao buscar produtos: " + erro.message });
     }
 };

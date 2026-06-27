@@ -22,3 +22,8 @@ export const criarProdutoService = async (codigo, nome, preco, categoria, quanti
 
     return novoProduto;
 };
+
+export const listarProdutosService = async () => {
+    const produtos = await Produto.findAll();
+    return produtos;
+};
