@@ -1,5 +1,6 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   User,
   Shield,
@@ -12,6 +13,8 @@ import {
 
 export default function Sidebar() {
   const [activeSection, setActiveSection] = useState("cadastrar-produto");
+  const location = useLocation();
+  const isProductsOpen = location.pathname.startsWith("/cadastro-produtos");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,86 +25,112 @@ export default function Sidebar() {
 
       const salvosTop = salvos.getBoundingClientRect().top;
 
-      if (salvosTop < 250) {
-        setActiveSection("produtos-salvos");
-      } else {
-        setActiveSection("cadastrar-produto");
-      }
+      setActiveSection(
+        salvosTop < 250 ? "produtos-salvos" : "cadastrar-produto",
+      );
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <aside className="sidebar">
       <nav className="sidebar-nav">
-        <button className="nav-item">
+        <NavLink
+          to="/perfil"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
           <User size={24} className="nav-icon" />
           <span className="nav-label">Meu Perfil</span>
-        </button>
+        </NavLink>
 
-        <button className="nav-item">
+        <NavLink
+          to="/seguranca"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
           <Shield size={24} className="nav-icon" />
           <span className="nav-label">Segurança</span>
-        </button>
+        </NavLink>
 
-        <button className="nav-item">
+        <NavLink
+          to="/notificacoes"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
           <Bell size={24} className="nav-icon" />
           <span className="nav-label">Notificações</span>
-        </button>
+        </NavLink>
 
-        <button className="nav-item">
+        <NavLink
+          to="/favoritos"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
           <Heart size={24} className="nav-icon" />
           <span className="nav-label">Favoritos</span>
-        </button>
+        </NavLink>
 
         <div className="divider" />
 
-        <button className="nav-item nav-item--active">
+        <NavLink
+          to="/cadastro-produtos"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
           <span className="nav-indicator" />
 
           <Package size={24} className="nav-icon" />
 
           <span className="nav-label">Produtos</span>
-        </button>
+        </NavLink>
 
-        <div className="submenu">
-          <button
-            onClick={() =>
-              document.getElementById("cadastrar-produto")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              })
-            }
-            className={
-              activeSection === "cadastrar-produto"
-                ? "submenu-item submenu-item--active"
-                : "submenu-item"
-            }
-          >
-            <span className="submenu-bullet" />
-            <span className="submenu-label">Cadastrar produto</span>
-          </button>
+        {isProductsOpen && (
+          <div className="submenu">
+            <button
+              onClick={() =>
+                document.getElementById("cadastrar-produto")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
+              className={
+                activeSection === "cadastrar-produto"
+                  ? "submenu-item submenu-item--active"
+                  : "submenu-item"
+              }
+            >
+              <span className="submenu-bullet" />
+              <span className="submenu-label">Cadastrar produto</span>
+            </button>
 
-          <button
-            onClick={() =>
-              document.getElementById("produtos-salvos")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              })
-            }
-            className={
-              activeSection === "produtos-salvos"
-                ? "submenu-item submenu-item--active"
-                : "submenu-item"
-            }
-          >
-            <span className="submenu-bullet" />
-            <span className="submenu-label">Produtos salvos</span>
-          </button>
-        </div>
+            <button
+              onClick={() =>
+                document.getElementById("produtos-salvos")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
+              className={
+                activeSection === "produtos-salvos"
+                  ? "submenu-item submenu-item--active"
+                  : "submenu-item"
+              }
+            >
+              <span className="submenu-bullet" />
+              <span className="submenu-label">Produtos salvos</span>
+            </button>
+          </div>
+        )}
 
         <div className="divider" />
 
@@ -118,7 +147,6 @@ export default function Sidebar() {
 
         <div className="help-body">
           <p className="help-title">Precisa de ajuda?</p>
-
           <p className="help-desc">Entre em contato com o suporte do RU.</p>
         </div>
 
