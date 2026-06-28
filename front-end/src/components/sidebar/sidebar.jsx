@@ -1,6 +1,6 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   User,
   Shield,
@@ -15,6 +15,15 @@ export default function Sidebar() {
   const [activeSection, setActiveSection] = useState("cadastrar-produto");
   const location = useLocation();
   const isProductsOpen = location.pathname.startsWith("/cadastro-produtos");
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("is_admin");
+
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,7 +141,7 @@ export default function Sidebar() {
 
         <div className="divider" />
 
-        <button className="nav-item nav-item--logout">
+        <button className="nav-item nav-item--logout" onClick={handleLogout}>
           <LogOut size={24} className="nav-icon" />
           <span className="nav-label">Sair da conta</span>
         </button>
