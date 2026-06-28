@@ -1,7 +1,7 @@
 import "./style.css";
 import { Pencil, Trash2 } from "lucide-react";
 
-export default function ProdutosSalvos({ produtos, onProdutoDeletado }) {
+export default function ProdutosSalvos({ produtos, onProdutoDeletado, onEditarProduto }) {
   async function handleDelete(id, nome) {
     const confirmar = window.confirm(`Deseja realmente remover o produto "${nome}"?`);
     if (!confirmar) return;
