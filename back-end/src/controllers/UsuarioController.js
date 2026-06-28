@@ -1,4 +1,4 @@
-import { criarUsuarioService, listarUsuariosService, loginService } from "../services/UsuarioService.js";
+import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService } from "../services/UsuarioService.js";
 
 // CREATE
 export const criarUsuario = async (req, res) => {
@@ -49,6 +49,19 @@ export const login = async (req, res) => {
         });
     } catch (erro) {
         console.error(`Erro no login: ${erro}`);
+        return res.status(400).json({ erro: erro.message });
+    }
+};
+
+export const deletarConta = async (req, res) => {
+    try {
+        // O id_usuario vem do authMiddleware.js
+        const id = req.id_usuario;
+
+        await deletarUsuarioService(id);
+
+        return res.status(200).json({ mensagem: "Conta excluída com sucesso." });
+    } catch (erro) {
         return res.status(400).json({ erro: erro.message });
     }
 };
