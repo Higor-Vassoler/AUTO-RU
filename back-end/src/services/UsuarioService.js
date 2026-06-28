@@ -42,3 +42,15 @@ export const loginService = async (email, senha) => {
 
     return token;
 };
+
+export const deletarUsuarioService = async (id) => {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    await usuario.destroy();
+
+    return true;
+};
