@@ -18,7 +18,14 @@ export default function Sidebar() {
 
   const navigate = useNavigate();
 
+
   const handleLogout = () => {
+    const resposta = window.confirm("Tem certeza que deseja sair da conta?");
+
+    if (!resposta) {
+      return;
+    }
+
     localStorage.removeItem("token");
     localStorage.removeItem("is_admin");
 
