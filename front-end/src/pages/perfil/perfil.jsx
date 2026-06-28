@@ -19,6 +19,38 @@ export default function Perfil() {
     telefone: "(44) 99999-9999"
   });
 
+  const handleExcluirConta = async () => {
+    const confirmacao = window.confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão perdidos.");
+
+    if (!confirmacao) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        }
+      });
+
+      const dadosResposta = await resposta.json();
+
+      if (resposta.ok) {
+        alert(dadosResposta.mensagem);
+
+        localStorage.removeItem("token");
+
+        window.location.href = "/";
+      } else {
+        alert("Erro ao excluir conta: " + (dadosResposta.erro || "Falha desconhecida."));
+      }
+    } catch (erro) {
+      console.error("Erro na requisição:", erro);
+      alert("Não foi possível conectar ao servidor.");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -184,7 +216,7 @@ export default function Perfil() {
 
           </div>
 
-          <button className="btn-excluir">
+          <button className="btn-excluir" onClick={handleExcluirConta}>
 
             <Trash2 size={18} />
 
