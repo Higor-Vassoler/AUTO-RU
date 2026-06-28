@@ -67,8 +67,14 @@ export default function Catalogo() {
 
     listaFiltrada.sort((a, b) => b.id_produto - a.id_produto);
 
+    if (valorBusca.trim()) {
+      listaFiltrada = listaFiltrada.filter((produto) =>
+        produto.nome.toLowerCase().includes(valorBusca.toLowerCase())
+      );
+    }
+
     return listaFiltrada;
-  }, [produtos]);
+  }, [produtos, valorBusca]);
 
   const totalPaginas = Math.max(1, Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA));
   const indiceInicial = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
@@ -85,14 +91,15 @@ export default function Catalogo() {
           </div>
 
           { }
-          { }
+          <div className="catalogo-busca">
+            <BarraPesquisa valorBusca={valorBusca} setValorBusca={setValorBusca} onBuscar={handleBuscar} />
+          </div>
         </div>
 
         <div className="catalogo-filtros">
           { }
           { }
 
-          { }
           <Alternador modoVisualizacao={modoVisualizacao} onModoChange={setModoVisualizacao} />
         </div>
 
