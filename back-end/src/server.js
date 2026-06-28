@@ -1,8 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import path from "path";
+import { fileURLToPath } from 'url';
 import sequelize from './config/database.js';
 import "./models/index.js"
 import apiRoutes from './routes/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,17 +15,15 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', apiRoutes);
 
 async function iniciarServidor() {
     try {
-        // 1. Desativa temporariamente a verificação de chaves estrangeiras
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
 
-        // 2. Sincroniza as tabelas (aplica as alterações de colunas como o 'ra')
         await sequelize.sync({ alter: true });
 
-        // 3. Reativa a verificação de chaves estrangeiras para manter a segurança do banco
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
 
         console.log("✅ Banco de Dados conectado e tabelas sincronizadas!");
