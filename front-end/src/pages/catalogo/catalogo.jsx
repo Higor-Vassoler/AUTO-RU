@@ -72,6 +72,12 @@ export default function Catalogo() {
       );
     }
 
+    if (categoriaSelecionada !== "Todas") {
+      listaFiltrada = listaFiltrada.filter((produto) =>
+        produto.categoria === categoriaSelecionada
+      );
+    }
+
     switch (ordenacao) {
       case "az":
         listaFiltrada.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -90,7 +96,7 @@ export default function Catalogo() {
     }
 
     return listaFiltrada;
-  }, [produtos, valorBusca, ordenacao]);
+  }, [produtos, valorBusca, categoriaSelecionada, ordenacao]);
 
   const totalPaginas = Math.max(1, Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA));
   const indiceInicial = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
