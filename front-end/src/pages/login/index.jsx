@@ -49,10 +49,13 @@ export default function Login() {
       }
 
       localStorage.setItem("token", dadosResposta.token);
-      alert("Bem-vindo!");
+      localStorage.setItem("is_admin", dadosResposta.is_admin);
 
-    } catch (err) {
-      alert("Servidor fora do ar.");
+      alert("Bem-vindo!");
+      window.location.href = "/perfil";
+
+    } catch (erro) {
+      console.error(erro);
     }
   };
 

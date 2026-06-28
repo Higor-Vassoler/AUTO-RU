@@ -6,7 +6,11 @@
   "scripts": {
     "back": "npm run dev --prefix back-end/",
     "front": "npm run dev --prefix front-end/",
-    "dev": "concurrently \"npm run back\" \"npm run front\""
+    "dev": "concurrently \"npm run back\" \"npm run front\"",
+    "db:migrate": "cd back-end && npx sequelize-cli db:migrate",
+    "db:seed": "cd back-end && npx sequelize-cli db:seed:all",
+    "db:reset": "cd back-end && npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:criar-admin": "cd back-end && npx sequelize-cli seed:generate --name criar-usuario-admin"
   },
   "repository": {
     "type": "git",

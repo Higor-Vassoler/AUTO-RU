@@ -40,19 +40,15 @@ export const login = async (req, res) => {
     try {
         const { email, senha } = req.body;
 
-        const token = await loginService(email, senha);
+        const dadosLogin = await loginService(email, senha);
 
         return res.status(200).json({
             mensagem: "Login realizado com sucesso.",
-            token: token
+            token: dadosLogin.token,
+            is_admin: dadosLogin.is_admin
         });
     } catch (erro) {
         console.error(`Erro no login: ${erro}`);
-
-        if (erro.message === "E-mail ou senha inválidos.") {
-            return res.status(401).json({ erro: erro.message });
-        }
-
-        return res.status(500).json({ erro: "Erro interno no servidor." });
+        return res.status(400).json({ erro: erro.message });
     }
 };

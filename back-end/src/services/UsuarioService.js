@@ -35,10 +35,13 @@ export const loginService = async (email, senha) => {
     const usuario = await Usuario.findOne({ where: { email } });
 
     if (!usuario || usuario.senha !== senha) {
-        throw new Error("E-mail ou senha inválidos.");
+        throw new Error("E-mail ou senha incorretos.");
     }
 
-    const token = jwt.sign({ id: usuario.id }, "SENHA", { expiresIn: "1h" });
+    const token = jwt.sign({ id: usuario.id }, "SENHA", { expiresIn: "24h" });
 
-    return token;
+    return {
+        token: token,
+        is_admin: usuario.is_admin
+    };
 };
