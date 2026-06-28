@@ -22,7 +22,7 @@ async function iniciarServidor() {
     try {
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
 
-        await sequelize.sync({ alter: true });
+        // await sequelize.sync({ alter: true });
 
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
 
