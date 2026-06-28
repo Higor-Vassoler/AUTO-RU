@@ -45,3 +45,15 @@ export const loginService = async (email, senha) => {
         is_admin: usuario.is_admin
     };
 };
+
+export const deletarUsuarioService = async (id) => {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    await usuario.destroy();
+
+    return true;
+};
