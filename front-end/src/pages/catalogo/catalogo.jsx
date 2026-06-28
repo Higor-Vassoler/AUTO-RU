@@ -30,6 +30,7 @@ export default function Catalogo() {
         if (response.ok) {
           const produtosAdaptados = data.map(produto => ({
             ...produto,
+            id_produto: product => produto.id,
             id_produto: produto.id,
             preco_unitario: produto.preco ? parseFloat(produto.preco) : 0.0,
             quantidade_estoque: produto.quantidade !== undefined ? produto.quantidade : 0,
@@ -65,16 +66,31 @@ export default function Catalogo() {
   const produtosFiltrados = useMemo(() => {
     let listaFiltrada = [...produtos];
 
-    listaFiltrada.sort((a, b) => b.id_produto - a.id_produto);
-
     if (valorBusca.trim()) {
       listaFiltrada = listaFiltrada.filter((produto) =>
         produto.nome.toLowerCase().includes(valorBusca.toLowerCase())
       );
     }
 
+    switch (ordenacao) {
+      case "az":
+        listaFiltrada.sort((a, b) => a.nome.localeCompare(b.nome));
+        break;
+      case "za":
+        listaFiltrada.sort((a, b) => b.nome.localeCompare(a.nome));
+        break;
+      case "preco-menor":
+        listaFiltrada.sort((a, b) => a.preco_unitario - b.preco_unitario);
+        break;
+      case "preco-maior":
+        listaFiltrada.sort((a, b) => b.preco_unitario - a.preco_unitario);
+        break;
+      default:
+        listaFiltrada.sort((a, b) => b.id_produto - a.id_produto);
+    }
+
     return listaFiltrada;
-  }, [produtos, valorBusca]);
+  }, [produtos, valorBusca, ordenacao]);
 
   const totalPaginas = Math.max(1, Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA));
   const indiceInicial = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
@@ -90,7 +106,6 @@ export default function Catalogo() {
             <p>Encontre os produtos disponíveis no RU da sua faculdade.</p>
           </div>
 
-          { }
           <div className="catalogo-busca">
             <BarraPesquisa valorBusca={valorBusca} setValorBusca={setValorBusca} onBuscar={handleBuscar} />
           </div>
@@ -98,7 +113,13 @@ export default function Catalogo() {
 
         <div className="catalogo-filtros">
           { }
-          { }
+          <Filtros
+            categoriaSelecionada={categoriaSelecionada}
+            setCategoriaSelecionada={setCategoriaSelecionada}
+            ordenacao={ordenacao}
+            setOrdenacao={setOrdenacao}
+            setPaginaAtual={setPaginaAtual}
+          />
 
           <Alternador modoVisualizacao={modoVisualizacao} onModoChange={setModoVisualizacao} />
         </div>
