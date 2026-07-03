@@ -14,7 +14,6 @@ function Paginacao({ paginaAtual, totalPaginas, onPaginaChange }) {
     }
 
     paginas.push(1);
-
     if (paginaAtual > 3) {
       paginas.push("...");
     }
@@ -31,7 +30,6 @@ function Paginacao({ paginaAtual, totalPaginas, onPaginaChange }) {
     }
 
     paginas.push(totalPaginas);
-
     return paginas;
   };
 
