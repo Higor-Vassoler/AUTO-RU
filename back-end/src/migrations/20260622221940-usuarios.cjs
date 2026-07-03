@@ -27,11 +27,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      is_admin: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
