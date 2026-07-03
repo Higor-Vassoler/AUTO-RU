@@ -2,12 +2,33 @@ html,
 body,
 :root {
   --fontePadrao: Verdana, Geneva, Tahoma, sans-serif;
-  --cor1: #E0B23F;
-  --cor2: #E0D93F;
-  --cor3: #E0C63F;
-  --cor4: #E09E3F;
-  --cor5: #F5E4A6;
-  --cor6: #F4F1EA;
+  --cor1: #e0b23f;
+  --cor2: #e0d93f;
+  --cor3: #e0c63f;
+  --cor4: #e09e3f;
+  --cor5: #f5e4a6;
+  --cor6: #f4f1ea;
+  --color-primary: #f5a623;
+  --color-primary-dark: #c47f00;
+  --color-text: #444444;
+  --color-text-muted: #666666;
+  --color-text-light: #888888;
+  --color-title: #222222;
+  --color-bg-hover: #f7f7f7;
+  --color-bg-active: #fff8e8;
+  --color-bg-active-hover: #ffefc4;
+  --color-danger: #c0392b;
+  --color-danger-bg: #fff2f2;
+  --color-divider: #eeeeee;
+  --color-bullet: #cccccc;
+  --color-help-bg: #fffbf0;
+  --color-help-border: #f0d98a;
+  --color-help-icon-bg: #fff3cc;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+  --radius-xs: 10px;
+  --transition-fast: 0.15s ease;
 }
 
 body {

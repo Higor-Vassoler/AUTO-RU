@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import './style.css'
+import "./style.css";
 import RotaFuncionario from "./components/rota-protegida/RotaFuncionario.jsx";
 import RotaProtegida from "./components/rota-protegida/RotaProtegida.jsx";
 import Produtos from "./pages/cadastro-produtos/produtos/produtos.jsx";
@@ -13,6 +13,7 @@ import Catalogo from "./pages/catalogo/catalogo.jsx";
 import SobreRU from "./pages/sobre/sobre.jsx";
 import ContatoRU from "./pages/contato/contato.jsx";
 import CardapioRU from "./pages/cardapio/cardapio.jsx";
+import MinhasCompras from "./pages/minhas-compras/minhas-compras.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -32,6 +33,14 @@ createRoot(document.getElementById("root")).render(
           element={
             <RotaProtegida>
               <Perfil />
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/minhas-compras"
+          element={
+            <RotaProtegida>
+              <MinhasCompras />
             </RotaProtegida>
           }
         />
