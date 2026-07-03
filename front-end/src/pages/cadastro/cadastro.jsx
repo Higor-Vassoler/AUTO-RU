@@ -99,8 +99,6 @@ export default function Cadastro() {
 
         <div className="cadastro-card">
 
-          {/* COLUNA ESQUERDA */}
-
           <div className="cadastro-info">
 
             <div className="icone-principal">
@@ -147,8 +145,6 @@ export default function Cadastro() {
             </div>
 
           </div>
-
-          {/* COLUNA DIREITA */}
 
           <div className="cadastro-formulario">
 

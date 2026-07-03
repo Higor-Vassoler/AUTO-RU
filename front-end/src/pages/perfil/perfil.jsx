@@ -89,7 +89,7 @@ export default function Perfil() {
           Gerencie suas informações pessoais e configurações da conta.
         </p>
 
-        {/* DADOS PESSOAIS */}
+   
 
         <section className="card-perfil">
 
@@ -181,8 +181,6 @@ export default function Perfil() {
 
         </section>
 
-        {/* SEGURANÇA */}
-
         <section className="card-perfil">
 
           <div className="titulo-card">
@@ -201,8 +199,6 @@ export default function Perfil() {
           </button>
 
         </section>
-
-        {/* EXCLUIR CONTA */}
 
         <section className="card-excluir">
 
