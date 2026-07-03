@@ -7,6 +7,7 @@ import {
   Bell,
   Heart,
   Package,
+  ShoppingBag,
   LogOut,
   Headphones,
 } from "lucide-react";
@@ -17,7 +18,6 @@ export default function Sidebar() {
   const isProductsOpen = location.pathname.startsWith("/cadastro-produtos");
 
   const navigate = useNavigate();
-
 
   const handleLogout = () => {
     const resposta = window.confirm("Tem certeza que deseja sair da conta?");
@@ -33,6 +33,10 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
+    // O listener de scroll só faz sentido enquanto a página de
+    // Cadastro de Produtos estiver aberta
+    if (!isProductsOpen) return;
+
     const handleScroll = () => {
       const cadastro = document.getElementById("cadastrar-produto");
       const salvos = document.getElementById("produtos-salvos");
@@ -50,7 +54,7 @@ export default function Sidebar() {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isProductsOpen]);
 
   return (
     <aside className="sidebar">
@@ -104,7 +108,6 @@ export default function Sidebar() {
           }
         >
           <Package size={24} className="nav-icon" />
-
           <span className="nav-label">Produtos</span>
         </NavLink>
 
@@ -145,6 +148,16 @@ export default function Sidebar() {
             </button>
           </div>
         )}
+
+        <NavLink
+          to="/minhas-compras"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
+          <ShoppingBag size={24} className="nav-icon" />
+          <span className="nav-label">Minhas Compras</span>
+        </NavLink>
 
         <div className="divider" />
 

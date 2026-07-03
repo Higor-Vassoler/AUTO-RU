@@ -263,7 +263,7 @@
   transition:
     background 0.18s ease,
     color 0.18s ease;
-}
+} 
 
 .help-btn:hover {
   background: var(--color-primary);
