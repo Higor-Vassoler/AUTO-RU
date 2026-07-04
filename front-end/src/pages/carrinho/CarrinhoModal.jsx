@@ -1,25 +1,21 @@
 import React from 'react';
-import './CarrinhoModal.css'; 
+import './CarrinhoModal.css';
 
 const CartModal = ({ isOpen, onClose, cartItems, onUpdateQuantity }) => {
 
   if (!isOpen) return null;
 
-
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      {}
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        
-        {}
+
         <div className="modal-header">
           <h2>Meu Carrinho ({cartItems.length} itens)</h2>
           <button className="close-button" onClick={onClose}>&times;</button>
         </div>
 
-        {}
         <div className="modal-body">
           {cartItems.map((item) => (
             <div key={item.id} className="cart-item">
@@ -36,8 +32,6 @@ const CartModal = ({ isOpen, onClose, cartItems, onUpdateQuantity }) => {
             </div>
           ))}
         </div>
-
-        {}
         <div className="modal-footer">
           <div className="subtotal-container">
             <span>Subtotal:</span>

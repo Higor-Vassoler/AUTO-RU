@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useContext } from "react";
 import Layout from "../../components/layout/layout.jsx";
 import "./catalogo.css";
 import BarraPesquisa from "../../components/barra-pesquisa/barra-pesquisa.jsx";
@@ -8,18 +8,21 @@ import ProdutoCard from "../../components/produto-card/produto-card.jsx";
 import ProdutoItem from "../../components/produto-item/produto-item.jsx";
 import ModalProduto from "../../components/modal-produtos/modal-produtos.jsx";
 import Paginacao from "../../components/paginacao/paginacao.jsx";
+import { CartContext } from "../../context/CartContext.jsx";
 
 export default function Catalogo() {
   const [produtos, setProdutos] = useState([]);
+  const PRODUTOS_POR_PAGINA = 8;
 
   const [valorBusca, setValorBusca] = useState("");
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todas");
   const [ordenacao, setOrdenacao] = useState("relevancia");
   const [modoVisualizacao, setModoVisualizacao] = useState("grade");
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const PRODUTOS_POR_PAGINA = 8;
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
+
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     async function fetchProdutos() {
@@ -30,7 +33,6 @@ export default function Catalogo() {
         if (response.ok) {
           const produtosAdaptados = data.map(produto => ({
             ...produto,
-            id_produto: product => produto.id,
             id_produto: produto.id,
             preco_unitario: produto.preco ? parseFloat(produto.preco) : 0.0,
             quantidade_estoque: produto.quantidade !== undefined ? produto.quantidade : 0,
@@ -54,14 +56,9 @@ export default function Catalogo() {
     setModalAberto(true);
   }
 
-  function fecharModal() {
-    setModalAberto(false);
-    setProdutoSelecionado(null);
-  }
-
-  const handleBuscar = () => {
+  function handleBuscar() {
     setPaginaAtual(1);
-  };
+  }
 
   const produtosFiltrados = useMemo(() => {
     let listaFiltrada = [...produtos];
@@ -118,7 +115,6 @@ export default function Catalogo() {
         </div>
 
         <div className="catalogo-filtros">
-          { }
           <Filtros
             categoriaSelecionada={categoriaSelecionada}
             setCategoriaSelecionada={setCategoriaSelecionada}
@@ -152,7 +148,14 @@ export default function Catalogo() {
           <Paginacao paginaAtual={paginaAtual} totalPaginas={totalPaginas} onPaginaChange={setPaginaAtual} />
         )}
 
-        <ModalProduto key={produtoSelecionado?.id_produto} produto={produtoSelecionado} aberto={modalAberto} onClose={fecharModal} />
+        <ModalProduto
+          key={produtoSelecionado?.id_produto}
+          produto={produtoSelecionado}
+          aberto={modalAberto}
+          onClose={() => setModalAberto(false)}
+          onAddCart={addToCart}
+        />
+
       </div>
     </Layout>
   );
