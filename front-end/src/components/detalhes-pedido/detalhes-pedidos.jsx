@@ -4,7 +4,7 @@ import {
   formatarDataHora,
 } from "../../utils/formatadores/formatadores";
 
-function calcularSubtotal(itens) {
+function calcularSubtotal(itens) {  
   return itens.reduce(
     (soma, item) => soma + item.precoUnitario * item.quantidade,
     0,
@@ -20,7 +20,6 @@ function LinhaItemPedido({ item }) {
           <span>{item.nome}</span>
         </div>
       </td>
-      
       <td>{item.quantidade}</td>
       <td>{formatarMoeda(item.precoUnitario)}</td>
       <td>{formatarMoeda(item.precoUnitario * item.quantidade)}</td>
@@ -35,12 +34,10 @@ function ResumoPedido({ subtotal, taxaServico }) {
         <span>Subtotal</span>
         <span>{formatarMoeda(subtotal)}</span>
       </div>
-
       <div className="detalhe-pedido-resumo-linha">
         <span>Taxa de Serviço</span>
         <span>{formatarMoeda(taxaServico)}</span>
       </div>
-
       <div className="detalhe-pedido-resumo-linha detalhe-pedido-resumo-linha--total">
         <span>Total</span>
         <span>{formatarMoeda(subtotal + taxaServico)}</span>
@@ -82,7 +79,6 @@ export default function DetalhePedido({ pedido }) {
             <th>Subtotal</th>
           </tr>
         </thead>
-
         <tbody>
           {itens.map((item) => (
             <LinhaItemPedido key={item.id} item={item} />
