@@ -37,7 +37,6 @@ export default function ModalProduto({ produto, aberto, onClose }) {
 
           <div className="modal-descricao">
             <h3>Descrição e ingredientes</h3>
-
             <p>{produto.descricao}</p>
           </div>
 

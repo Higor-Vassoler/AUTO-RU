@@ -7,7 +7,6 @@ function gerarPaginas(paginaAtual, totalPaginas) {
   }
 
   const paginas = [1];
-
   if (paginaAtual > 3) {
     paginas.push("...");
   }
