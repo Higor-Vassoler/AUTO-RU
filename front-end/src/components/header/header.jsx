@@ -64,7 +64,7 @@ export default function Header() {
 
       <nav className="header__nav">
         <NavLink
-          to="/"
+          to="/catalogo"
           className={({ isActive }) =>
             isActive ? "nav-link nav-link--active" : "nav-link"
           }
