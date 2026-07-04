@@ -1,5 +1,5 @@
 import React from 'react';
-import './CarrinhoModal.css'; 
+import './CarrinhoModal.css';
 
 const CartModal = ({ isOpen, onClose, cartItems, onUpdateQuantity }) => {
 

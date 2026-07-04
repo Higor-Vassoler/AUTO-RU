@@ -1,40 +1,35 @@
 import "./paginacao.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-function Paginacao({ paginaAtual, totalPaginas, onPaginaChange }) {
-  const gerarPaginas = () => {
-    const paginas = [];
+function gerarPaginas(paginaAtual, totalPaginas) {
+  if (totalPaginas <= 7) {
+    return Array.from({ length: totalPaginas }, (_, i) => i + 1);
+  }
 
-    if (totalPaginas <= 7) {
-      for (let i = 1; i <= totalPaginas; i++) {
-        paginas.push(i);
-      }
+  const paginas = [1];
+  if (paginaAtual > 3) {
+    paginas.push("...");
+  }
 
-      return paginas;
-    }
+  const inicio = Math.max(2, paginaAtual - 1);
+  const fim = Math.min(totalPaginas - 1, paginaAtual + 1);
+  for (let i = inicio; i <= fim; i++) {
+    paginas.push(i);
+  }
 
-    paginas.push(1);
+  if (paginaAtual < totalPaginas - 2) {
+    paginas.push("...");
+  }
 
-    if (paginaAtual > 3) {
-      paginas.push("...");
-    }
+  paginas.push(totalPaginas);
+  return paginas;
+}
 
-    const inicio = Math.max(2, paginaAtual - 1);
-    const fim = Math.min(totalPaginas - 1, paginaAtual + 1);
-
-    for (let i = inicio; i <= fim; i++) {
-      paginas.push(i);
-    }
-
-    if (paginaAtual < totalPaginas - 2) {
-      paginas.push("...");
-    }
-
-    paginas.push(totalPaginas);
-
-    return paginas;
-  };
-
+export default function Paginacao({
+  paginaAtual,
+  totalPaginas,
+  onPaginaChange,
+}) {
   return (
     <div className="paginacao">
       <button
@@ -45,9 +40,9 @@ function Paginacao({ paginaAtual, totalPaginas, onPaginaChange }) {
         <ChevronLeft size={18} />
       </button>
 
-      {gerarPaginas().map((pagina, index) =>
+      {gerarPaginas(paginaAtual, totalPaginas).map((pagina, index) =>
         pagina === "..." ? (
-          <span key={index} className="reticencias">
+          <span key={`reticencias-${index}`} className="reticencias">
             ...
           </span>
         ) : (
@@ -71,5 +66,3 @@ function Paginacao({ paginaAtual, totalPaginas, onPaginaChange }) {
     </div>
   );
 }
-
-export default Paginacao;

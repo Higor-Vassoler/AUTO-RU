@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./modal-produtos.css";
 import { X, Minus, Plus, ShoppingCart } from "lucide-react";
 
-export default function ModalProduto({ produto, aberto, onClose }) {
+export default function ModalProduto({ produto, aberto, onClose, onAddCart }) {
   const [quantidade, setQuantidade] = useState(1);
+
+  useEffect(() => {
+    if (aberto) setQuantidade(1);
+  }, [aberto, produto]);
 
   if (!aberto || !produto) return null;
 
   function aumentar() {
-    setQuantidade((q) => q + 1);
+    if (quantidade < produto.quantidade_estoque) {
+      setQuantidade((q) => q + 1);
+    }
   }
 
   function diminuir() {
     if (quantidade > 1) {
       setQuantidade((q) => q - 1);
     }
+  }
+
+  function handleAdicionar() {
+    onAddCart(produto, quantidade);
+    onClose();
   }
 
   return (
@@ -37,7 +48,6 @@ export default function ModalProduto({ produto, aberto, onClose }) {
 
           <div className="modal-descricao">
             <h3>Descrição e ingredientes</h3>
-
             <p>{produto.descricao}</p>
           </div>
 
@@ -53,7 +63,7 @@ export default function ModalProduto({ produto, aberto, onClose }) {
             </button>
           </div>
 
-          <button className="btn-carrinho">
+          <button className="btn-carrinho" onClick={handleAdicionar}>
             <ShoppingCart size={18} />
             Adicionar ao carrinho
           </button>

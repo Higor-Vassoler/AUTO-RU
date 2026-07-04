@@ -3,6 +3,7 @@ import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
+import { CartContext } from "../../context/CartContext.jsx";
 
 import { CartContext } from "../../pages/carrinho/ConteudoCarrinho.jsx";
 
@@ -102,7 +103,7 @@ export default function Header() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
+        onUpdateQuantity={updateQuantity}
       />
     </header>
   );

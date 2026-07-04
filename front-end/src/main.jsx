@@ -7,6 +7,7 @@ import { CartProvider } from "../src/pages/carrinho/ConteudoCarrinho.jsx";
 import "./style.css";
 import RotaFuncionario from "./components/rota-protegida/RotaFuncionario.jsx";
 import RotaProtegida from "./components/rota-protegida/RotaProtegida.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 import Produtos from "./pages/cadastro-produtos/produtos/produtos.jsx";
 import Cadastro from "./pages/cadastro/cadastro.jsx";
 import Login from "./pages/login/index.jsx";
@@ -24,7 +25,7 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Routes>
           {/* 🟢 ROTAS PÚBLICAS */}
-           <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/sobre" element={<SobreRU />} />

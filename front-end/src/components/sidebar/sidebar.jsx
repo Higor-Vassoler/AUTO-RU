@@ -1,16 +1,7 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import {
-  User,
-  Shield,
-  Bell,
-  Heart,
-  Package,
-  ShoppingBag,
-  LogOut,
-  Headphones,
-} from "lucide-react";
+import { User, Package, ShoppingBag, LogOut, Headphones } from "lucide-react";
 
 export default function Sidebar() {
   const [activeSection, setActiveSection] = useState("cadastrar-produto");
@@ -28,13 +19,12 @@ export default function Sidebar() {
 
     localStorage.removeItem("token");
     localStorage.removeItem("is_admin");
+    localStorage.removeItem("carrinhoRU");
 
     navigate("/login");
   };
 
   useEffect(() => {
-    // O listener de scroll só faz sentido enquanto a página de
-    // Cadastro de Produtos estiver aberta
     if (!isProductsOpen) return;
 
     const handleScroll = () => {
@@ -67,36 +57,6 @@ export default function Sidebar() {
         >
           <User size={24} className="nav-icon" />
           <span className="nav-label">Meu Perfil</span>
-        </NavLink>
-
-        <NavLink
-          to="/seguranca"
-          className={({ isActive }) =>
-            isActive ? "nav-item nav-item--active" : "nav-item"
-          }
-        >
-          <Shield size={24} className="nav-icon" />
-          <span className="nav-label">Segurança</span>
-        </NavLink>
-
-        <NavLink
-          to="/notificacoes"
-          className={({ isActive }) =>
-            isActive ? "nav-item nav-item--active" : "nav-item"
-          }
-        >
-          <Bell size={24} className="nav-icon" />
-          <span className="nav-label">Notificações</span>
-        </NavLink>
-
-        <NavLink
-          to="/favoritos"
-          className={({ isActive }) =>
-            isActive ? "nav-item nav-item--active" : "nav-item"
-          }
-        >
-          <Heart size={24} className="nav-icon" />
-          <span className="nav-label">Favoritos</span>
         </NavLink>
 
         <div className="divider" />
