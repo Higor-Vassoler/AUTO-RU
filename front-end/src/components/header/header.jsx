@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
+
+import { CartContext } from "../../pages/carrinho/ConteudoCarrinho.jsx"; 
 
 export default function Header() {
   const location = useLocation();
@@ -10,41 +12,23 @@ export default function Header() {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Prato Feito Tradicional",
-      price: 16.5,
-      quantity: 1,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 2,
-      name: "Suco de Laranja",
-      price: 5.5,
-      quantity: 1,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 3,
-      name: "Batata Frita",
-      price: 7.5,
-      quantity: 1,
-      image: "https://via.placeholder.com/50",
-    },
-  ]);
+  const { cartItems, setCartItems } = useContext(CartContext);
 
   const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity <= 0) {
-      setCartItems(cartItems.filter(item => item.id !== id));
+      setCartItems(cartItems.filter((item) => item.id !== id));
     } else {
-      setCartItems(cartItems.map(item => item.id === id ? { ...item, quantity: newQuantity } : item));
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: newQuantity } : item,
+        ),
+      );
     }
   };
 
   return (
     <header className="header">
-      <NavLink to="/" className="header__logo-link">
+      <NavLink to="/catalogo" className="header__logo-link">
         <div className="header__logo">
           <div className="logo-circle">
             <UtensilsCrossed size={28} />
@@ -62,7 +46,7 @@ export default function Header() {
 
       <nav className="header__nav">
         <NavLink
-          to="/"
+          to="/catalogo"
           className={({ isActive }) =>
             isActive ? "nav-link nav-link--active" : "nav-link"
           }
@@ -84,7 +68,6 @@ export default function Header() {
       </nav>
 
       <div className="header__actions">
-        {}
         <button
           className="header-link header-link--cart"
           onClick={() => setIsCartOpen(!isCartOpen)}
@@ -97,7 +80,6 @@ export default function Header() {
         >
           <div style={{ position: "relative" }}>
             <ShoppingCart size={28} />
-            {}
             {cartItems.length > 0 && (
               <span className="cart-badge">
                 {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
@@ -116,7 +98,6 @@ export default function Header() {
         </NavLink>
       </div>
 
-      {}
       <CartModal
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
