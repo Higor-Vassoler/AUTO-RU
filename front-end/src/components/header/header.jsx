@@ -4,7 +4,7 @@ import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
 
-import { CartContext } from "../../pages/carrinho/ConteudoCarrinho.jsx"; 
+import { CartContext } from "../../pages/carrinho/ConteudoCarrinho.jsx";
 
 export default function Header() {
   const location = useLocation();
