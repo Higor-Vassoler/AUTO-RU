@@ -1,13 +1,7 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import {
-  User,
-  Package,
-  ShoppingBag,
-  LogOut,
-  Headphones,
-} from "lucide-react";
+import { User, Package, ShoppingBag, LogOut, Headphones } from "lucide-react";
 
 export default function Sidebar() {
   const [activeSection, setActiveSection] = useState("cadastrar-produto");

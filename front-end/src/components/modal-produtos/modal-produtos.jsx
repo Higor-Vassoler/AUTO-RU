@@ -48,7 +48,6 @@ export default function ModalProduto({ produto, aberto, onClose, onAddCart }) {
 
           <div className="modal-descricao">
             <h3>Descrição e ingredientes</h3>
-
             <p>{produto.descricao}</p>
           </div>
 

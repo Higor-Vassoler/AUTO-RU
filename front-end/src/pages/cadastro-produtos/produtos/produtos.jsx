@@ -37,7 +37,10 @@ export default function Produtos() {
 
       <InformacoesProduto onProdutoSalvo={carregarProdutos} />
 
-      <ProdutosSalvos produtos={produtos} onProdutoDeletado={carregarProdutos} />
+      <ProdutosSalvos
+        produtos={produtos}
+        onProdutoDeletado={carregarProdutos}
+      />
     </Layout>
   );
 }

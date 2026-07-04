@@ -18,16 +18,15 @@ import MinhasCompras from "./pages/minhas-compras/minhas-compras.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* 🟢 ROTAS PÚBLICAS */}
-          <Route path="/" element={<Catalogo />} />
-          <Route path="/cadastro" element={<Cadastro />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/sobre" element={<SobreRU />} />
-          <Route path="/cardapio" element={<CardapioRU />} />
-          <Route path="/contato" element={<ContatoRU />} />
+    <BrowserRouter>
+      <Routes>
+        {/* 🟢 ROTAS PÚBLICAS */}
+        <Route path="/" element={<Login />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/sobre" element={<SobreRU />} />
+        <Route path="/cardapio" element={<CardapioRU />} />
+        <Route path="/contato" element={<ContatoRU />} />
 
           {/* 🔴 ROTAS PRIVADAS */}
           <Route
