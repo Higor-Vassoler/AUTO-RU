@@ -11,7 +11,6 @@ import Paginacao from "../../components/paginacao/paginacao.jsx";
 
 export default function Catalogo() {
   const [produtos, setProdutos] = useState([]);
-
   const [valorBusca, setValorBusca] = useState("");
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todas");
   const [ordenacao, setOrdenacao] = useState("relevancia");
@@ -30,7 +29,6 @@ export default function Catalogo() {
         if (response.ok) {
           const produtosAdaptados = data.map((produto) => ({
             ...produto,
-            id_produto: (product) => produto.id,
             id_produto: produto.id,
             preco_unitario: produto.preco ? parseFloat(produto.preco) : 0.0,
             quantidade_estoque:
