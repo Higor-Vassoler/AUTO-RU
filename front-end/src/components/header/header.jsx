@@ -46,7 +46,7 @@ export default function Header() {
 
   return (
     <header className="header">
-      <NavLink to="/" className="header__logo-link">
+      <NavLink to="/catalogo" className="header__logo-link">
         <div className="header__logo">
           <div className="logo-circle">
             <UtensilsCrossed size={28} />
