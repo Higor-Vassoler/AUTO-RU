@@ -15,6 +15,7 @@ import SobreRU from "./pages/sobre/sobre.jsx";
 import ContatoRU from "./pages/contato/contato.jsx";
 import CardapioRU from "./pages/cardapio/cardapio.jsx";
 import MinhasCompras from "./pages/minhas-compras/minhas-compras.jsx";
+import Checkout from "./pages/finaliza/finaliza.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -28,6 +29,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/sobre" element={<SobreRU />} />
           <Route path="/cardapio" element={<CardapioRU />} />
           <Route path="/contato" element={<ContatoRU />} />
+          <Route path="/finaliza" element={<Checkout />} />
 
           {/* 🔴 ROTAS PRIVADAS */}
           <Route

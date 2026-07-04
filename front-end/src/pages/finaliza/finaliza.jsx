@@ -1,0 +1,169 @@
+import React, { useState, useContext } from 'react';
+import Layout from "../../components/layout/layout.jsx"; 
+import { CartContext } from "../../context/CartContext.jsx";
+import './finaliza.css';
+
+const Checkout = () => {
+  const [cpf, setCpf] = useState('');
+  const [notaFiscal, setNotaFiscal] = useState(false);
+  const [observacoes, setObservacoes] = useState('');
+  
+  const [metodoPagamento, setMetodoPagamento] = useState('');
+  const [compraFinalizada, setCompraFinalizada] = useState(false);
+
+  const { cartItems } = useContext(CartContext);
+
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const taxaServico = 0.00;
+  const totalGeral = subtotal + taxaServico;
+
+  const handleConfirmarCompra = () => {
+    if (!metodoPagamento) {
+      alert("Por favor, selecione um método de pagamento antes de continuar.");
+      return;
+    }
+    setCompraFinalizada(true);
+  };
+
+  if (compraFinalizada) {
+    return (
+      <Layout showSidebar={false} showHeader={true}>
+        <div className="success-container">
+          <div className="success-card">
+            <h2> Pedido Realizado!</h2>
+             <p>Sua compra foi processada com sucesso. Apresente o código abaixo na retirada do pedido.</p>
+            <div className="qr-code-wrapper">
+              <img 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Da nota pra gente professor😔" 
+                alt="QR Code Fictício" />
+            </div>
+
+            <button onClick={() => window.location.href = '/catalogo'} className="confirm-btn">
+              Voltar para o Catálogo
+            </button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout showSidebar={false} showHeader={true}>
+      <div className="checkout-main">
+        
+        <section className="payment-section">
+          <h2>Dados de Pagamento</h2>
+          <div className="payment-card">
+            <h3>Seção 1: Identificação</h3>
+            
+            <div className="form-group row">
+              <div className="input-wrapper">
+                <label>CPF / Matrícula</label>
+                <input 
+                  type="text" 
+                  placeholder="Nome ou Matrícula" 
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <h3 className="mt-large">Seção 2: Método de Pagamento</h3>
+            <div className="payment-methods">
+              <label className={`payment-method ${metodoPagamento === 'pix' ? 'selected' : ''}`}>
+                <input 
+                  type="radio" 
+                  name="pagamento" 
+                  value="pix"
+                  checked={metodoPagamento === 'pix'}
+                  onChange={(e) => setMetodoPagamento(e.target.value)}
+                />
+                <span>PIX</span>
+              </label>
+
+              <label className={`payment-method ${metodoPagamento === 'cartao' ? 'selected' : ''}`}>
+                <input 
+                  type="radio" 
+                  name="pagamento" 
+                  value="cartao"
+                  checked={metodoPagamento === 'cartao'}
+                  onChange={(e) => setMetodoPagamento(e.target.value)}
+                />
+                <span>Cartão de Crédito/Débito</span>
+              </label>
+
+              <label className={`payment-method ${metodoPagamento === 'dinheiro' ? 'selected' : ''}`}>
+                <input 
+                  type="radio" 
+                  name="pagamento" 
+                  value="dinheiro"
+                  checked={metodoPagamento === 'dinheiro'}
+                  onChange={(e) => setMetodoPagamento(e.target.value)}
+                />
+                <span>Dinheiro (Pagar no Caixa)</span>
+              </label>
+            </div>
+
+            <div className="form-group mt-large">
+              <textarea 
+                placeholder="Observações do Pedido"
+                rows="4"
+                value={observacoes}
+                onChange={(e) => setObservacoes(e.target.value)}
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section className="summary-section">
+          <div className="summary-card">
+            <h2>Resumo do Pedido ({cartItems.length} itens)</h2>
+            
+            <div className="items-list">
+              {cartItems.map(item => (
+                <div key={item.id} className="summary-item">
+                  <div className="item-image" style={{ background: 'transparent' }}>
+                    <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                  </div>
+                  <div className="item-details">
+                    <span className="item-name">{item.name}</span>
+                    <span className="item-qty-price">x{item.quantity} - R$ {item.price.toFixed(2)}</span>
+                  </div>
+                  <div className="item-total">
+                    <strong>R$ {(item.quantity * item.price).toFixed(2)}</strong>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="totals-section">
+              <div className="totals-row">
+                <span>Subtotal:</span>
+                <span className="dots"></span>
+                <strong>R$ {subtotal.toFixed(2)}</strong>
+              </div>
+              <div className="totals-row">
+                <span>Taxa de Serviço:</span>
+                <span className="dots"></span>
+                <span>R$ {taxaServico.toFixed(2)}</span>
+              </div>
+              
+              <div className="totals-row grand-total">
+                <span>Total Geral:</span>
+                <span className="dots"></span>
+                <strong className="highlight">R$ {totalGeral.toFixed(2)}</strong>
+              </div>
+            </div>
+
+            <button className="confirm-btn" onClick={handleConfirmarCompra}>
+              Confirmar e Pagar R$ {totalGeral.toFixed(2)}
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </Layout>
+  );
+};
+
+export default Checkout;
