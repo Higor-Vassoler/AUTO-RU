@@ -2,6 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { CartProvider } from "../src/pages/carrinho/ConteudoCarrinho.jsx"; 
+
 import "./style.css";
 import RotaFuncionario from "./components/rota-protegida/RotaFuncionario.jsx";
 import RotaProtegida from "./components/rota-protegida/RotaProtegida.jsx";
@@ -15,6 +17,7 @@ import SobreRU from "./pages/sobre/sobre.jsx";
 import ContatoRU from "./pages/contato/contato.jsx";
 import CardapioRU from "./pages/cardapio/cardapio.jsx";
 import MinhasCompras from "./pages/minhas-compras/minhas-compras.jsx";
+import Checkout from "./pages/finaliza/finaliza.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -28,6 +31,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/sobre" element={<SobreRU />} />
           <Route path="/cardapio" element={<CardapioRU />} />
           <Route path="/contato" element={<ContatoRU />} />
+          <Route path="/finaliza" element={<Checkout />} />
 
           {/* 🔴 ROTAS PRIVADAS */}
           <Route
@@ -57,5 +61,5 @@ createRoot(document.getElementById("root")).render(
         </Routes>
       </BrowserRouter>
     </CartProvider>
-  </StrictMode >,
+  </StrictMode>
 );
