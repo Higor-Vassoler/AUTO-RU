@@ -2,11 +2,9 @@ import "./filtros.css";
 import {
   LayoutGrid,
   UtensilsCrossed,
-  Soup,
   CupSoda,
   CakeSlice,
   Sandwich,
-  Leaf,
 } from "lucide-react";
 
 const categorias = [
@@ -15,29 +13,21 @@ const categorias = [
     icone: <LayoutGrid size={16} />,
   },
   {
-    nome: "Pratos Principais",
+    nome: "Refeições",
     icone: <UtensilsCrossed size={16} />,
-  },
-  {
-    nome: "Acompanhamentos",
-    icone: <Soup size={16} />,
   },
   {
     nome: "Bebidas",
     icone: <CupSoda size={16} />,
   },
   {
-    nome: "Sobremesas",
+    nome: "Doces",
     icone: <CakeSlice size={16} />,
   },
   {
     nome: "Lanches",
     icone: <Sandwich size={16} />,
-  },
-  {
-    nome: "Outros",
-    icone: <Leaf size={16} />,
-  },
+  }
 ];
 
 function Filtros({

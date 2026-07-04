@@ -1,12 +1,10 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   User,
-  Shield,
-  Bell,
-  Heart,
   Package,
+  ShoppingBag,
   LogOut,
   Headphones,
 } from "lucide-react";
@@ -16,7 +14,24 @@ export default function Sidebar() {
   const location = useLocation();
   const isProductsOpen = location.pathname.startsWith("/cadastro-produtos");
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const resposta = window.confirm("Tem certeza que deseja sair da conta?");
+
+    if (!resposta) {
+      return;
+    }
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("is_admin");
+
+    navigate("/login");
+  };
+
   useEffect(() => {
+    if (!isProductsOpen) return;
+
     const handleScroll = () => {
       const cadastro = document.getElementById("cadastrar-produto");
       const salvos = document.getElementById("produtos-salvos");
@@ -34,7 +49,7 @@ export default function Sidebar() {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isProductsOpen]);
 
   return (
     <aside className="sidebar">
@@ -49,36 +64,6 @@ export default function Sidebar() {
           <span className="nav-label">Meu Perfil</span>
         </NavLink>
 
-        <NavLink
-          to="/seguranca"
-          className={({ isActive }) =>
-            isActive ? "nav-item nav-item--active" : "nav-item"
-          }
-        >
-          <Shield size={24} className="nav-icon" />
-          <span className="nav-label">Segurança</span>
-        </NavLink>
-
-        <NavLink
-          to="/notificacoes"
-          className={({ isActive }) =>
-            isActive ? "nav-item nav-item--active" : "nav-item"
-          }
-        >
-          <Bell size={24} className="nav-icon" />
-          <span className="nav-label">Notificações</span>
-        </NavLink>
-
-        <NavLink
-          to="/favoritos"
-          className={({ isActive }) =>
-            isActive ? "nav-item nav-item--active" : "nav-item"
-          }
-        >
-          <Heart size={24} className="nav-icon" />
-          <span className="nav-label">Favoritos</span>
-        </NavLink>
-
         <div className="divider" />
 
         <NavLink
@@ -88,7 +73,6 @@ export default function Sidebar() {
           }
         >
           <Package size={24} className="nav-icon" />
-
           <span className="nav-label">Produtos</span>
         </NavLink>
 
@@ -130,9 +114,19 @@ export default function Sidebar() {
           </div>
         )}
 
+        <NavLink
+          to="/minhas-compras"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
+          <ShoppingBag size={24} className="nav-icon" />
+          <span className="nav-label">Minhas Compras</span>
+        </NavLink>
+
         <div className="divider" />
 
-        <button className="nav-item nav-item--logout">
+        <button className="nav-item nav-item--logout" onClick={handleLogout}>
           <LogOut size={24} className="nav-icon" />
           <span className="nav-label">Sair da conta</span>
         </button>

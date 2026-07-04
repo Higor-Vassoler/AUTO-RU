@@ -7,9 +7,7 @@ import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
 export default function Header() {
   const location = useLocation();
   const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");
-
   const [isCartOpen, setIsCartOpen] = useState(false);
-
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -36,15 +34,19 @@ export default function Header() {
 
   const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity <= 0) {
-      setCartItems(cartItems.filter(item => item.id !== id));
+      setCartItems(cartItems.filter((item) => item.id !== id));
     } else {
-      setCartItems(cartItems.map(item => item.id === id ? { ...item, quantity: newQuantity } : item));
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: newQuantity } : item,
+        ),
+      );
     }
   };
 
   return (
     <header className="header">
-      <NavLink to="/" className="header__logo-link">
+      <NavLink to="/catalogo" className="header__logo-link">
         <div className="header__logo">
           <div className="logo-circle">
             <UtensilsCrossed size={28} />
@@ -62,7 +64,7 @@ export default function Header() {
 
       <nav className="header__nav">
         <NavLink
-          to="/"
+          to="/catalogo"
           className={({ isActive }) =>
             isActive ? "nav-link nav-link--active" : "nav-link"
           }
@@ -84,7 +86,6 @@ export default function Header() {
       </nav>
 
       <div className="header__actions">
-        {}
         <button
           className="header-link header-link--cart"
           onClick={() => setIsCartOpen(!isCartOpen)}
@@ -97,7 +98,6 @@ export default function Header() {
         >
           <div style={{ position: "relative" }}>
             <ShoppingCart size={28} />
-            {}
             {cartItems.length > 0 && (
               <span className="cart-badge">
                 {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
@@ -116,7 +116,6 @@ export default function Header() {
         </NavLink>
       </div>
 
-      {}
       <CartModal
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}

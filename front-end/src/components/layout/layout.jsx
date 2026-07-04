@@ -11,7 +11,6 @@ export default function Layout({ children, showSidebar = true, showHeader = true
       <main className="main-content">
         {showSidebar && <Sidebar />}
         
-
         <section className="page-content">{children}</section>
       </main>
 
