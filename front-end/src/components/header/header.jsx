@@ -1,48 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
 import "./header.css";
 import { ShoppingCart, UserCircle, UtensilsCrossed } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
+import { CartContext } from "../../context/CartContext.jsx";
 
 export default function Header() {
   const location = useLocation();
   const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Prato Feito Tradicional",
-      price: 16.5,
-      quantity: 1,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 2,
-      name: "Suco de Laranja",
-      price: 5.5,
-      quantity: 1,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 3,
-      name: "Batata Frita",
-      price: 7.5,
-      quantity: 1,
-      image: "https://via.placeholder.com/50",
-    },
-  ]);
 
-  const handleUpdateQuantity = (id, newQuantity) => {
-    if (newQuantity <= 0) {
-      setCartItems(cartItems.filter((item) => item.id !== id));
-    } else {
-      setCartItems(
-        cartItems.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item,
-        ),
-      );
-    }
-  };
+  const { cartItems, isCartOpen, setIsCartOpen, updateQuantity } = useContext(CartContext);
 
   return (
     <header className="header">
@@ -120,7 +87,7 @@ export default function Header() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
+        onUpdateQuantity={updateQuantity}
       />
     </header>
   );

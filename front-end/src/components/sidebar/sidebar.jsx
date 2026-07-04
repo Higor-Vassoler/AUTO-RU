@@ -19,6 +19,7 @@ export default function Sidebar() {
 
     localStorage.removeItem("token");
     localStorage.removeItem("is_admin");
+    localStorage.removeItem("carrinhoRU");
 
     navigate("/login");
   };
