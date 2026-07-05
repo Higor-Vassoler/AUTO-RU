@@ -1,6 +1,5 @@
-import { createContext, useState, useEffect } from "react";
-
-export const CartContext = createContext();
+import { useState, useEffect } from "react";
+import { CartContext } from "./cart-context.js";
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
@@ -15,37 +14,46 @@ export function CartProvider({ children }) {
   }, [cartItems]);
 
   function addToCart(produtoSelecionado, quantidadeSelecionada) {
-    const itemExistente = cartItems.find(item => item.id === produtoSelecionado.id_produto);
+    const itemExistente = cartItems.find(
+      (item) => item.id === produtoSelecionado.id_produto,
+    );
 
     if (itemExistente) {
       if (itemExistente.quantity >= produtoSelecionado.quantidade_estoque) {
-        alert(`Você já possui o limite máximo de ${produtoSelecionado.quantidade_estoque} unidades de ${produtoSelecionado.nome} no carrinho!`);
+        alert(
+          `Você já possui o limite máximo de ${produtoSelecionado.quantidade_estoque} unidades de ${produtoSelecionado.nome} no carrinho!`,
+        );
         return;
       }
 
       const novaQuantidade = itemExistente.quantity + quantidadeSelecionada;
 
       if (novaQuantidade > produtoSelecionado.quantidade_estoque) {
-        const quantidadePossivel = produtoSelecionado.quantidade_estoque - itemExistente.quantity;
+        const quantidadePossivel =
+          produtoSelecionado.quantidade_estoque - itemExistente.quantity;
 
-        alert(`Você já tinha ${itemExistente.quantity} no carrinho. Só foi possível adicionar mais ${quantidadePossivel} unidade(s) para atingir o limite do estoque.`);
+        alert(
+          `Você já tinha ${itemExistente.quantity} no carrinho. Só foi possível adicionar mais ${quantidadePossivel} unidade(s) para atingir o limite do estoque.`,
+        );
 
         setCartItems((carrinhoAnterior) =>
-          carrinhoAnterior.map(item =>
+          carrinhoAnterior.map((item) =>
             item.id === produtoSelecionado.id_produto
               ? { ...item, quantity: produtoSelecionado.quantidade_estoque }
-              : item
-          )
+              : item,
+          ),
         );
       } else {
         setCartItems((carrinhoAnterior) =>
-          carrinhoAnterior.map(item =>
+          carrinhoAnterior.map((item) =>
             item.id === produtoSelecionado.id_produto
               ? { ...item, quantity: novaQuantidade }
-              : item
-          )
+              : item,
+          ),
         );
-        alert(`${quantidadeSelecionada}x ${produtoSelecionado.nome} adicionado(s) ao carrinho.`);
+        alert(
+          `${quantidadeSelecionada}x ${produtoSelecionado.nome} adicionado(s) ao carrinho.`,
+        );
       }
     } else {
       setCartItems((carrinhoAnterior) => [
@@ -56,22 +64,24 @@ export function CartProvider({ children }) {
           image: produtoSelecionado.imagem,
           price: produtoSelecionado.preco_unitario,
           quantity: quantidadeSelecionada,
-          estoqueMaximo: produtoSelecionado.quantidade_estoque
-        }
+          estoqueMaximo: produtoSelecionado.quantidade_estoque,
+        },
       ]);
-      alert(`${quantidadeSelecionada}x ${produtoSelecionado.nome} adicionado(s) ao carrinho.`);
+      alert(
+        `${quantidadeSelecionada}x ${produtoSelecionado.nome} adicionado(s) ao carrinho.`,
+      );
     }
   }
 
   function updateQuantity(itemId, novaQuantidade) {
     if (novaQuantidade < 1) {
       setCartItems((carrinhoAnterior) =>
-        carrinhoAnterior.filter(item => item.id !== itemId)
+        carrinhoAnterior.filter((item) => item.id !== itemId),
       );
       return;
     }
 
-    const itemAtual = cartItems.find(item => item.id === itemId);
+    const itemAtual = cartItems.find((item) => item.id === itemId);
     if (!itemAtual) return;
 
     if (novaQuantidade > itemAtual.estoqueMaximo) {
@@ -80,14 +90,22 @@ export function CartProvider({ children }) {
     }
 
     setCartItems((carrinhoAnterior) =>
-      carrinhoAnterior.map(item =>
-        item.id === itemId ? { ...item, quantity: novaQuantidade } : item
-      )
+      carrinhoAnterior.map((item) =>
+        item.id === itemId ? { ...item, quantity: novaQuantidade } : item,
+      ),
     );
   }
 
   return (
-    <CartContext.Provider value={{ cartItems, isCartOpen, setIsCartOpen, addToCart, updateQuantity }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        isCartOpen,
+        setIsCartOpen,
+        addToCart,
+        updateQuantity,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
