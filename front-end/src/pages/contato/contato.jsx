@@ -1,7 +1,5 @@
-import React from 'react';
-import Layout from "../../components/layout/layout.jsx"; 
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { Link } from 'react-router-dom';
+import Layout from "../../components/layout/layout.jsx";
+import { Phone, Mail, MapPin} from "lucide-react";
 import "./contato.css";
 
 export default function ContatoRU() {
@@ -12,7 +10,7 @@ export default function ContatoRU() {
           <div className="contato-ru__image-wrapper">
             <div className="contato-ru__image" />
           </div>
-          
+
 
           <div className="contato-ru__info-wrapper">
             <h3 className="contato-ru__heading">Canais de Atendimento</h3>
@@ -21,7 +19,7 @@ export default function ContatoRU() {
             </p>
 
             <div className="contato-ru__cards-container">
-              
+
 
               <div className="contato-ru__card">
                 <div className="contato-ru__card-icon">
