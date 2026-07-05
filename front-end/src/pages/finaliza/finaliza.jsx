@@ -1,18 +1,51 @@
 import React, { useState, useContext } from 'react';
 import Layout from "../../components/layout/layout.jsx"; 
-import { CartContext } from "../../pages/carrinho/ConteudoCarrinho.jsx";
+import { CartContext } from "../../context/CartContext.jsx";
 import './finaliza.css';
 
 const Checkout = () => {
   const [cpf, setCpf] = useState('');
   const [notaFiscal, setNotaFiscal] = useState(false);
   const [observacoes, setObservacoes] = useState('');
+  
+  const [metodoPagamento, setMetodoPagamento] = useState('');
+  const [compraFinalizada, setCompraFinalizada] = useState(false);
 
   const { cartItems } = useContext(CartContext);
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const taxaServico = 0.00;
   const totalGeral = subtotal + taxaServico;
+
+  const handleConfirmarCompra = () => {
+    if (!metodoPagamento) {
+      alert("Por favor, selecione um método de pagamento antes de continuar.");
+      return;
+    }
+    setCompraFinalizada(true);
+  };
+
+  if (compraFinalizada) {
+    return (
+      <Layout showSidebar={false} showHeader={true}>
+        <div className="success-container">
+          <div className="success-card">
+            <h2> Pedido Realizado!</h2>
+             <p>Sua compra foi processada com sucesso. Apresente o código abaixo na retirada do pedido.</p>
+            <div className="qr-code-wrapper">
+              <img 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Da nota pra gente professor😔" 
+                alt="QR Code Fictício" />
+            </div>
+
+            <button onClick={() => window.location.href = '/catalogo'} className="confirm-btn">
+              Voltar para o Catálogo
+            </button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout showSidebar={false} showHeader={true}>
@@ -33,15 +66,42 @@ const Checkout = () => {
                   onChange={(e) => setCpf(e.target.value)}
                 />
               </div>
-              <div className="checkbox-wrapper">
+            </div>
+
+            <h3 className="mt-large">Seção 2: Método de Pagamento</h3>
+            <div className="payment-methods">
+              <label className={`payment-method ${metodoPagamento === 'pix' ? 'selected' : ''}`}>
                 <input 
-                  type="checkbox" 
-                  id="nota-fiscal"
-                  checked={notaFiscal}
-                  onChange={(e) => setNotaFiscal(e.target.checked)}
+                  type="radio" 
+                  name="pagamento" 
+                  value="pix"
+                  checked={metodoPagamento === 'pix'}
+                  onChange={(e) => setMetodoPagamento(e.target.value)}
                 />
-                <label htmlFor="nota-fiscal">Solicitar Nota Fiscal</label>
-              </div>
+                <span>PIX</span>
+              </label>
+
+              <label className={`payment-method ${metodoPagamento === 'cartao' ? 'selected' : ''}`}>
+                <input 
+                  type="radio" 
+                  name="pagamento" 
+                  value="cartao"
+                  checked={metodoPagamento === 'cartao'}
+                  onChange={(e) => setMetodoPagamento(e.target.value)}
+                />
+                <span>Cartão de Crédito/Débito</span>
+              </label>
+
+              <label className={`payment-method ${metodoPagamento === 'dinheiro' ? 'selected' : ''}`}>
+                <input 
+                  type="radio" 
+                  name="pagamento" 
+                  value="dinheiro"
+                  checked={metodoPagamento === 'dinheiro'}
+                  onChange={(e) => setMetodoPagamento(e.target.value)}
+                />
+                <span>Dinheiro (Pagar no Caixa)</span>
+              </label>
             </div>
 
             <div className="form-group mt-large">
@@ -95,7 +155,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            <button className="confirm-btn">
+            <button className="confirm-btn" onClick={handleConfirmarCompra}>
               Confirmar e Pagar R$ {totalGeral.toFixed(2)}
             </button>
           </div>

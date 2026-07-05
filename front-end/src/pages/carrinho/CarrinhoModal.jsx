@@ -34,16 +34,21 @@ const CartModal = ({ isOpen, onClose, cartItems, onUpdateQuantity }) => {
             </div>
           ))}
         </div>
-
+        
         <div className="modal-footer">
           <div className="subtotal-container">
             <span>Subtotal:</span>
             <strong>R$ {subtotal.toFixed(2)}</strong>
           </div>
+          
           <button 
-          className="checkout-button" 
-          onClick={() => window.location.href = '/finaliza'}>
-          Finalizar Compra
+            className="checkout-button" 
+            onClick={() => {
+              onClose(); 
+              window.location.href = '/finaliza';
+            }}
+          >
+            Finalizar Compra
           </button>
         </div>
 
