@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./modal-produtos.css";
 import { X, Minus, Plus, ShoppingCart } from "lucide-react";
 
 export default function ModalProduto({ produto, aberto, onClose, onAddCart }) {
   const [quantidade, setQuantidade] = useState(1);
-
-  useEffect(() => {
-    if (aberto) setQuantidade(1);
-  }, [aberto, produto]);
 
   if (!aberto || !produto) return null;
 
