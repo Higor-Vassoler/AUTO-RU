@@ -4,10 +4,10 @@ services:
     container_name: auto-ru-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: auto_ru
+      MYSQL_ROOT_PASS: root
+      MYSQL_NAME: auto_ru
       MYSQL_USER: usuario
-      MYSQL_PASSWORD: senha
+      MYSQL_PASS: senha
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
