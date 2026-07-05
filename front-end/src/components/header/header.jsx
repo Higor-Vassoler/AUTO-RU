@@ -5,8 +5,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import CartModal from "../../pages/carrinho/CarrinhoModal.jsx";
 import { CartContext } from "../../context/CartContext.jsx";
 
-import { CartContext } from "../../pages/carrinho/ConteudoCarrinho.jsx";
-
 export default function Header() {
   const location = useLocation();
   const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");

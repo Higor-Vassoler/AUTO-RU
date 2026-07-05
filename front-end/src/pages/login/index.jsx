@@ -52,7 +52,7 @@ export default function Login() {
       localStorage.setItem("is_admin", dadosResposta.is_admin);
 
       alert("Bem-vindo!");
-      window.location.href = "/";
+      window.location.href = "/catalogo";
 
     } catch (erro) {
       console.error(erro);

@@ -2,8 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { CartProvider } from "../src/pages/carrinho/ConteudoCarrinho.jsx"; 
-
 import "./style.css";
 import RotaFuncionario from "./components/rota-protegida/RotaFuncionario.jsx";
 import RotaProtegida from "./components/rota-protegida/RotaProtegida.jsx";
