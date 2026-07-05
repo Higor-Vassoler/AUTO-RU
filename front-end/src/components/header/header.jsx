@@ -8,23 +8,9 @@ import { CartContext } from "../../context/CartContext.jsx";
 export default function Header() {
   const location = useLocation();
   const isPerfilArea = location.pathname.startsWith("/cadastro-produtos");
-
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const { cartItems, setCartItems } = useContext(CartContext);
-
-  const handleUpdateQuantity = (id, newQuantity) => {
-    if (newQuantity <= 0) {
-      setCartItems(cartItems.filter((item) => item.id !== id));
-    } else {
-      setCartItems(
-        cartItems.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item,
-        ),
-      );
-    }
-  };
-
+  const { cartItems, updateQuantity } = useContext(CartContext);
+  
   return (
     <header className="header">
       <NavLink to="/catalogo" className="header__logo-link">
