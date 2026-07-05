@@ -177,7 +177,7 @@ export default function Catalogo() {
         )}
 
         <ModalProduto
-          key={produtoSelecionado?.id_produto}
+          key={produtoSelecionado?.id_produto ?? "vazio"}
           produto={produtoSelecionado}
           aberto={modalAberto}
           onClose={() => setModalAberto(false)}
