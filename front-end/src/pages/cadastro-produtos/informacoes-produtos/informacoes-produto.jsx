@@ -179,7 +179,6 @@ export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, se
                   value={quantidade}
                   onChange={(e) => setQuantidade(e.target.value)}
                   required
-                  disabled={!!produtoEmEdicao}
                 />
               </div>
             </div>
