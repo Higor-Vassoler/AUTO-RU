@@ -1,0 +1,7 @@
+{
+  "name": "AUTO-RU",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "backend",
+  "workspaceFolder": "/app",
+  "shutdownAction": "stopCompose"
+}
