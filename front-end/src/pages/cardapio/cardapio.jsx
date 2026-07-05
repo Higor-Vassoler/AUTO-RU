@@ -1,5 +1,4 @@
-import React from 'react';
-import Layout from "../../components/layout/layout.jsx"; 
+import Layout from "../../components/layout/layout.jsx";
 import { Calendar, AlertTriangle, Globe, Award } from "lucide-react";
 import "./cardapio.css";
 
@@ -26,16 +25,16 @@ export default function CardapioRU() {
   };
 
   return (
-    <Layout showSidebar={false}> 
+    <Layout showSidebar={false}>
       <div className="cardapio-ru">
-        
- 
+
+
         <div className="cardapio-ru__header">
           <div>
             <h2 className="cardapio-ru__title">Cardápio do Campus</h2>
             <p className="cardapio-ru__subtitle">Veja as refeições planejadas para hoje</p>
           </div>
-          
+
           <div className="cardapio-ru__date-badge">
             <Calendar size={20} />
             <span>{cardapioDoDia.data}</span>
@@ -43,7 +42,7 @@ export default function CardapioRU() {
         </div>
 
         <div className="cardapio-ru__container">
-          
+
 
           <div className="cardapio-ru__meal-section">
             <div className="cardapio-ru__meal-title">
@@ -55,7 +54,7 @@ export default function CardapioRU() {
               {cardapioDoDia.itens.map((item, index) => (
                 <li key={index} className="cardapio-ru__item">
                   <span className="cardapio-ru__item-name">{item.nome}</span>
-                  
+
                   <div className="cardapio-ru__tags">
                     {item.tags.includes("CG") && (
                       <span className="tag tag--cg" title="Contém Glúten">*CG</span>
@@ -73,7 +72,7 @@ export default function CardapioRU() {
           </div>
 
           <div className="cardapio-ru__sidebar-info">
-            
+
             <div className="cardapio-ru__info-card">
               <h4>Legenda de Alérgenos</h4>
               <ul className="cardapio-ru__legend-list">
@@ -96,9 +95,9 @@ export default function CardapioRU() {
                 <Globe size={20} />
                 <h4>Siga o Campus para receber o cardapio da semana!</h4>
             </div>
-              <a 
-                href={`https://instagram.com/utfprcm`} 
-                target="_blank" 
+              <a
+                href={`https://instagram.com/utfprcm`}
+                target="_blank"
                 rel="noreferrer"
                 className="cardapio-ru__instagram-link"
               >
