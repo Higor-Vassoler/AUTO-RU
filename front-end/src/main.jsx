@@ -29,7 +29,6 @@ createRoot(document.getElementById("root")).render(
           <Route path="/sobre" element={<SobreRU />} />
           <Route path="/cardapio" element={<CardapioRU />} />
           <Route path="/contato" element={<ContatoRU />} />
-          <Route path="/finaliza" element={<Checkout />} />
 
           {/* 🔴 ROTAS PRIVADAS */}
           <Route
@@ -56,8 +55,17 @@ createRoot(document.getElementById("root")).render(
               </RotaFuncionario>
             }
           />
+          <Route
+            path="/finaliza"
+            element={
+              <RotaProtegida>
+                {" "}
+                <Checkout />{" "}
+              </RotaProtegida>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </CartProvider>
-  </StrictMode>
+  </StrictMode>,
 );
