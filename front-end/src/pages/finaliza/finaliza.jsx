@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
-import Layout from "../../components/layout/layout.jsx"; 
-import { CartContext } from "../../context/CartContext.jsx";
+import { useState, useContext } from 'react';
+import Layout from "../../components/layout/layout.jsx";
+import { CartContext } from "../../context/cart-context.js";
 import './finaliza.css';
 
 const Checkout = () => {
   const [cpf, setCpf] = useState('');
-  const [notaFiscal, setNotaFiscal] = useState(false);
   const [observacoes, setObservacoes] = useState('');
-  
+
   const [metodoPagamento, setMetodoPagamento] = useState('');
   const [compraFinalizada, setCompraFinalizada] = useState(false);
 
@@ -33,8 +32,8 @@ const Checkout = () => {
             <h2> Pedido Realizado!</h2>
              <p>Sua compra foi processada com sucesso. Apresente o código abaixo na retirada do pedido.</p>
             <div className="qr-code-wrapper">
-              <img 
-                src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Da nota pra gente professor😔" 
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Da nota pra gente professor😔"
                 alt="QR Code Fictício" />
             </div>
 
@@ -50,18 +49,18 @@ const Checkout = () => {
   return (
     <Layout showSidebar={false} showHeader={true}>
       <div className="checkout-main">
-        
+
         <section className="payment-section">
           <h2>Dados de Pagamento</h2>
           <div className="payment-card">
             <h3>Seção 1: Identificação</h3>
-            
+
             <div className="form-group row">
               <div className="input-wrapper">
                 <label>CPF / Matrícula</label>
-                <input 
-                  type="text" 
-                  placeholder="Nome ou Matrícula" 
+                <input
+                  type="text"
+                  placeholder="Nome ou Matrícula"
                   value={cpf}
                   onChange={(e) => setCpf(e.target.value)}
                 />
@@ -71,9 +70,9 @@ const Checkout = () => {
             <h3 className="mt-large">Seção 2: Método de Pagamento</h3>
             <div className="payment-methods">
               <label className={`payment-method ${metodoPagamento === 'pix' ? 'selected' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="pagamento" 
+                <input
+                  type="radio"
+                  name="pagamento"
                   value="pix"
                   checked={metodoPagamento === 'pix'}
                   onChange={(e) => setMetodoPagamento(e.target.value)}
@@ -82,9 +81,9 @@ const Checkout = () => {
               </label>
 
               <label className={`payment-method ${metodoPagamento === 'cartao' ? 'selected' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="pagamento" 
+                <input
+                  type="radio"
+                  name="pagamento"
                   value="cartao"
                   checked={metodoPagamento === 'cartao'}
                   onChange={(e) => setMetodoPagamento(e.target.value)}
@@ -93,9 +92,9 @@ const Checkout = () => {
               </label>
 
               <label className={`payment-method ${metodoPagamento === 'dinheiro' ? 'selected' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="pagamento" 
+                <input
+                  type="radio"
+                  name="pagamento"
                   value="dinheiro"
                   checked={metodoPagamento === 'dinheiro'}
                   onChange={(e) => setMetodoPagamento(e.target.value)}
@@ -105,7 +104,7 @@ const Checkout = () => {
             </div>
 
             <div className="form-group mt-large">
-              <textarea 
+              <textarea
                 placeholder="Observações do Pedido"
                 rows="4"
                 value={observacoes}
@@ -118,7 +117,7 @@ const Checkout = () => {
         <section className="summary-section">
           <div className="summary-card">
             <h2>Resumo do Pedido ({cartItems.length} itens)</h2>
-            
+
             <div className="items-list">
               {cartItems.map(item => (
                 <div key={item.id} className="summary-item">
@@ -147,7 +146,7 @@ const Checkout = () => {
                 <span className="dots"></span>
                 <span>R$ {taxaServico.toFixed(2)}</span>
               </div>
-              
+
               <div className="totals-row grand-total">
                 <span>Total Geral:</span>
                 <span className="dots"></span>
