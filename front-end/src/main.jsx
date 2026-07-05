@@ -29,6 +29,8 @@ createRoot(document.getElementById("root")).render(
           <Route path="/sobre" element={<SobreRU />} />
           <Route path="/cardapio" element={<CardapioRU />} />
           <Route path="/contato" element={<ContatoRU />} />
+          <Route path="/login" element={<Login />} />
+
 
           {/* 🔴 ROTAS PRIVADAS */}
           <Route

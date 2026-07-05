@@ -48,7 +48,7 @@ export default function Login() {
 
       alert("Bem-vindo!");
       navigate("/catalogo");
-      
+
     } catch (erro) {
       console.error(erro);
       alert("Erro ao conectar com o servidor. Tente novamente.");

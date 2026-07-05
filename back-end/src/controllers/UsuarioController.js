@@ -1,4 +1,4 @@
-import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService } from "../services/UsuarioService.js";
+import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService } from "../services/UsuarioService.js";
 
 // CREATE
 export const criarUsuario = async (req, res) => {
@@ -61,6 +61,35 @@ export const deletarConta = async (req, res) => {
         await deletarUsuarioService(id);
 
         return res.status(200).json({ mensagem: "Conta excluída com sucesso." });
+    } catch (erro) {
+        return res.status(400).json({ erro: erro.message });
+    }
+};
+
+// BUSCAR MEUS DADOS
+export const buscarMeusDados = async (req, res) => {
+    try {
+        const id = req.id_usuario;
+        const usuario = await buscarUsuarioPorIdService(id);
+
+        return res.status(200).json(usuario);
+    } catch (erro) {
+        return res.status(404).json({ erro: erro.message });
+    }
+};
+
+// ATUALIZAR CONTA
+export const atualizarConta = async (req, res) => {
+    try {
+        const id = req.id_usuario;
+        const { nome, email, ra } = req.body;
+
+        const usuarioAtualizado = await atualizarUsuarioService(id, { nome, email, ra });
+
+        return res.status(200).json({
+            mensagem: "Dados atualizados com sucesso!",
+            usuario: usuarioAtualizado
+        });
     } catch (erro) {
         return res.status(400).json({ erro: erro.message });
     }
