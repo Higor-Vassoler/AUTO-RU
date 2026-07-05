@@ -1,4 +1,3 @@
-import React from 'react';
 import Layout from "../../components/layout/layout.jsx";
 import "./sobre.css";
 
@@ -6,8 +5,8 @@ export default function SobreRU() {
   return (
     <Layout showSidebar={false}>
       <div className="sobre-ru">
-        
-        
+
+
         <div className="sobre-ru__header">
           <div>
             <h2 className="sobre-ru__title">Conheça o Seu RU</h2>
@@ -15,7 +14,7 @@ export default function SobreRU() {
           </div>
         </div>
 
-       
+
         <div className="sobre-ru__hero">
           <p>O AutoRU se trata de um trabalho de BCC da matéria de Engenharia de Software ministrada pelo professor Igor Wiese, tivemos a ideia de fazer um site para o RU visando ajudar
             os alunos a comprar suas refeições e o funcionários a ter um serviço mais facilitado.</p>
@@ -26,7 +25,7 @@ export default function SobreRU() {
 
         <section className="sobre-ru__values">
           <h3 className="sobre-ru__section-title">Nossos Valores</h3>
-          
+
           <div className="sobre-ru__values-grid">
             <div className="sobre-ru__value-card">
               <div className="sobre-ru__value-icon">🥗</div>
