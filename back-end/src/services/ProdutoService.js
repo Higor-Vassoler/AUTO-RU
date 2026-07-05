@@ -40,3 +40,35 @@ export const ocultarProdutoService = async (id) => {
 
     return produto;
 };
+
+export const atualizarProdutoService = async (id, codigo, nome, preco, categoria, quantidade, descricao, imagem) => {
+    const produto = await Produto.findByPk(id);
+
+    if (!produto) {
+        throw new Error("Produto não encontrado.");
+    }
+
+    if (codigo && codigo !== produto.codigo) {
+        const produtoExistente = await Produto.findOne({ where: { codigo } });
+        if (produtoExistente) {
+            throw new Error("Já existe outro produto cadastrado com este ID.");
+        }
+    }
+
+    const dadosAtualizados = {
+        codigo: codigo || produto.codigo,
+        nome: nome || produto.nome,
+        preco: preco || produto.preco,
+        categoria: categoria || produto.categoria,
+        quantidade: quantidade || produto.quantidade,
+        descricao: descricao || produto.descricao,
+    };
+
+    if (imagem) {
+        dadosAtualizados.imagem = imagem;
+    }
+
+    await produto.update(dadosAtualizados);
+
+    return produto;
+};

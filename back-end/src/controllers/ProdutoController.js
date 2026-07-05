@@ -1,4 +1,4 @@
-import { criarProdutoService, listarProdutosService, ocultarProdutoService } from "../services/ProdutoService.js";
+import { criarProdutoService, listarProdutosService, ocultarProdutoService, atualizarProdutoService } from "../services/ProdutoService.js";
 
 export const criarProduto = async (req, res) => {
     try {
@@ -36,10 +36,34 @@ export const listarProdutos = async (req, res) => {
 export const ocultarProduto = async (req, res) => {
     try {
         const { id } = req.params;
-
         await ocultarProdutoService(id);
-
         return res.status(200).json({ mensagem: "Produto ocultado com sucesso!" });
+    } catch (erro) {
+        return res.status(400).json({ erro: erro.message });
+    }
+};
+
+export const atualizarProduto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { codigo, nome, preco, categoria, quantidade, descricao } = req.body;
+        const imagem = req.file ? req.file.filename : null;
+
+        const produtoAtualizado = await atualizarProdutoService(
+            id,
+            codigo,
+            nome,
+            preco,
+            categoria,
+            quantidade,
+            descricao,
+            imagem
+        );
+
+        return res.status(200).json({
+            mensagem: "Produto atualizado com sucesso!",
+            produto: produtoAtualizado
+        });
     } catch (erro) {
         return res.status(400).json({ erro: erro.message });
     }

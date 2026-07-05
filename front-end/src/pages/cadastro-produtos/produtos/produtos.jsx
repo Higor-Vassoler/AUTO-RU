@@ -5,6 +5,7 @@ import ProdutosSalvos from "../produtos-salvos/produtos-salvos.jsx";
 
 export default function Produtos() {
   const [produtos, setProdutos] = useState([]);
+  const [produtoEmEdicao, setProdutoEmEdicao] = useState(null);
 
   async function carregarProdutos() {
     try {
@@ -22,25 +23,39 @@ export default function Produtos() {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     carregarProdutos();
   }, []);
+
+  function handleEditarProduto(produto) {
+    setProdutoEmEdicao(produto);
+
+    document.getElementById("cadastrar-produto")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
 
   return (
     <Layout>
       <div className="page-header">
-        <h1>Cadastrar produto</h1>
+        <h1>{produtoEmEdicao ? "Editar produto" : "Cadastrar produto"}</h1>
         <p>
-          Preencha as informações abaixo para adicionar um novo produto ao
-          catálogo.
+          {produtoEmEdicao
+            ? "Altere as informações abaixo para atualizar o produto no catálogo."
+            : "Preencha as informações abaixo para adicionar um novo produto ao catálogo."}
         </p>
       </div>
 
-      <InformacoesProduto onProdutoSalvo={carregarProdutos} />
+      <InformacoesProduto
+        onProdutoSalvo={carregarProdutos}
+        produtoEmEdicao={produtoEmEdicao}
+        setProdutoEmEdicao={setProdutoEmEdicao}
+      />
 
       <ProdutosSalvos
         produtos={produtos}
         onProdutoDeletado={carregarProdutos}
+        onEdit={handleEditarProduto}
       />
     </Layout>
   );
