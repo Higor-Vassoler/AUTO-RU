@@ -8,7 +8,7 @@ import ProdutoCard from "../../components/produto-card/produto-card.jsx";
 import ProdutoItem from "../../components/produto-item/produto-item.jsx";
 import ModalProduto from "../../components/modal-produtos/modal-produtos.jsx";
 import Paginacao from "../../components/paginacao/paginacao.jsx";
-import { CartContext } from "../../context/CartContext.jsx";
+import { CartContext } from "../../context/cart-context.js";
 
 export default function Catalogo() {
   const [produtos, setProdutos] = useState([]);
