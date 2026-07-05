@@ -2,7 +2,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
 
-export default function InformacoesProduto({ onProdutoSalvo }) {
+export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, setProdutoEmEdicao }) {
   const [nome, setNome] = useState("");
   const [codigo, setCodigo] = useState("");
   const [preco, setPreco] = useState("");
@@ -13,11 +13,30 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
   const [imagemArquivo, setImagemArquivo] = useState(null);
   const [productImage, setProductImage] = useState(null);
 
+  useEffect(() => {
+    if (produtoEmEdicao) {
+      setNome(produtoEmEdicao.nome || "");
+      setCodigo(produtoEmEdicao.codigo || "");
+      setPreco(produtoEmEdicao.preco || "");
+      setCategoria(produtoEmEdicao.categoria || "");
+      setQuantidade(produtoEmEdicao.quantidade || "");
+      setDescricao(produtoEmEdicao.descricao || "");
+
+      if (produtoEmEdicao.imagem) {
+        setProductImage(`http://localhost:5000/uploads/${produtoEmEdicao.imagem}`);
+      } else {
+        setProductImage(null);
+      }
+    } else {
+      limparCampos();
+    }
+  }, [produtoEmEdicao]);
+
   function handleImageChange(event) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    if (productImage) {
+    if (productImage && !produtoEmEdicao?.imagem) {
       URL.revokeObjectURL(productImage);
     }
 
@@ -25,10 +44,7 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
     setProductImage(URL.createObjectURL(file));
   }
 
-  function handleReset() {
-    if (productImage) {
-      URL.revokeObjectURL(productImage);
-    }
+  function limparCampos() {
     setNome("");
     setCodigo("");
     setPreco("");
@@ -39,13 +55,12 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
     setProductImage(null);
   }
 
-  useEffect(() => {
-    return () => {
-      if (productImage) {
-        URL.revokeObjectURL(productImage);
-      }
-    };
-  }, [productImage]);
+  function handleReset() {
+    limparCampos();
+    if (setProdutoEmEdicao) {
+      setProdutoEmEdicao(null);
+    }
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -63,22 +78,28 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/produtos", {
-        method: "POST",
+      const url = produtoEmEdicao
+        ? `http://localhost:5000/api/produtos/${produtoEmEdicao.id}`
+        : "http://localhost:5000/api/produtos";
+
+      const metodo = produtoEmEdicao ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method: metodo,
         body: formData,
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Produto cadastrado com sucesso!");
+        alert(produtoEmEdicao ? "Produto atualizado com sucesso!" : "Produto cadastrado com sucesso!");
         handleReset();
 
         if (onProdutoSalvo) {
           onProdutoSalvo();
         }
       } else {
-        alert("Erro ao cadastrar: " + (data.erro || "Verifique os dados."));
+        alert("Erro: " + (data.erro || "Verifique os dados."));
       }
     } catch (error) {
       console.error("Erro na requisição:", error);
@@ -94,7 +115,7 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
         </div>
         <div>
           <h2>Informações do produto</h2>
-          <p>Informe os dados do produto que será cadastrado.</p>
+          <p>Informe os dados do produto que será {produtoEmEdicao ? "atualizado" : "cadastrado"}.</p>
         </div>
       </div>
 
@@ -153,7 +174,7 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
                 <label>Quantidade *</label>
                 <input
                   type="number"
-                  min="1"
+                  min="0"
                   placeholder="Ex.: 50"
                   value={quantidade}
                   onChange={(e) => setQuantidade(e.target.value)}
@@ -218,7 +239,7 @@ export default function InformacoesProduto({ onProdutoSalvo }) {
           </button>
           <button type="submit" className="btn-save">
             <Save size={18} />
-            Salvar
+            {produtoEmEdicao ? "Atualizar" : "Salvar"}
           </button>
         </div>
       </form>

@@ -1,7 +1,7 @@
 import "./style.css";
 import { Pencil, Trash2 } from "lucide-react";
 
-export default function ProdutosSalvos({ produtos, onProdutoDeletado }) {
+export default function ProdutosSalvos({ produtos, onProdutoDeletado, onEdit }) {
   async function handleDelete(id, nome) {
     const confirmar = window.confirm(`Deseja realmente remover o produto "${nome}"?`);
     if (!confirmar) return;
@@ -18,12 +18,11 @@ export default function ProdutosSalvos({ produtos, onProdutoDeletado }) {
           onProdutoDeletado();
         }
       } else {
-        console.error("Erro reportado pelo backend:", data);
         alert(`Erro do backend: ${data.erro || data.message || "Erro desconhecido"}`);
       }
     } catch (error) {
       console.error("Erro no momento do fetch:", error);
-      alert("Erro na comunicação com o servidor. Abra o console (F12) para ver.");
+      alert("Erro na comunicação com o servidor.");
     }
   }
 
@@ -54,14 +53,14 @@ export default function ProdutosSalvos({ produtos, onProdutoDeletado }) {
             ) : (
               produtos.map((produto) => (
                 <tr key={produto.id}>
-                  <td>{produto.id}</td>
+                  <td>{produto.codigo}</td>
                   <td>{produto.nome}</td>
                   <td>{produto.categoria}</td>
-                  <td>R$ {produto.preco}</td>
+                  <td>R$ {parseFloat(produto.preco).toFixed(2)}</td>
                   <td>{produto.quantidade}</td>
 
                   <td className="actions-column">
-                    <button className="edit-btn">
+                    <button className="edit-btn" onClick={() => onEdit(produto)}>
                       <Pencil size={16} />
                     </button>
 

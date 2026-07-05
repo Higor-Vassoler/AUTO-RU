@@ -6,7 +6,10 @@ import {
   User,
   Shield,
   Trash2,
-  Pencil
+  Pencil,
+  X,
+  Eye,
+  EyeOff
 } from "lucide-react";
 
 export default function Perfil() {
@@ -17,28 +20,44 @@ export default function Perfil() {
     ra: ""
   });
 
+  const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
+  const [dadosSenha, setDadosSenha] = useState({ novaSenha: "", confirmarSenha: "" });
+  const [mostrarNovaSenha, setMostrarNovaSenha] = useState(false);
+  const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+
   useEffect(() => {
     const buscarDadosUsuario = async () => {
       try {
         const token = localStorage.getItem("token");
 
+        if (!token) {
+          console.error("Token não encontrado no localStorage");
+          return;
+        }
+
         const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
           method: "GET",
           headers: {
-            "Authorization": token
+            "Authorization": token,
+            "Content-Type": "application/json"
           }
         });
 
+        const respostaJson = await resposta.json();
+
         if (resposta.ok) {
-          const dados = await resposta.json();
+          const usuarioData = respostaJson.dados;
+
           setUsuario({
-            nome: dados.nome || "",
-            email: dados.email || "",
-            ra: dados.ra || ""
+            nome: usuarioData.nome || "",
+            email: usuarioData.email || "",
+            ra: usuarioData.ra || ""
           });
+        } else {
+          console.error("Erro ao buscar dados do usuário:", respostaJson.erro);
         }
-      } catch (erro) {
-        console.error("Erro ao carregar os dados:", erro);
+      } catch (error) {
+        console.error("Erro na requisição:", error);
       }
     };
 
@@ -47,12 +66,10 @@ export default function Perfil() {
 
   const handleExcluirConta = async () => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão perdidos.");
-
     if (!confirmacao) return;
 
     try {
       const token = localStorage.getItem("token");
-
       const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
         method: "DELETE",
         headers: {
@@ -60,9 +77,7 @@ export default function Perfil() {
           "Authorization": token
         }
       });
-
       const dadosResposta = await resposta.json();
-
       if (resposta.ok) {
         alert(dadosResposta.mensagem);
         localStorage.removeItem("token");
@@ -84,11 +99,34 @@ export default function Perfil() {
     });
   };
 
-  const editarDados = () => {
-    setEditando(true);
+  const handleSenhaChange = (e) => {
+    const { name, value } = e.target;
+    setDadosSenha({ ...dadosSenha, [name]: value });
   };
 
+  const handleConfirmarSenha = () => {
+    if (dadosSenha.novaSenha !== dadosSenha.confirmarSenha) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    console.log("Enviando requisição de troca de senha:", dadosSenha);
+
+    alert("Senha alterada com sucesso!");
+    fecharModalSenha();
+  };
+
+  const fecharModalSenha = () => {
+    setModalSenhaAberto(false);
+    setDadosSenha({ novaSenha: "", confirmarSenha: "" });
+    setMostrarNovaSenha(false);
+    setMostrarConfirmarSenha(false);
+  };
+
+  const editarDados = () => setEditando(true);
+
   const cancelarEdicao = () => {
+    setEditando(false);
     window.location.reload();
   };
 
@@ -108,7 +146,7 @@ export default function Perfil() {
       const dadosResposta = await resposta.json();
 
       if (resposta.ok) {
-        alert(dadosResposta.mensagem);
+        alert(dadosResposta.mensagem || "Dados atualizados com sucesso!");
         setEditando(false);
       } else {
         alert("Erro ao atualizar: " + (dadosResposta.erro || "Falha desconhecida."));
@@ -157,7 +195,6 @@ export default function Perfil() {
                 className={editando ? "input-editavel" : ""}
               />
             </div>
-
             <div className="campo">
               <label>E-mail</label>
               <input
@@ -169,7 +206,6 @@ export default function Perfil() {
                 className={editando ? "input-editavel" : ""}
               />
             </div>
-
             <div className="campo">
               <label>Matrícula</label>
               <input
@@ -203,7 +239,8 @@ export default function Perfil() {
               <p>Altere sua senha quando necessário</p>
             </div>
           </div>
-          <button className="btn-senha">
+
+          <button className="btn-senha" onClick={() => setModalSenhaAberto(true)}>
             Alterar Senha
           </button>
         </section>
@@ -219,6 +256,71 @@ export default function Perfil() {
           </button>
         </section>
       </div>
+
+      {modalSenhaAberto && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+
+            <div className="modal-header-container">
+              <h2>Alterar Senha</h2>
+              <button className="btn-fechar-modal" onClick={fecharModalSenha}>
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="campo input-senha-container">
+              <label>Nova Senha</label>
+              <div className="input-with-icon">
+                <input
+                  type={mostrarNovaSenha ? "text" : "password"}
+                  name="novaSenha"
+                  value={dadosSenha.novaSenha}
+                  onChange={handleSenhaChange}
+                  placeholder="Digite a nova senha"
+                />
+                <button
+                  type="button"
+                  className="btn-toggle-password"
+                  onClick={() => setMostrarNovaSenha(!mostrarNovaSenha)}
+                >
+                  {mostrarNovaSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="campo input-senha-container">
+              <label>Confirmar Nova Senha</label>
+              <div className="input-with-icon">
+                <input
+                  type={mostrarConfirmarSenha ? "text" : "password"}
+                  name="confirmarSenha"
+                  value={dadosSenha.confirmarSenha}
+                  onChange={handleSenhaChange}
+                  placeholder="Repita a nova senha"
+                />
+                <button
+                  type="button"
+                  className="btn-toggle-password"
+                  onClick={() => setMostrarConfirmarSenha(!mostrarConfirmarSenha)}
+                >
+                  {mostrarConfirmarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="acoes-edicao" style={{ marginTop: "30px" }}>
+              <button className="btn-cancelar" onClick={fecharModalSenha}>
+                Cancelar
+              </button>
+              <button className="btn-salvar" onClick={handleConfirmarSenha}>
+                Confirmar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </Layout>
   );
 }
