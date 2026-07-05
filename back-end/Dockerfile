@@ -10,4 +10,8 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["npm", "run", "dev"]
+COPY entrypoint.sh .
+
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
