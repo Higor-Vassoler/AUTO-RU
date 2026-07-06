@@ -43,7 +43,7 @@ export default function Usuarios() {
       nome: novoUsuario.nome,
       email: novoUsuario.email,
       matricula: novoUsuario.matricula,
-      permissao: "Usuário",
+      permissao: "Usuário",   
     };
     
     setUsuarios([...usuarios, novoUsuarioCompleto]);
