@@ -15,7 +15,7 @@ export default function Usuarios() {
   const [busca, setBusca] = useState("");
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [novoUsuario, setNovoUsuario] = useState({
+  const [novoUsuario, setNovoUsuario] = useState({ 
     nome: "",
     email: "",
     matricula: "",
@@ -86,7 +86,7 @@ export default function Usuarios() {
             <input
               type="text"
               className="usuarios-search-input"
-              placeholder="Pesquisar usuários por nome, e-mail ou matrícula..."
+              placeholder="Pesquisar usuários por nome, e-mail ou matrícula"
               value={busca}
               onChange={handleBuscar}
             />
