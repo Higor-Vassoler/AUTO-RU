@@ -323,3 +323,19 @@
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.input-group select {
+  padding: 10px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background-color: #fff;
+  transition: border-color 0.2s;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.input-group select:focus {
+  border-color: #E0A800;
+  box-shadow: 0 0 0 2px rgba(224, 168, 0, 0.1);
+}
