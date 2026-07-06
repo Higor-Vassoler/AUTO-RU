@@ -116,7 +116,7 @@ export default function Usuarios() {
             <input
               type="text"
               className="usuarios-search-input"
-              placeholder="Pesquisar usuários por nome, e-mail ou matrícula..."
+              placeholder="Pesquisar usuários por nome, e-mail ou matrícula"
               value={busca}
               onChange={handleBuscar}
             />
