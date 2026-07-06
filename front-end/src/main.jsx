@@ -61,8 +61,7 @@ createRoot(document.getElementById("root")).render(
             path="/finaliza"
             element={
               <RotaProtegida>
-                {" "}
-                <Checkout />{" "}
+                <Checkout />
               </RotaProtegida>
             }
           />

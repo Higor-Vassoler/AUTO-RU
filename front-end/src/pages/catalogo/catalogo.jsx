@@ -31,18 +31,24 @@ export default function Catalogo() {
         const data = await response.json();
 
         if (response.ok) {
-          const produtosAdaptados = data.map((produto) => ({
-            ...produto,
-            id_produto: produto.id,
-            preco_unitario: produto.preco ? parseFloat(produto.preco) : 0.0,
-            quantidade_estoque:
-              produto.quantidade !== undefined ? produto.quantidade : 0,
-            imagem: produto.imagem
-              ? `http://localhost:5000/uploads/${produto.imagem}`
-              : null,
-          }));
+          const listaDeProdutos = data.dados || data;
 
-          setProdutos(produtosAdaptados);
+          if (Array.isArray(listaDeProdutos)) {
+            const produtosAdaptados = listaDeProdutos.map((produto) => ({
+              ...produto,
+              id_produto: produto.id,
+              preco_unitario: produto.preco ? parseFloat(produto.preco) : 0.0,
+              quantidade_estoque:
+                produto.quantidade !== undefined ? produto.quantidade : 0,
+              imagem: produto.imagem
+                ? `http://localhost:5000/uploads/${produto.imagem}`
+                : null,
+            }));
+
+            setProdutos(produtosAdaptados);
+          } else {
+            console.error("O backend não retornou uma lista válida de produtos.");
+          }
         } else {
           console.error("Erro ao buscar catálogo:", data.erro);
         }
