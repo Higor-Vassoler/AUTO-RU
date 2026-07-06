@@ -10,7 +10,9 @@
     "db:migrate": "cd back-end && npx sequelize-cli db:migrate",
     "db:seed": "cd back-end && npx sequelize-cli db:seed:all",
     "db:reset": "cd back-end && npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
-    "db:criar-admin": "cd back-end && npx sequelize-cli seed:generate --name criar-usuario-admin"
+    "db:criar-admin": "cd back-end && npx sequelize-cli seed:generate --name criar-usuario-admin",
+    "build": "docker compose up --build",
+    "down": "docker compose down"
   },
   "repository": {
     "type": "git",
