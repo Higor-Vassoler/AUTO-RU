@@ -47,8 +47,8 @@ export default function Login() {
 
       const storage = lembrarMim ? localStorage : sessionStorage;
 
-      localStorage.setItem("token", dadosResposta.dados.token);
-      localStorage.setItem("is_admin", dadosResposta.dados.is_admin);
+      storage.setItem("token", dadosResposta.dados.token);
+      storage.setItem("is_admin", dadosResposta.dados.is_admin);
 
       alert("Bem-vindo!");
       navigate("/catalogo");
