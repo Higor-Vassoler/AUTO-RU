@@ -1,8 +1,12 @@
-import "./style.css";
 import { useState, useEffect } from "react";
+import "./informacoes-produto.css";
 import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
 
-export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, setProdutoEmEdicao }) {
+export default function InformacoesProduto({
+  onProdutoSalvo,
+  produtoEmEdicao,
+  setProdutoEmEdicao,
+}) {
   const [nome, setNome] = useState("");
   const [codigo, setCodigo] = useState("");
   const [preco, setPreco] = useState("");
@@ -23,7 +27,9 @@ export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, se
       setDescricao(produtoEmEdicao.descricao || "");
 
       if (produtoEmEdicao.imagem) {
-        setProductImage(`http://localhost:5000/uploads/${produtoEmEdicao.imagem}`);
+        setProductImage(
+          `http://localhost:5000/uploads/${produtoEmEdicao.imagem}`,
+        );
       } else {
         setProductImage(null);
       }
@@ -92,7 +98,11 @@ export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, se
       const data = await response.json();
 
       if (response.ok) {
-        alert(produtoEmEdicao ? "Produto atualizado com sucesso!" : "Produto cadastrado com sucesso!");
+        alert(
+          produtoEmEdicao
+            ? "Produto atualizado com sucesso!"
+            : "Produto cadastrado com sucesso!",
+        );
         handleReset();
 
         if (onProdutoSalvo) {
@@ -115,7 +125,10 @@ export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, se
         </div>
         <div>
           <h2>Informações do produto</h2>
-          <p>Informe os dados do produto que será {produtoEmEdicao ? "atualizado" : "cadastrado"}.</p>
+          <p>
+            Informe os dados do produto que será{" "}
+            {produtoEmEdicao ? "atualizado" : "cadastrado"}.
+          </p>
         </div>
       </div>
 
@@ -161,7 +174,11 @@ export default function InformacoesProduto({ onProdutoSalvo, produtoEmEdicao, se
 
               <div className="field">
                 <label>Categoria *</label>
-                <select value={categoria} onChange={(e) => setCategoria(e.target.value)} required>
+                <select
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                  required
+                >
                   <option value="">Selecione a categoria</option>
                   <option value="Bebidas">Bebidas</option>
                   <option value="Lanches">Lanches</option>
