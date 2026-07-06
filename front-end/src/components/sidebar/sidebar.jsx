@@ -1,7 +1,7 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { User, Package, ShoppingBag, LogOut, Headphones } from "lucide-react";
+import { User, Users, Package, ShoppingBag, LogOut, Headphones } from "lucide-react";
 
 export default function Sidebar() {
   const [activeSection, setActiveSection] = useState("cadastrar-produto");
@@ -117,6 +117,16 @@ export default function Sidebar() {
         >
           <ShoppingBag size={24} className="nav-icon" />
           <span className="nav-label">Minhas Compras</span>
+        </NavLink>
+
+        <NavLink
+          to="/usuarios"
+          className={({ isActive }) =>
+            isActive ? "nav-item nav-item--active" : "nav-item"
+          }
+        >
+          <Users size={24} className="nav-icon" />
+          <span className="nav-label">Usuários</span>
         </NavLink>
 
         <div className="divider" />
