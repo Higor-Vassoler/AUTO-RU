@@ -16,6 +16,7 @@ import ContatoRU from "./pages/contato/contato.jsx";
 import CardapioRU from "./pages/cardapio/cardapio.jsx";
 import MinhasCompras from "./pages/minhas-compras/minhas-compras.jsx";
 import Checkout from "./pages/finaliza/finaliza.jsx";
+import Usuarios from "./pages/usuarios/usuarios.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -62,6 +63,14 @@ createRoot(document.getElementById("root")).render(
             element={
               <RotaProtegida>
                 <Checkout />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/usuarios"
+            element={
+              <RotaProtegida>
+                <Usuarios />
               </RotaProtegida>
             }
           />
