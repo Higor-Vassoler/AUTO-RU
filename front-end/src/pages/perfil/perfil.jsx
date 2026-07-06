@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../components/layout/layout";
 import "./style.css";
 
@@ -14,21 +14,56 @@ import {
 
 export default function Perfil() {
   const [editando, setEditando] = useState(false);
-
   const [usuario, setUsuario] = useState({
-    nome: "Eduardo Cordeiro",
-    email: "eduardo@gmail.com",
-    telefone: "(44) 99999-9999"
+    nome: "",
+    email: "",
+    ra: ""
   });
 
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
-  const [dadosSenha, setDadosSenha] = useState({
-    novaSenha: "",
-    confirmarSenha: ""
-  });
-
+  const [dadosSenha, setDadosSenha] = useState({ novaSenha: "", confirmarSenha: "" });
   const [mostrarNovaSenha, setMostrarNovaSenha] = useState(false);
   const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+
+  useEffect(() => {
+    const buscarDadosUsuario = async () => {
+      try {
+        let token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("Token não encontrado");
+          return;
+        }
+
+        token = token.replace(/^Bearer\s+/, "").replace(/^"(.*)"$/, '$1');
+
+        const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
+          method: "GET",
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json"
+          }
+        });
+
+        const respostaJson = await resposta.json();
+
+        if (resposta.ok) {
+          const usuarioData = respostaJson.dados || respostaJson;
+          setUsuario({
+            nome: usuarioData.nome || "",
+            email: usuarioData.email || "",
+            ra: usuarioData.ra || ""
+          });
+        } else {
+          console.error("Erro:", respostaJson.erro || respostaJson.mensagem);
+        }
+      } catch (erro) {
+        console.error("Erro ao carregar os dados:", erro);
+      }
+    };
+
+    buscarDadosUsuario();
+  }, []);
 
   const handleExcluirConta = async () => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão perdidos.");
@@ -67,34 +102,99 @@ export default function Perfil() {
 
   const handleSenhaChange = (e) => {
     const { name, value } = e.target;
-    setDadosSenha({ ...dadosSenha, [name]: value });
+    setDadosSenha({
+      ...dadosSenha,
+      [name]: value,
+    });
   };
 
-  const handleConfirmarSenha = () => {
-    if (dadosSenha.novaSenha !== dadosSenha.confirmarSenha) {
-      alert("As senhas não coincidem!");
+  const handleConfirmarSenha = async () => {
+    const { novaSenha, confirmarSenha } = dadosSenha;
+
+    // Validações básicas no front-end antes de enviar
+    if (!novaSenha || !confirmarSenha) {
+      alert("Por favor, preencha todos os campos.");
       return;
     }
-    
-    console.log("Enviando requisição de troca de senha:", dadosSenha);
-    
-    alert("Senha alterada com sucesso!");
-    fecharModalSenha();
+
+    if (novaSenha !== confirmarSenha) {
+      alert("As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const resposta = await fetch("http://localhost:5000/api/usuarios/me/senha", {
+        method: "PUT",
+        headers: {
+          "Authorization": token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ novaSenha }),
+      });
+
+      const dadosResposta = await resposta.json();
+
+      if (resposta.ok) {
+        alert("Senha alterada com sucesso!");
+        fecharModalSenha();
+      } else {
+        // Exibe o erro retornado pelo back-end (ex: senha fraca)
+        alert(dadosResposta.erro || "Erro ao alterar a senha.");
+      }
+    } catch (erro) {
+      console.error("Erro ao alterar senha:", erro);
+      alert("Erro de conexão com o servidor.");
+    }
   };
 
   const fecharModalSenha = () => {
     setModalSenhaAberto(false);
-    setDadosSenha({ novaSenha: "", confirmarSenha: "" }); 
-    setMostrarNovaSenha(false);
-    setMostrarConfirmarSenha(false);
+    setDadosSenha({ novaSenha: "", confirmarSenha: "" });
   };
 
   const editarDados = () => setEditando(true);
-  const cancelarEdicao = () => setEditando(false);
-  const salvarDados = () => {
-    console.log("Dados atualizados:", usuario);
-    alert("Dados atualizados com sucesso!");
+
+  const cancelarEdicao = () => {
     setEditando(false);
+    window.location.reload();
+  };
+
+  const salvarDados = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Sessão expirada. Faça login novamente.");
+        return;
+      }
+
+      const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        },
+        body: JSON.stringify({
+          nome: usuario.nome,
+          email: usuario.email,
+          ra: usuario.ra
+        })
+      });
+
+      const respostaJson = await resposta.json();
+
+      if (resposta.ok) {
+        alert(respostaJson.mensagem || "Dados atualizados com sucesso!");
+        setEditando(false);
+      } else {
+        alert("Erro ao atualizar: " + (respostaJson.erro || "Verifique os dados."));
+      }
+    } catch (erro) {
+      console.error("Erro na requisição:", erro);
+      alert("Não foi possível conectar ao servidor.");
+    }
   };
 
   return (
@@ -132,6 +232,7 @@ export default function Perfil() {
                 value={usuario.nome}
                 onChange={handleChange}
                 readOnly={!editando}
+                className={editando ? "input-editavel" : ""}
               />
             </div>
             <div className="campo">
@@ -142,16 +243,18 @@ export default function Perfil() {
                 value={usuario.email}
                 onChange={handleChange}
                 readOnly={!editando}
+                className={editando ? "input-editavel" : ""}
               />
             </div>
             <div className="campo">
-              <label>Telefone</label>
+              <label>Matrícula</label>
               <input
                 type="text"
-                name="telefone"
-                value={usuario.telefone}
+                name="ra"
+                value={usuario.ra}
                 onChange={handleChange}
                 readOnly={!editando}
+                className={editando ? "input-editavel" : ""}
               />
             </div>
           </div>
@@ -192,13 +295,12 @@ export default function Perfil() {
             Excluir Conta
           </button>
         </section>
-
       </div>
 
       {modalSenhaAberto && (
         <div className="modal-overlay">
           <div className="modal-content">
-            
+
             <div className="modal-header-container">
               <h2>Alterar Senha</h2>
               <button className="btn-fechar-modal" onClick={fecharModalSenha}>
@@ -209,16 +311,16 @@ export default function Perfil() {
             <div className="campo input-senha-container">
               <label>Nova Senha</label>
               <div className="input-with-icon">
-                <input 
+                <input
                   type={mostrarNovaSenha ? "text" : "password"}
-                  name="novaSenha" 
-                  value={dadosSenha.novaSenha} 
-                  onChange={handleSenhaChange} 
+                  name="novaSenha"
+                  value={dadosSenha.novaSenha}
+                  onChange={handleSenhaChange}
                   placeholder="Digite a nova senha"
                 />
-                <button 
+                <button
                   type="button"
-                  className="btn-toggle-password" 
+                  className="btn-toggle-password"
                   onClick={() => setMostrarNovaSenha(!mostrarNovaSenha)}
                 >
                   {mostrarNovaSenha ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -229,16 +331,16 @@ export default function Perfil() {
             <div className="campo input-senha-container">
               <label>Confirmar Nova Senha</label>
               <div className="input-with-icon">
-                <input 
+                <input
                   type={mostrarConfirmarSenha ? "text" : "password"}
-                  name="confirmarSenha" 
-                  value={dadosSenha.confirmarSenha} 
-                  onChange={handleSenhaChange} 
+                  name="confirmarSenha"
+                  value={dadosSenha.confirmarSenha}
+                  onChange={handleSenhaChange}
                   placeholder="Repita a nova senha"
                 />
-                <button 
+                <button
                   type="button"
-                  className="btn-toggle-password" 
+                  className="btn-toggle-password"
                   onClick={() => setMostrarConfirmarSenha(!mostrarConfirmarSenha)}
                 >
                   {mostrarConfirmarSenha ? <EyeOff size={20} /> : <Eye size={20} />}

@@ -1,4 +1,4 @@
-import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService } from "../services/UsuarioService.js";
+import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService, alterarSenhaService } from "../services/UsuarioService.js";
 import { ResponseFactory } from "../utils/ResponseFactory.js";
 
 // CREATE
@@ -61,6 +61,53 @@ export const deletarConta = async (req, res) => {
         await deletarUsuarioService(id);
 
         return ResponseFactory.sucesso(res, "Conta excluída com sucesso.");
+    } catch (erro) {
+        return ResponseFactory.erro(res, erro.message);
+    }
+};
+
+// BUSCAR MEUS DADOS
+export const buscarMeusDados = async (req, res) => {
+    try {
+        const id = req.id_usuario;
+        const usuario = await buscarUsuarioPorIdService(id);
+
+        return ResponseFactory.sucesso(res, "Dados do usuário buscados com sucesso.", usuario);
+    } catch (erro) {
+        return ResponseFactory.erro(res, erro.message, 404);
+    }
+};
+
+// ATUALIZAR CONTA
+export const atualizarConta = async (req, res) => {
+    try {
+        const id = req.id_usuario;
+        const { nome, email, ra } = req.body;
+
+        const usuarioAtualizado = await atualizarUsuarioService(id, { nome, email, ra });
+
+        return res.status(200).json({
+            mensagem: "Dados atualizados com sucesso!",
+            usuario: usuarioAtualizado
+        });
+    } catch (erro) {
+        return res.status(400).json({ erro: erro.message });
+    }
+};
+
+// ALTERAR SENHA
+export const alterarSenha = async (req, res) => {
+    try {
+        const id = req.id_usuario;
+        const { novaSenha } = req.body;
+
+        if (!novaSenha) {
+            return ResponseFactory.erro(res, "A nova senha é obrigatória.");
+        }
+
+        await alterarSenhaService(id, novaSenha);
+
+        return ResponseFactory.sucesso(res, "Senha alterada com sucesso.");
     } catch (erro) {
         return ResponseFactory.erro(res, erro.message);
     }

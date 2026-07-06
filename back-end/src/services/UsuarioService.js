@@ -57,3 +57,60 @@ export const deletarUsuarioService = async (id) => {
 
     return true;
 };
+
+export const buscarUsuarioPorIdService = async (id) => {
+    const usuario = await Usuario.findByPk(id, {
+        attributes: ['id', 'nome', 'email', 'ra']
+    });
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    return usuario;
+};
+
+export const atualizarUsuarioService = async (id, dadosAtualizados) => {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    if (dadosAtualizados.email && dadosAtualizados.email !== usuario.email) {
+        const emailExistente = await Usuario.findOne({ where: { email: dadosAtualizados.email } });
+        if (emailExistente) {
+            throw new Error("Este e-mail já está em uso por outra conta.");
+        }
+    }
+
+    await usuario.update({
+        nome: dadosAtualizados.nome || usuario.nome,
+        email: dadosAtualizados.email || usuario.email,
+        ra: dadosAtualizados.ra || usuario.ra
+    });
+
+    return {
+        id: usuario.id,
+        nome: usuario.nome,
+        email: usuario.email,
+        ra: usuario.ra
+    };
+};
+
+export const alterarSenhaService = async (id, novaSenha) => {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    const regexSenha = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!regexSenha.test(novaSenha)) {
+        throw new Error("Sua nova senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
+    }
+
+    await usuario.update({ senha: novaSenha });
+
+    return true;
+};
