@@ -4,55 +4,85 @@ import Layout from "../../components/layout/layout.jsx";
 import "./usuarios.css";
 
 const usuariosIniciais = [
-  { id: 1, nome: "Admin Geral", email: "admin@admin.com", matricula: "999999", permissao: "Administrador" },
-  { id: 2, nome: "João Silva", email: "joao.silva@alunos.utfpr.edu.br", matricula: "231045", permissao: "Usuário" },
-  { id: 3, nome: "Maria Souza", email: "maria.souza@utfpr.edu.br", matricula: "104857", permissao: "Editor" },
-  { id: 4, nome: "Carlos Eduardo", email: "cadu@alunos.utfpr.edu.br", matricula: "241022", permissao: "Usuário" },
+  { id: 1, nome: "Admin", email: "admin@admin.com", matricula: "999999", permissao: "Administrador" },
+  { id: 2, nome: "Usuario 1", email: "usuario1@alunos.utfpr.edu.br", matricula: "231045", permissao: "Usuário" },
+  { id: 3, nome: "Usuario 2", email: "usuario2@utfpr.edu.br", matricula: "104857", permissao: "Usuário" },
+  { id: 4, nome: "Usuario 3", email: "usuario3@alunos.utfpr.edu.br", matricula: "241022", permissao: "Usuário" },
 ];
 
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState(usuariosIniciais);
   const [busca, setBusca] = useState("");
   
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [novoUsuario, setNovoUsuario] = useState({
+  // Controle de Modais: null | 'cadastro' | 'edicao' | 'permissao'
+  const [modalAberto, setModalAberto] = useState(null); 
+  
+  // Estado para armazenar os dados do formulário atual
+  const [usuarioAtual, setUsuarioAtual] = useState({
+    id: null,
     nome: "",
     email: "",
     matricula: "",
     senha: "",
+    permissao: "Usuário"
   });
 
   const handleBuscar = (e) => setBusca(e.target.value);
 
-  const abrirModal = () => setIsModalOpen(true);
+  // Abertura e Fechamento de Modais
   const fecharModal = () => {
-    setIsModalOpen(false);
-    setNovoUsuario({ nome: "", email: "", matricula: "", senha: "" }); 
+    setModalAberto(null);
+    setUsuarioAtual({ id: null, nome: "", email: "", matricula: "", senha: "", permissao: "Usuário" });
   };
 
+  const abrirModalCadastro = () => {
+    setUsuarioAtual({ id: null, nome: "", email: "", matricula: "", senha: "", permissao: "Usuário" });
+    setModalAberto("cadastro");
+  };
+
+  const abrirModalEdicao = (user) => {
+    setUsuarioAtual({ ...user, senha: "" }); // Carrega dados do usuário (senha vazia por segurança)
+    setModalAberto("edicao");
+  };
+
+  const abrirModalPermissao = (user) => {
+    // Se o usuário tiver permissões diferentes (ex: Editor), forçamos pro fallback ou mantém Adm/Usuário
+    setUsuarioAtual(user);
+    setModalAberto("permissao");
+  };
+
+  // Lida com a digitação nos inputs
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNovoUsuario((prev) => ({ ...prev, [name]: value }));
+    setUsuarioAtual((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitCadastro = (e) => {
+  // Submissões de Formulário unificadas
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const novoUsuarioCompleto = {
-      id: Date.now(),
-      nome: novoUsuario.nome,
-      email: novoUsuario.email,
-      matricula: novoUsuario.matricula,
-      permissao: "Usuário",
-    };
-    
-    setUsuarios([...usuarios, novoUsuarioCompleto]);
+    if (modalAberto === "cadastro") {
+      const novoUsuario = {
+        id: Date.now(),
+        nome: usuarioAtual.nome,
+        email: usuarioAtual.email,
+        matricula: usuarioAtual.matricula,
+        permissao: "Usuário", 
+      };
+      setUsuarios([...usuarios, novoUsuario]);
+
+    } else if (modalAberto === "edicao" || modalAberto === "permissao") {
+      setUsuarios(
+        usuarios.map((u) => 
+          u.id === usuarioAtual.id 
+            ? { ...u, nome: usuarioAtual.nome, email: usuarioAtual.email, matricula: usuarioAtual.matricula, permissao: usuarioAtual.permissao } 
+            : u
+        )
+      );
+    }
     fecharModal();
   };
 
-  const handleEditarDados = (id) => alert(`Ação: Editar dados do usuário ID: ${id}`);
-  const handlePermissoes = (id) => alert(`Ação: Alterar permissões do usuário ID: ${id}`);
-  
   const handleExcluir = (id) => {
     if (window.confirm("Tem certeza que deseja excluir este usuário definitivamente?")) {
       setUsuarios(usuarios.filter((user) => user.id !== id));
@@ -74,7 +104,7 @@ export default function Usuarios() {
             <h1 className="usuarios-page-title">Gerenciamento de Usuários</h1>
             <p className="usuarios-page-subtitle">Visualize, cadastre e gerencie as permissões dos usuários do RU.</p>
           </div>
-          <button className="btn-primary-yellow" onClick={abrirModal}>
+          <button className="btn-primary-yellow" onClick={abrirModalCadastro}>
             <UserPlus size={16} />
             Cadastrar Novo Usuário
           </button>
@@ -86,7 +116,7 @@ export default function Usuarios() {
             <input
               type="text"
               className="usuarios-search-input"
-              placeholder="Pesquisar usuários por nome, e-mail ou matrícula..."
+              placeholder="Pesquisar usuários por nome, e-mail ou matrícula"
               value={busca}
               onChange={handleBuscar}
             />
@@ -117,13 +147,23 @@ export default function Usuarios() {
                       </td>
                       <td>
                         <div className="usuarios-actions-group">
-                          <button className="usuarios-btn-action usuarios-btn-edit" onClick={() => handleEditarDados(user.id)}>
+                          <button 
+                            className="usuarios-btn-action usuarios-btn-edit" 
+                            onClick={() => abrirModalEdicao(user)}
+                          >
                             <Edit2 size={14} /> Editar Dados
                           </button>
-                          <button className="usuarios-btn-action usuarios-btn-perm" onClick={() => handlePermissoes(user.id)}>
+                          <button 
+                            className="usuarios-btn-action usuarios-btn-perm" 
+                            onClick={() => abrirModalPermissao(user)}
+                          >
                             <Shield size={14} /> Permissões
                           </button>
-                          <button className="usuarios-btn-action usuarios-btn-delete" onClick={() => handleExcluir(user.id)} title="Excluir Usuário">
+                          <button 
+                            className="usuarios-btn-action usuarios-btn-delete" 
+                            onClick={() => handleExcluir(user.id)}
+                            title="Excluir Usuário"
+                          >
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -143,45 +183,75 @@ export default function Usuarios() {
         </div>
       </div>
 
-      {isModalOpen && (
+      {/* ================= MODAL CENTRAL ================= */}
+      {modalAberto && (
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
-              <h2>Cadastrar Novo Usuário</h2>
+              <h2>
+                {modalAberto === "cadastro" && "Cadastrar Novo Usuário"}
+                {modalAberto === "edicao" && "Editar Dados do Usuário"}
+                {modalAberto === "permissao" && "Gerenciar Permissões"}
+              </h2>
               <button className="modal-close-btn" onClick={fecharModal}>
                 <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmitCadastro} className="modal-form">
-              <div className="input-group">
-                <label>Nome Completo</label>
-                <input type="text" name="nome" placeholder="Ex: Maria Silva" value={novoUsuario.nome} onChange={handleInputChange} required />
-              </div>
+            <form onSubmit={handleSubmit} className="modal-form">
+              
+              {/* CAMPOS PARA CADASTRO E EDIÇÃO */}
+              {(modalAberto === "cadastro" || modalAberto === "edicao") && (
+                <>
+                  <div className="input-group">
+                    <label>Nome Completo</label>
+                    <input type="text" name="nome" placeholder="Ex: Maria Silva" value={usuarioAtual.nome} onChange={handleInputChange} required />
+                  </div>
 
-              <div className="input-group">
-                <label>E-mail</label>
-                <input type="email" name="email" placeholder="email@exemplo.com" value={novoUsuario.email} onChange={handleInputChange} required />
-              </div>
+                  <div className="input-group">
+                    <label>E-mail</label>
+                    <input type="email" name="email" placeholder="email@exemplo.com" value={usuarioAtual.email} onChange={handleInputChange} required />
+                  </div>
 
-              <div className="modal-row">
+                  <div className="modal-row">
+                    <div className="input-group">
+                      <label>Matrícula</label>
+                      <input type="text" name="matricula" placeholder="Ex: 123456" value={usuarioAtual.matricula} onChange={handleInputChange} required />
+                    </div>
+
+                    {/* Senha só é obrigatória/exibida no cadastro */}
+                    {modalAberto === "cadastro" && (
+                      <div className="input-group">
+                        <label>Senha</label>
+                        <input type="password" name="senha" placeholder="Crie uma senha" value={usuarioAtual.senha} onChange={handleInputChange} required />
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* CAMPOS APENAS PARA PERMISSÕES */}
+              {modalAberto === "permissao" && (
                 <div className="input-group">
-                  <label>Matrícula</label>
-                  <input type="text" name="matricula" placeholder="Ex: 123456" value={novoUsuario.matricula} onChange={handleInputChange} required />
+                  <label>Nível de Acesso (Administrador)</label>
+                  <select name="permissao" value={usuarioAtual.permissao} onChange={handleInputChange} required>
+                    <option value="Usuário">Usuário Comum</option>
+                    <option value="Administrador">Administrador</option>
+                  </select>
+                  <p style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
+                    Administradores possuem controle total sobre o catálogo, cardápio e permissões do sistema.
+                  </p>
                 </div>
-
-                <div className="input-group">
-                  <label>Senha</label>
-                  <input type="password" name="senha" placeholder="Crie uma senha" value={novoUsuario.senha} onChange={handleInputChange} required />
-                </div>
-              </div>
+              )}
 
               <div className="modal-footer">
                 <button type="button" className="btn-modal-cancelar" onClick={fecharModal}>
                   Cancelar
                 </button>
                 <button type="submit" className="btn-primary-yellow">
-                  Cadastrar Usuário
+                  {modalAberto === "cadastro" && "Cadastrar Usuário"}
+                  {modalAberto === "edicao" && "Salvar Alterações"}
+                  {modalAberto === "permissao" && "Atualizar Permissão"}
                 </button>
               </div>
             </form>
