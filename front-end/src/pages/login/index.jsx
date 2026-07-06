@@ -43,8 +43,8 @@ export default function Login() {
         return;
       }
 
-      localStorage.setItem("token", dadosResposta.token);
-      localStorage.setItem("is_admin", dadosResposta.is_admin);
+      localStorage.setItem("token", dadosResposta.dados.token);
+      localStorage.setItem("is_admin", dadosResposta.dados.is_admin);
 
       alert("Bem-vindo!");
       navigate("/catalogo");

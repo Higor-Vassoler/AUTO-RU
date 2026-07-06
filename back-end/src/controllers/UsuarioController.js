@@ -1,4 +1,4 @@
-import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService } from "../services/UsuarioService.js";
+import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService, alterarSenhaService } from "../services/UsuarioService.js";
 import { ResponseFactory } from "../utils/ResponseFactory.js";
 
 // CREATE
@@ -92,5 +92,23 @@ export const atualizarConta = async (req, res) => {
         });
     } catch (erro) {
         return res.status(400).json({ erro: erro.message });
+    }
+};
+
+// ALTERAR SENHA
+export const alterarSenha = async (req, res) => {
+    try {
+        const id = req.id_usuario;
+        const { novaSenha } = req.body;
+
+        if (!novaSenha) {
+            return ResponseFactory.erro(res, "A nova senha é obrigatória.");
+        }
+
+        await alterarSenhaService(id, novaSenha);
+
+        return ResponseFactory.sucesso(res, "Senha alterada com sucesso.");
+    } catch (erro) {
+        return ResponseFactory.erro(res, erro.message);
     }
 };

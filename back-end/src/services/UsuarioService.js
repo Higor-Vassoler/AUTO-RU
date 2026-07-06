@@ -97,3 +97,20 @@ export const atualizarUsuarioService = async (id, dadosAtualizados) => {
         ra: usuario.ra
     };
 };
+
+export const alterarSenhaService = async (id, novaSenha) => {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    const regexSenha = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!regexSenha.test(novaSenha)) {
+        throw new Error("Sua nova senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
+    }
+
+    await usuario.update({ senha: novaSenha });
+
+    return true;
+};
