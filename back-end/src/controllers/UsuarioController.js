@@ -7,20 +7,20 @@ export const criarUsuario = async (req, res) => {
         const { nome, email, senha, confirmarSenha, ra } = req.body;
 
         if (senha !== confirmarSenha) {
-            return ResponseFactory.erro(res, "As senhas não são iguais.");
+            return ResponseFactory.criarErro("As senhas não são iguais.").enviar(res);
         }
 
         const novoUsuario = await criarUsuarioService(nome, email, senha, ra);
 
-        return ResponseFactory.sucesso(res, "Usuário cadastrado com sucesso.", {
+        return ResponseFactory.criarSucesso("Usuário cadastrado com sucesso.", {
             usuario: {
                 id: novoUsuario.id,
                 nome: novoUsuario.nome,
                 email: novoUsuario.email
             }
-        }, 201);
+        }, 201).enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
 
@@ -29,10 +29,10 @@ export const listarUsuarios = async (req, res) => {
     try {
         const usuarios = await listarUsuariosService();
 
-        return ResponseFactory.sucesso(res, "Usuários listados com sucesso.", usuarios);
+        return ResponseFactory.criarSucesso("Usuários listados com sucesso.", usuarios).enviar(res);
     } catch (erro) {
         console.error(`Erro ao buscar usuários: ${erro}`);
-        return ResponseFactory.erro(res, "Erro interno ao buscar dados.", 500);
+        return ResponseFactory.criarErro("Erro interno ao buscar dados.", 500).enviar(res);
     }
 };
 
@@ -40,29 +40,23 @@ export const listarUsuarios = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, senha } = req.body;
-
         const dadosLogin = await loginService(email, senha);
 
-        return ResponseFactory.sucesso(res, "Login realizado com sucesso.", {
-            token: dadosLogin.token,
-            is_admin: dadosLogin.is_admin
-        });
+        return ResponseFactory.criarSucesso("Login efetuado com sucesso.", dadosLogin).enviar(res);
     } catch (erro) {
-        console.error(`Erro no login: ${erro}`);
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message, 401).enviar(res);
     }
 };
 
-// DELETAR CONTA
+// DELETE
 export const deletarConta = async (req, res) => {
     try {
         const id = req.id_usuario;
-
         await deletarUsuarioService(id);
 
-        return ResponseFactory.sucesso(res, "Conta excluída com sucesso.");
+        return ResponseFactory.criarSucesso("Conta excluída com sucesso.").enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
 
@@ -72,9 +66,9 @@ export const buscarMeusDados = async (req, res) => {
         const id = req.id_usuario;
         const usuario = await buscarUsuarioPorIdService(id);
 
-        return ResponseFactory.sucesso(res, "Dados do usuário buscados com sucesso.", usuario);
+        return ResponseFactory.criarSucesso("Dados do usuário buscados com sucesso.", usuario).enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message, 404);
+        return ResponseFactory.criarErro(erro.message, 404).enviar(res);
     }
 };
 
@@ -86,12 +80,9 @@ export const atualizarConta = async (req, res) => {
 
         const usuarioAtualizado = await atualizarUsuarioService(id, { nome, email, ra });
 
-        return res.status(200).json({
-            mensagem: "Dados atualizados com sucesso!",
-            usuario: usuarioAtualizado
-        });
+        return ResponseFactory.criarSucesso("Dados atualizados com sucesso!", { usuario: usuarioAtualizado }).enviar(res);
     } catch (erro) {
-        return res.status(400).json({ erro: erro.message });
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
 
@@ -102,13 +93,13 @@ export const alterarSenha = async (req, res) => {
         const { novaSenha } = req.body;
 
         if (!novaSenha) {
-            return ResponseFactory.erro(res, "A nova senha é obrigatória.");
+            return ResponseFactory.criarErro("A nova senha é obrigatória.").enviar(res);
         }
 
         await alterarSenhaService(id, novaSenha);
 
-        return ResponseFactory.sucesso(res, "Senha alterada com sucesso.");
+        return ResponseFactory.criarSucesso("Senha alterada com sucesso!").enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };

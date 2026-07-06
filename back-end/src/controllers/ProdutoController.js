@@ -1,5 +1,5 @@
 import { criarProdutoService, listarProdutosService, ocultarProdutoService, atualizarProdutoService } from "../services/ProdutoService.js";
-import { ResponseFactory } from "../utils/ResponseFactory.js"; // <-- Importamos a Factory aqui!
+import { ResponseFactory } from "../utils/ResponseFactory.js";
 
 export const criarProduto = async (req, res) => {
     try {
@@ -8,9 +8,9 @@ export const criarProduto = async (req, res) => {
 
         const novoProduto = await criarProdutoService(codigo, nome, preco, categoria, quantidade, descricao, imagem);
 
-        return ResponseFactory.sucesso(res, "Produto cadastrado com sucesso!", { produto: novoProduto }, 201);
+        return ResponseFactory.criarSucesso("Produto cadastrado com sucesso!", { produto: novoProduto }, 201).enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
 
@@ -18,9 +18,9 @@ export const listarProdutos = async (req, res) => {
     try {
         const produtos = await listarProdutosService();
 
-        return ResponseFactory.sucesso(res, "Lista carregada", produtos);
+        return ResponseFactory.criarSucesso("Lista carregada", produtos).enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, "Erro ao buscar produtos: " + erro.message, 500);
+        return ResponseFactory.criarErro("Erro ao buscar produtos: " + erro.message, 500).enviar(res);
     }
 };
 
@@ -29,9 +29,9 @@ export const ocultarProduto = async (req, res) => {
         const { id } = req.params;
         await ocultarProdutoService(id);
 
-        return ResponseFactory.sucesso(res, "Produto ocultado com sucesso!");
+        return ResponseFactory.criarSucesso("Produto ocultado com sucesso!").enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
 
@@ -43,8 +43,8 @@ export const atualizarProduto = async (req, res) => {
 
         const produtoAtualizado = await atualizarProdutoService(id, codigo, nome, preco, categoria, quantidade, descricao, imagem);
 
-        return ResponseFactory.sucesso(res, "Produto atualizado com sucesso!", { produto: produtoAtualizado });
+        return ResponseFactory.criarSucesso("Produto atualizado com sucesso!", { produto: produtoAtualizado }).enviar(res);
     } catch (erro) {
-        return ResponseFactory.erro(res, erro.message);
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
