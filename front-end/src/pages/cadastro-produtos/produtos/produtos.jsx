@@ -61,6 +61,7 @@ export default function Produtos() {
       </div>
 
       <InformacoesProduto
+        key={produtoEmEdicao?.id ?? "novo"}
         onProdutoSalvo={carregarProdutos}
         produtoEmEdicao={produtoEmEdicao}
         setProdutoEmEdicao={setProdutoEmEdicao}
