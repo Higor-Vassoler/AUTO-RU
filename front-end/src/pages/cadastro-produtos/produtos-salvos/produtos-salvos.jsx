@@ -1,4 +1,4 @@
-import "./style.css";
+import "./produtos-salvos.css";
 import { Pencil, Trash2 } from "lucide-react";
 
 export default function ProdutosSalvos({ produtos, onProdutoDeletado, onEdit }) {
