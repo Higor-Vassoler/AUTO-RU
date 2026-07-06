@@ -4,10 +4,10 @@ import Layout from "../../components/layout/layout.jsx";
 import "./usuarios.css";
 
 const usuariosIniciais = [
-  { id: 1, nome: "Admin Geral", email: "admin@admin.com", matricula: "999999", permissao: "Administrador" },
-  { id: 2, nome: "João Silva", email: "joao.silva@alunos.utfpr.edu.br", matricula: "231045", permissao: "Usuário" },
-  { id: 3, nome: "Maria Souza", email: "maria.souza@utfpr.edu.br", matricula: "104857", permissao: "Editor" },
-  { id: 4, nome: "Carlos Eduardo", email: "cadu@alunos.utfpr.edu.br", matricula: "241022", permissao: "Usuário" },
+  { id: 1, nome: "Admin", email: "admin@admin.com", matricula: "999999", permissao: "Administrador" },
+  { id: 2, nome: "usuario 1", email: "usuario1@alunos.utfpr.edu.br", matricula: "231045", permissao: "Usuário" },
+  { id: 3, nome: "usuario 2", email: "usuario2@utfpr.edu.br", matricula: "104857", permissao: "Usuário" },
+  { id: 4, nome: "usuario 3", email: "usuario3@alunos.utfpr.edu.br", matricula: "241022", permissao: "Usuário" },
 ];
 
 export default function Usuarios() {
