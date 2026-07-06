@@ -14,6 +14,7 @@ import {
 
 export default function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [lembrarMim, setLembrarMim] = useState(false);
   const [dados, setDados] = useState({
     email: "",
     senha: "",
@@ -28,6 +29,7 @@ export default function Login() {
   };
 
   const navigate = useNavigate();
+
   const fazerLogin = async () => {
     try {
       const { email, senha } = dados;
@@ -42,6 +44,8 @@ export default function Login() {
         alert(dadosResposta.erro || "Falha no login");
         return;
       }
+
+      const storage = lembrarMim ? localStorage : sessionStorage;
 
       localStorage.setItem("token", dadosResposta.dados.token);
       localStorage.setItem("is_admin", dadosResposta.dados.is_admin);
@@ -144,7 +148,11 @@ export default function Login() {
 
             <div className="opcoes-login">
               <label className="lembrar">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={lembrarMim}
+                  onChange={(e) => setLembrarMim(e.target.checked)}
+                />
                 Lembrar de mim
               </label>
             </div>
