@@ -29,6 +29,9 @@ O projeto se trata da criação de um sistema web de autoatendimento inspirado d
 
 - MVC (Model-View-Controller).
 
+## Padrão de Projeto (Design Patterns):
+- Simple Factory
+
 ## Tecnologias que pretendemos estudar para aplicarmos no projeto:
 
 ### Fron-End
