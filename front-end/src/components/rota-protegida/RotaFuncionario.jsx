@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 
 export default function RotaFuncionario({ children }) {
-    const token = localStorage.getItem("token");
-    const isAdmin = localStorage.getItem("is_admin");
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const isAdmin = localStorage.getItem("is_admin") || sessionStorage.getItem("is_admin");
 
     if (!token) {
         return <Navigate to="/login" replace />;

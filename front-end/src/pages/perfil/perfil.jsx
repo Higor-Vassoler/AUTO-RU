@@ -28,7 +28,7 @@ export default function Perfil() {
   useEffect(() => {
     const buscarDadosUsuario = async () => {
       try {
-        let token = localStorage.getItem("token");
+        let token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
         if (!token) {
           console.error("Token não encontrado");
@@ -70,7 +70,7 @@ export default function Perfil() {
     if (!confirmacao) return;
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
         method: "DELETE",
         headers: {
@@ -82,6 +82,7 @@ export default function Perfil() {
       if (resposta.ok) {
         alert(dadosResposta.mensagem);
         localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         window.location.href = "/";
       } else {
         alert("Erro ao excluir conta: " + (dadosResposta.erro || "Falha desconhecida."));
@@ -123,7 +124,7 @@ export default function Perfil() {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
       const resposta = await fetch("http://localhost:5000/api/usuarios/me/senha", {
         method: "PUT",
@@ -163,7 +164,7 @@ export default function Perfil() {
 
   const salvarDados = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
       if (!token) {
         alert("Sessão expirada. Faça login novamente.");
