@@ -9,11 +9,16 @@ import ProdutoItem from "../../components/produto-item/produto-item.jsx";
 import ModalProduto from "../../components/modal-produtos/modal-produtos.jsx";
 import Paginacao from "../../components/paginacao/paginacao.jsx";
 import { CartContext } from "../../context/cart-context.js";
+import {
+  adaptarListaProdutos,
+  filtrarEOrdenarProdutos,
+  paginarProdutos,
+} from "../../utils/catalogo/catalogo-produtos.js";
+
+const PRODUTOS_POR_PAGINA = 8;
 
 export default function Catalogo() {
   const [produtos, setProdutos] = useState([]);
-  const PRODUTOS_POR_PAGINA = 8;
-
   const [valorBusca, setValorBusca] = useState("");
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todas");
   const [ordenacao, setOrdenacao] = useState("relevancia");
@@ -34,20 +39,11 @@ export default function Catalogo() {
           const listaDeProdutos = data.dados || data;
 
           if (Array.isArray(listaDeProdutos)) {
-            const produtosAdaptados = listaDeProdutos.map((produto) => ({
-              ...produto,
-              id_produto: produto.id,
-              preco_unitario: produto.preco ? parseFloat(produto.preco) : 0.0,
-              quantidade_estoque:
-                produto.quantidade !== undefined ? produto.quantidade : 0,
-              imagem: produto.imagem
-                ? `http://localhost:5000/uploads/${produto.imagem}`
-                : null,
-            }));
-
-            setProdutos(produtosAdaptados);
+            setProdutos(adaptarListaProdutos(listaDeProdutos));
           } else {
-            console.error("O backend não retornou uma lista válida de produtos.");
+            console.error(
+              "O backend não retornou uma lista válida de produtos.",
+            );
           }
         } else {
           console.error("Erro ao buscar catálogo:", data.erro);
@@ -69,50 +65,20 @@ export default function Catalogo() {
     setPaginaAtual(1);
   }
 
-  const produtosFiltrados = useMemo(() => {
-    let listaFiltrada = [...produtos];
-
-    if (valorBusca.trim()) {
-      listaFiltrada = listaFiltrada.filter((produto) =>
-        produto.nome.toLowerCase().includes(valorBusca.toLowerCase()),
-      );
-    }
-
-    if (categoriaSelecionada !== "Todas") {
-      listaFiltrada = listaFiltrada.filter(
-        (produto) => produto.categoria === categoriaSelecionada,
-      );
-    }
-
-    switch (ordenacao) {
-      case "az":
-        listaFiltrada.sort((a, b) => a.nome.localeCompare(b.nome));
-        break;
-      case "za":
-        listaFiltrada.sort((a, b) => b.nome.localeCompare(a.nome));
-        break;
-      case "preco-menor":
-        listaFiltrada.sort((a, b) => a.preco_unitario - b.preco_unitario);
-        break;
-      case "preco-maior":
-        listaFiltrada.sort((a, b) => b.preco_unitario - a.preco_unitario);
-        break;
-      default:
-        listaFiltrada.sort((a, b) => b.id_produto - a.id_produto);
-    }
-
-    return listaFiltrada;
-  }, [produtos, valorBusca, categoriaSelecionada, ordenacao]);
-
-  const totalPaginas = Math.max(
-    1,
-    Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA),
+  const produtosFiltrados = useMemo(
+    () =>
+      filtrarEOrdenarProdutos(
+        produtos,
+        valorBusca,
+        categoriaSelecionada,
+        ordenacao,
+      ),
+    [produtos, valorBusca, categoriaSelecionada, ordenacao],
   );
-  const indiceInicial = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
-  const indiceFinal = indiceInicial + PRODUTOS_POR_PAGINA;
-  const produtosPaginaAtual = produtosFiltrados.slice(
-    indiceInicial,
-    indiceFinal,
+
+  const { totalPaginas, produtosPaginaAtual } = useMemo(
+    () => paginarProdutos(produtosFiltrados, paginaAtual, PRODUTOS_POR_PAGINA),
+    [produtosFiltrados, paginaAtual],
   );
 
   return (
@@ -189,7 +155,6 @@ export default function Catalogo() {
           onClose={() => setModalAberto(false)}
           onAddCart={addToCart}
         />
-
       </div>
     </Layout>
   );

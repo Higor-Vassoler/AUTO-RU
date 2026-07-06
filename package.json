@@ -28,5 +28,8 @@
   "homepage": "https://github.com/Higor-Vassoler/AUTO-RU#readme",
   "devDependencies": {
     "concurrently": "^10.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.6"
   }
 }
