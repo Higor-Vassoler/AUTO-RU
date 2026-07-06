@@ -15,7 +15,7 @@ export default function Usuarios() {
   const [busca, setBusca] = useState("");
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [novoUsuario, setNovoUsuario] = useState({
+  const [novoUsuario, setNovoUsuario] = useState({ 
     nome: "",
     email: "",
     matricula: "",
