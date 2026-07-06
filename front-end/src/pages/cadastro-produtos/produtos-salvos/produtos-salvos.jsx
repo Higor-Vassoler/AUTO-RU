@@ -7,8 +7,14 @@ export default function ProdutosSalvos({ produtos, onProdutoDeletado, onEdit }) 
     if (!confirmar) return;
 
     try {
+      const token = localStorage.getItem("token");
+
       const response = await fetch(`http://localhost:5000/api/produtos/${id}/ocultar`, {
         method: "PATCH",
+        headers: {
+          "Authorization": token,
+          "Content-Type": "application/json"
+        }
       });
 
       const data = await response.json().catch(() => ({ erro: "Não foi possível ler o JSON do backend" }));

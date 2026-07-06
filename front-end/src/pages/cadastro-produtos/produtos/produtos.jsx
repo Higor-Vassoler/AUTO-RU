@@ -9,16 +9,29 @@ export default function Produtos() {
 
   async function carregarProdutos() {
     try {
-      const response = await fetch("http://localhost:5000/api/produtos");
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://localhost:5000/api/produtos", {
+        method: "GET",
+        headers: {
+          "Authorization": token,
+          "Content-Type": "application/json"
+        }
+      });
+
       const data = await response.json();
 
       if (response.ok) {
-        setProdutos(data);
+        const listaDeProdutos = data.dados || data;
+
+        setProdutos(Array.isArray(listaDeProdutos) ? listaDeProdutos : []);
       } else {
-        console.error("Erro ao buscar produtos:", data.erro);
+        console.error("Erro do servidor:", data.erro || data.mensagem);
+        setProdutos([]);
       }
     } catch (error) {
       console.error("Erro na requisição de produtos:", error);
+      setProdutos([]);
     }
   }
 
