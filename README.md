@@ -53,5 +53,8 @@ O projeto se trata da criação de um sistema web de autoatendimento inspirado d
 ## Como rodar o projeto:
 - `git clone https://github.com/Higor-Vassoler/AUTO-RU.git`
 - `cd AUTO-RU`
+- cd back-end
+- cd src
+- Criar uma pasta de uploads (vazia)
 - Criar um .env na pasta back-end (usar o `.env.example` de exemplo).
 - `docker compose up --build`
