@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  padding: 20px;
   animation: fadeIn 0.3s ease;
 }
 
@@ -18,7 +19,7 @@
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 6px 0;
-  color: #000;
+  color: #1a1a1a;
 }
 
 .usuarios-page-subtitle {
@@ -40,169 +41,164 @@
   align-items: center;
   gap: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .btn-primary-yellow:hover {
-  background-color: #c49300;
+  background-color: #d19c00;
+  transform: translateY(-1px);
 }
 
-.usuarios-admin-card {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #F0EFEA;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-}
-
-.usuarios-search-container {
+.busca-wrapper {
   position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
+  max-width: 600px;
 }
 
-.usuarios-search-icon {
+.busca-icon {
   position: absolute;
   left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
+  color: #888;
 }
 
-.usuarios-search-input {
+.busca-input {
   width: 100%;
-  box-sizing: border-box;
-  padding: 12px 14px 12px 44px;
-  border: 1px solid #DCDCDC;
-  border-radius: 6px;
+  padding: 12px 40px 12px 42px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 }
 
-.usuarios-search-input:focus {
+.busca-input:focus {
   border-color: #E0A800;
+  box-shadow: 0 0 0 3px rgba(224, 168, 0, 0.15);
 }
 
-.usuarios-table-wrapper {
-  width: 100%;
+.busca-limpar {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.busca-limpar:hover {
+  color: #333;
+}
+
+.tabela-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eaeaea;
   overflow-x: auto;
 }
 
-.usuarios-user-table {
+.usuarios-tabela {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+}
+
+.usuarios-tabela th, 
+.usuarios-tabela td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.usuarios-tabela th {
+  background-color: #fafafa;
+  font-weight: 600;
+  color: #444;
   font-size: 14px;
 }
 
-.usuarios-user-table th {
-  padding: 14px;
-  border-bottom: 2px solid #FAF8F3;
-  color: #333;
+.usuarios-tabela tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.usuario-info-nome {
   font-weight: 600;
+  color: #222;
 }
 
-.usuarios-user-table td {
-  padding: 16px 14px;
-  border-bottom: 1px solid #FAF8F3;
-  vertical-align: middle;
-  color: #444;
+.txt-matricula {
+  color: #666;
+  font-family: monospace;
+  background: #f4f4f4;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
-.usuarios-user-name {
-  font-weight: 600;
-  color: #000;
-}
-
-.usuarios-badge {
-  padding: 4px 10px;
-  border-radius: 50px;
+.badge-permissao {
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   display: inline-block;
 }
 
-.usuarios-badge-administrador {
-  background-color: #EFFFEC;
-  color: #22C55E;
+.badge-permissao.admin {
+  background-color: #e6f7ff;
+  color: #0050b3;
+  border: 1px solid #91d5ff;
 }
 
-.usuarios-badge-editor {
-  background-color: #EFF6FF;
-  color: #3B82F6;
+.badge-permissao.user {
+  background-color: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
 }
 
-.usuarios-badge-usuário {
-  background-color: #F3F4F6;
-  color: #6B7280;
-}
-
-.usuarios-actions-group {
+.acoes-botoes {
   display: flex;
   gap: 8px;
+  justify-content: center;
 }
 
-.usuarios-btn-action {
+.btn-acao {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 4px;
-  cursor: pointer;
-  border: none;
+  justify-content: center;
   transition: all 0.2s;
 }
 
-.usuarios-btn-edit {
-  background-color: #E0A800;
-  color: #000;
-}
+.btn-acao.editar { color: #1890ff; }
+.btn-acao.editar:hover { background: #e6f7ff; }
 
-.usuarios-btn-edit:hover {
-  background-color: #c49300;
-}
+.btn-acao.permissao { color: #E0A800; }
+.btn-acao.permissao:hover { background: #fffbe6; }
 
-.usuarios-btn-perm {
-  background-color: #FAF8F3;
-  color: #333;
-  border: 1px solid #DCDCDC;
-}
+.btn-acao.deletar { color: #ff4d4f; }
+.btn-acao.deletar:hover { background: #fff1f0; }
 
-.usuarios-btn-perm:hover {
-  background-color: #E6E4DF;
-}
-
-.usuarios-btn-delete {
-  background-color: #FFF5F5;
-  color: #E53E3E;
-  border: 1.5px solid #FED7D7;
-  padding: 6px 10px;
-}
-
-.usuarios-btn-delete:hover {
-  background-color: #E53E3E;
-  color: #fff;
-  border-color: #E53E3E;
-}
-/*css do modal de cadastro */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease;
-  backdrop-filter: blur(2px); 
+  z-index: 9999;
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
@@ -211,8 +207,8 @@
   max-width: 500px;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  animation: slideUp 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease;
 }
 
 .modal-header {
@@ -220,52 +216,35 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .modal-header h2 {
   margin: 0;
   font-size: 20px;
-  font-weight: 700;
-  color: #000;
+  color: #222;
 }
 
-.modal-close-btn {
-  background: transparent;
+.btn-fechar-modal {
+  background: none;
   border: none;
-  color: #666;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #888;
   padding: 4px;
   border-radius: 4px;
-  transition: all 0.2s;
 }
 
-.modal-close-btn:hover {
-  background: #f0f0f0;
-  color: #000;
-}
-
-.modal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.modal-row {
-  display: flex;
-  gap: 16px;
-}
-
-.modal-row .input-group {
-  flex: 1;
+.btn-fechar-modal:hover {
+  background: #f4f4f4;
+  color: #333;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-bottom: 16px;
 }
 
 .input-group label {
@@ -274,18 +253,27 @@
   color: #333;
 }
 
-.input-group input {
+.input-group input, 
+.input-group select {
   padding: 10px 14px;
   border: 1px solid #dcdcdc;
   border-radius: 6px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
+  background: #fff;
 }
 
-.input-group input:focus {
+.input-group input:focus, 
+.input-group select:focus {
   border-color: #E0A800;
-  box-shadow: 0 0 0 2px rgba(224, 168, 0, 0.1);
+  box-shadow: 0 0 0 2px rgba(224, 168, 0, 0.15);
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .modal-footer {
@@ -306,36 +294,25 @@
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s;
 }
 
 .btn-modal-cancelar:hover {
-  background: #f5f5f5;
-  color: #000;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  background: #f4f4f4;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.input-group select {
-  padding: 10px 14px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
-  background-color: #fff;
-  transition: border-color 0.2s;
-  cursor: pointer;
-  appearance: auto;
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.input-group select:focus {
-  border-color: #E0A800;
-  box-shadow: 0 0 0 2px rgba(224, 168, 0, 0.1);
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

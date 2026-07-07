@@ -1,38 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, UserPlus, Edit2, Shield, Trash2, X } from "lucide-react";
-import Layout from "../../components/layout/layout.jsx"; 
+import Layout from "../../components/layout/layout.jsx";
 import "./usuarios.css";
 
-const usuariosIniciais = [
-  { id: 1, nome: "Admin", email: "admin@admin.com", matricula: "999999", permissao: "Administrador" },
-  { id: 2, nome: "Usuario 1", email: "usuario1@alunos.utfpr.edu.br", matricula: "231045", permissao: "Usuário" },
-  { id: 3, nome: "Usuario 2", email: "usuario2@utfpr.edu.br", matricula: "104857", permissao: "Usuário" },
-  { id: 4, nome: "Usuario 3", email: "usuario3@alunos.utfpr.edu.br", matricula: "241022", permissao: "Usuário" },
-];
-
 export default function Usuarios() {
-  const [usuarios, setUsuarios] = useState(usuariosIniciais);
+  const [usuarios, setUsuarios] = useState([]);
   const [busca, setBusca] = useState("");
-  
-  // Controle de Modais: null | 'cadastro' | 'edicao' | 'permissao'
-  const [modalAberto, setModalAberto] = useState(null); 
-  
-  // Estado para armazenar os dados do formulário atual
+  const [modalAberto, setModalAberto] = useState(null);
   const [usuarioAtual, setUsuarioAtual] = useState({
     id: null,
     nome: "",
     email: "",
     matricula: "",
     senha: "",
-    permissao: "Usuário"
+    permissao: "Usuário",
   });
 
-  const handleBuscar = (e) => setBusca(e.target.value);
+  const buscarUsuariosNoBanco = async (termoDeBusca) => {
+    try {
+      const url = termoDeBusca
+        ? `http://localhost:5000/api/usuarios/pesquisa?q=${termoDeBusca}`
+        : `http://localhost:5000/api/usuarios`;
 
-  // Abertura e Fechamento de Modais
-  const fecharModal = () => {
-    setModalAberto(null);
-    setUsuarioAtual({ id: null, nome: "", email: "", matricula: "", senha: "", permissao: "Usuário" });
+      const resposta = await fetch(url);
+      const data = await resposta.json();
+
+      if (data.sucesso) {
+        const usuariosFormatados = data.dados.map(user => ({
+          id: user.id,
+          nome: user.nome,
+          email: user.email,
+          matricula: user.ra ? String(user.ra) : "",
+          permissao: user.is_admin ? "Administrador" : "Usuário"
+        }));
+        setUsuarios(usuariosFormatados);
+      }
+    } catch (erro) {
+      console.error("Erro ao conectar com o backend:", erro);
+    }
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      buscarUsuariosNoBanco(busca);
+    }, 400);
+    return () => clearTimeout(timeoutId);
+  }, [busca]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUsuarioAtual({ ...usuarioAtual, [name]: value });
   };
 
   const abrirModalCadastro = () => {
@@ -41,60 +58,35 @@ export default function Usuarios() {
   };
 
   const abrirModalEdicao = (user) => {
-    setUsuarioAtual({ ...user, senha: "" }); // Carrega dados do usuário (senha vazia por segurança)
+    setUsuarioAtual({ ...user, senha: "" });
     setModalAberto("edicao");
   };
 
   const abrirModalPermissao = (user) => {
-    // Se o usuário tiver permissões diferentes (ex: Editor), forçamos pro fallback ou mantém Adm/Usuário
-    setUsuarioAtual(user);
+    setUsuarioAtual({ ...user });
     setModalAberto("permissao");
   };
 
-  // Lida com a digitação nos inputs
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUsuarioAtual((prev) => ({ ...prev, [name]: value }));
+  const fecharModal = () => {
+    setModalAberto(null);
+    setUsuarioAtual({ id: null, nome: "", email: "", matricula: "", senha: "", permissao: "Usuário" });
   };
 
-  // Submissões de Formulário unificadas
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (modalAberto === "cadastro") {
-      const novoUsuario = {
-        id: Date.now(),
-        nome: usuarioAtual.nome,
-        email: usuarioAtual.email,
-        matricula: usuarioAtual.matricula,
-        permissao: "Usuário", 
-      };
-      setUsuarios([...usuarios, novoUsuario]);
-
+      setUsuarios([...usuarios, { ...usuarioAtual, id: Date.now() }]);
     } else if (modalAberto === "edicao" || modalAberto === "permissao") {
-      setUsuarios(
-        usuarios.map((u) => 
-          u.id === usuarioAtual.id 
-            ? { ...u, nome: usuarioAtual.nome, email: usuarioAtual.email, matricula: usuarioAtual.matricula, permissao: usuarioAtual.permissao } 
-            : u
-        )
-      );
+      setUsuarios(usuarios.map((u) => (u.id === usuarioAtual.id ? usuarioAtual : u)));
     }
     fecharModal();
   };
 
-  const handleExcluir = (id) => {
-    if (window.confirm("Tem certeza que deseja excluir este usuário definitivamente?")) {
-      setUsuarios(usuarios.filter((user) => user.id !== id));
+  const deletarUsuario = (id) => {
+    if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
+      setUsuarios(usuarios.filter((u) => u.id !== id));
     }
   };
-
-  const usuariosFiltrados = usuarios.filter(
-    (user) =>
-      user.nome.toLowerCase().includes(busca.toLowerCase()) ||
-      user.email.toLowerCase().includes(busca.toLowerCase()) ||
-      user.matricula.includes(busca)
-  );
 
   return (
     <Layout>
@@ -102,88 +94,84 @@ export default function Usuarios() {
         <div className="usuarios-page-header">
           <div>
             <h1 className="usuarios-page-title">Gerenciamento de Usuários</h1>
-            <p className="usuarios-page-subtitle">Visualize, cadastre e gerencie as permissões dos usuários do RU.</p>
+            <p className="usuarios-page-subtitle">Visualize, pesquise, edite permissões ou remova usuários do sistema.</p>
           </div>
           <button className="btn-primary-yellow" onClick={abrirModalCadastro}>
-            <UserPlus size={16} />
-            Cadastrar Novo Usuário
+            <UserPlus size={20} />
+            Novo Usuário
           </button>
         </div>
 
-        <div className="usuarios-admin-card">
-          <div className="usuarios-search-container">
-            <Search size={18} className="usuarios-search-icon" />
-            <input
-              type="text"
-              className="usuarios-search-input"
-              placeholder="Pesquisar usuários por nome, e-mail ou matrícula"
-              value={busca}
-              onChange={handleBuscar}
-            />
-          </div>
+        <div className="busca-wrapper">
+          <Search className="busca-icon" size={20} />
+          <input
+            type="text"
+            placeholder="Pesquise por nome ou e-mail."
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            className="busca-input"
+          />
+          {busca && (
+            <button className="busca-limpar" onClick={() => setBusca("")}>
+              <X size={18} />
+            </button>
+          )}
+        </div>
 
-          <div className="usuarios-table-wrapper">
-            <table className="usuarios-user-table">
-              <thead>
-                <tr>
-                  <th>Nome Completo</th>
-                  <th>E-mail</th>
-                  <th>Matrícula</th>
-                  <th>Permissão</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {usuariosFiltrados.length > 0 ? (
-                  usuariosFiltrados.map((user) => (
-                    <tr key={user.id}>
-                      <td className="usuarios-user-name">{user.nome}</td>
-                      <td>{user.email}</td>
-                      <td>{user.matricula}</td>
-                      <td>
-                        <span className={`usuarios-badge usuarios-badge-${user.permissao.toLowerCase()}`}>
-                          {user.permissao}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="usuarios-actions-group">
-                          <button 
-                            className="usuarios-btn-action usuarios-btn-edit" 
-                            onClick={() => abrirModalEdicao(user)}
-                          >
-                            <Edit2 size={14} /> Editar Dados
-                          </button>
-                          <button 
-                            className="usuarios-btn-action usuarios-btn-perm" 
-                            onClick={() => abrirModalPermissao(user)}
-                          >
-                            <Shield size={14} /> Permissões
-                          </button>
-                          <button 
-                            className="usuarios-btn-action usuarios-btn-delete" 
-                            onClick={() => handleExcluir(user.id)}
-                            title="Excluir Usuário"
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" style={{ textAlign: "center", padding: "40px", color: "#888" }}>
-                      Nenhum usuário encontrado.
+        <div className="tabela-card">
+          <table className="usuarios-tabela">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Matrícula (RA)</th>
+                <th>Nível de Acesso</th>
+                <th style={{ textAlign: "center" }}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usuarios.length > 0 ? (
+                usuarios.map((usuario) => (
+                  <tr key={usuario.id}>
+                    <td>
+                      <div className="usuario-info-nome">{usuario.nome}</div>
+                    </td>
+                    <td>{usuario.email}</td>
+                    <td>
+                      <span className="txt-matricula">{usuario.matricula || "Não informado"}</span>
+                    </td>
+                    <td>
+                      <span className={`badge-permissao ${usuario.permissao === "Administrador" ? "admin" : "user"}`}>
+                        {usuario.permissao}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="acoes-botoes">
+                        <button className="btn-acao editar" title="Editar Usuário" onClick={() => abrirModalEdicao(usuario)}>
+                          <Edit2 size={16} />
+                        </button>
+                        <button className="btn-acao permissao" title="Alterar Permissão" onClick={() => abrirModalPermissao(usuario)}>
+                          <Shield size={16} />
+                        </button>
+                        <button className="btn-acao deletar" title="Excluir Usuário" onClick={() => deletarUsuario(usuario.id)}>
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: "center", padding: "32px", color: "#666" }}>
+                    Nenhum usuário encontrado.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* ================= MODAL CENTRAL ================= */}
       {modalAberto && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -191,46 +179,42 @@ export default function Usuarios() {
               <h2>
                 {modalAberto === "cadastro" && "Cadastrar Novo Usuário"}
                 {modalAberto === "edicao" && "Editar Dados do Usuário"}
-                {modalAberto === "permissao" && "Gerenciar Permissões"}
+                {modalAberto === "permissao" && "Alterar Nível de Acesso"}
               </h2>
-              <button className="modal-close-btn" onClick={fecharModal}>
+              <button className="btn-fechar-modal" onClick={fecharModal}>
                 <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="modal-form">
-              
-              {/* CAMPOS PARA CADASTRO E EDIÇÃO */}
-              {(modalAberto === "cadastro" || modalAberto === "edicao") && (
+            <form onSubmit={handleSubmit}>
+              {modalAberto !== "permissao" && (
                 <>
                   <div className="input-group">
                     <label>Nome Completo</label>
-                    <input type="text" name="nome" placeholder="Ex: Maria Silva" value={usuarioAtual.nome} onChange={handleInputChange} required />
+                    <input type="text" name="nome" value={usuarioAtual.nome} onChange={handleInputChange} required placeholder="Ex: João Silva" />
                   </div>
 
                   <div className="input-group">
-                    <label>E-mail</label>
-                    <input type="email" name="email" placeholder="email@exemplo.com" value={usuarioAtual.email} onChange={handleInputChange} required />
+                    <label>E-mail institucional</label>
+                    <input type="email" name="email" value={usuarioAtual.email} onChange={handleInputChange} required placeholder="Ex: joao@alunos.utfpr.edu.br" />
                   </div>
 
-                  <div className="modal-row">
+                  <div className="input-grid">
                     <div className="input-group">
-                      <label>Matrícula</label>
-                      <input type="text" name="matricula" placeholder="Ex: 123456" value={usuarioAtual.matricula} onChange={handleInputChange} required />
+                      <label>Matrícula (RA)</label>
+                      <input type="text" name="matricula" value={usuarioAtual.matricula} onChange={handleInputChange} required placeholder="Ex: 231045" />
                     </div>
 
-                    {/* Senha só é obrigatória/exibida no cadastro */}
                     {modalAberto === "cadastro" && (
                       <div className="input-group">
-                        <label>Senha</label>
-                        <input type="password" name="senha" placeholder="Crie uma senha" value={usuarioAtual.senha} onChange={handleInputChange} required />
+                        <label>Senha Provisória</label>
+                        <input type="password" name="senha" value={usuarioAtual.senha} onChange={handleInputChange} required placeholder="Mínimo 8 caracteres" />
                       </div>
                     )}
                   </div>
                 </>
               )}
 
-              {/* CAMPOS APENAS PARA PERMISSÕES */}
               {modalAberto === "permissao" && (
                 <div className="input-group">
                   <label>Nível de Acesso (Administrador)</label>
