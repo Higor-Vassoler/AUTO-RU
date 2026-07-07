@@ -72,14 +72,64 @@ export default function Usuarios() {
     setUsuarioAtual({ id: null, nome: "", email: "", matricula: "", senha: "", permissao: "Usuário" });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (modalAberto === "cadastro") {
-      setUsuarios([...usuarios, { ...usuarioAtual, id: Date.now() }]);
-    } else if (modalAberto === "edicao" || modalAberto === "permissao") {
-      setUsuarios(usuarios.map((u) => (u.id === usuarioAtual.id ? usuarioAtual : u)));
+
+    if (modalAberto === "edicao") {
+      try {
+        const resposta = await fetch(`http://localhost:5000/api/usuarios/${usuarioAtual.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nome: usuarioAtual.nome,
+            email: usuarioAtual.email,
+            ra: usuarioAtual.matricula ? Number(usuarioAtual.matricula) : null,
+          }),
+        });
+
+        const data = await resposta.json();
+
+        if (data.sucesso) {
+          alert("Usuário atualizado com sucesso!");
+          buscarUsuariosNoBanco(busca);
+          fecharModal();
+        } else {
+          alert("Erro ao atualizar: " + data.erro);
+        }
+      } catch (erro) {
+        console.error("Erro na edição:", erro);
+        alert("Erro de conexão com o servidor.");
+      }
     }
-    fecharModal();
+
+    if (modalAberto === "permissao") {
+      try {
+        const isAdmin = usuarioAtual.permissao === "Administrador";
+
+        const resposta = await fetch(`http://localhost:5000/api/usuarios/${usuarioAtual.id}/permissao`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ is_admin: isAdmin }),
+        });
+
+        const data = await resposta.json();
+
+        if (data.sucesso) {
+          alert("Permissão atualizada com sucesso!");
+          buscarUsuariosNoBanco(busca);
+          fecharModal();
+        } else {
+          alert("Erro ao atualizar permissão: " + data.erro);
+        }
+      } catch (erro) {
+        console.error("Erro na permissão:", erro);
+        alert("Erro de conexão com o servidor.");
+      }
+    }
   };
 
   const deletarUsuario = async (id) => {

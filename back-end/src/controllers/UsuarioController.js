@@ -1,4 +1,4 @@
-import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService, alterarSenhaService, pesquisarUsuariosService } from "../services/UsuarioService.js";
+import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService, alterarSenhaService, pesquisarUsuariosService, alterarPermissaoService } from "../services/UsuarioService.js";
 import { ResponseFactory } from "../utils/ResponseFactory.js";
 
 // CREATE
@@ -134,5 +134,37 @@ export const deletarUsuarioAdmin = async (req, res) => {
         return ResponseFactory.criarSucesso("Usuário deletado com sucesso.").enviar(res);
     } catch (erro) {
         return ResponseFactory.criarErro(erro.message, 400).enviar(res);
+    }
+};
+
+// ATUALIZAR USUÁRIO POR ID (AÇÃO DO LÁPIS)
+export const atualizarUsuarioAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nome, email, ra } = req.body;
+
+        const usuarioAtualizado = await atualizarUsuarioService(id, { nome, email, ra });
+
+        return ResponseFactory.criarSucesso("Usuário atualizado com sucesso!", { usuario: usuarioAtualizado }).enviar(res);
+    } catch (erro) {
+        return ResponseFactory.criarErro(erro.message).enviar(res);
+    }
+};
+
+// ALTERAR PERMISSÃO DE ADMIN (AÇÃO DO ESCUDO)
+export const alterarPermissaoAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { is_admin } = req.body;
+
+        if (is_admin === undefined) {
+            return ResponseFactory.criarErro("O campo is_admin é obrigatório.").enviar(res);
+        }
+
+        const usuarioAlterado = await alterarPermissaoService(id, is_admin);
+
+        return ResponseFactory.criarSucesso("Permissão do usuário alterada com sucesso!", { usuario: usuarioAlterado }).enviar(res);
+    } catch (erro) {
+        return ResponseFactory.criarErro(erro.message).enviar(res);
     }
 };
