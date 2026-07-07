@@ -75,6 +75,43 @@ export default function Usuarios() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (modalAberto === "cadastro") {
+      try {
+        if (!usuarioAtual.nome || !usuarioAtual.email || !usuarioAtual.matricula || !usuarioAtual.senha) {
+          alert("Por favor, preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        const resposta = await fetch("http://localhost:5000/api/usuarios", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nome: usuarioAtual.nome,
+            email: usuarioAtual.email,
+            senha: usuarioAtual.senha,
+            confirmarSenha: usuarioAtual.senha,
+            ra: usuarioAtual.matricula ? Number(usuarioAtual.matricula) : null,
+          }),
+        });
+
+        const data = await resposta.json();
+
+        if (data.sucesso) {
+          alert("Usuário criado com sucesso!");
+          buscarUsuariosNoBanco(busca);
+          fecharModal();
+        } else {
+          alert("Erro ao cadastrar: " + data.erro);
+        }
+      } catch (erro) {
+        console.error("Erro ao criar usuário:", erro);
+        alert("Erro de conexão com o servidor.");
+      }
+      return;
+    }
+
     if (modalAberto === "edicao") {
       try {
         const resposta = await fetch(`http://localhost:5000/api/usuarios/${usuarioAtual.id}`, {
@@ -189,7 +226,7 @@ export default function Usuarios() {
               <tr>
                 <th>Nome</th>
                 <th>E-mail</th>
-                <th>Matrícula (RA)</th>
+                <th>Matrícula</th>
                 <th>Nível de Acesso</th>
                 <th style={{ textAlign: "center" }}>Ações</th>
               </tr>
@@ -266,7 +303,7 @@ export default function Usuarios() {
 
                   <div className="input-grid">
                     <div className="input-group">
-                      <label>Matrícula (RA)</label>
+                      <label>Matrícula</label>
                       <input type="text" name="matricula" value={usuarioAtual.matricula} onChange={handleInputChange} required placeholder="Ex: 231045" />
                     </div>
 
