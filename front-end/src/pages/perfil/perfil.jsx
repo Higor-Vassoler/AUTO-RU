@@ -2,47 +2,43 @@ import { useState, useEffect } from "react";
 import Layout from "../../components/layout/layout";
 import "./style.css";
 
-import {
-  User,
-  Shield,
-  Trash2,
-  Pencil,
-  X,
-  Eye,
-  EyeOff
-} from "lucide-react";
+import { User, Shield, Trash2, Pencil, X, Eye, EyeOff } from "lucide-react";
 
 export default function Perfil() {
   const [editando, setEditando] = useState(false);
   const [usuario, setUsuario] = useState({
     nome: "",
     email: "",
-    ra: ""
+    ra: "",
   });
 
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
-  const [dadosSenha, setDadosSenha] = useState({ novaSenha: "", confirmarSenha: "" });
+  const [dadosSenha, setDadosSenha] = useState({
+    novaSenha: "",
+    confirmarSenha: "",
+  });
   const [mostrarNovaSenha, setMostrarNovaSenha] = useState(false);
   const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
 
   useEffect(() => {
     const buscarDadosUsuario = async () => {
       try {
-        let token = localStorage.getItem("token") || sessionStorage.getItem("token");
+        let token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
 
         if (!token) {
           console.error("Token não encontrado");
           return;
         }
 
-        token = token.replace(/^Bearer\s+/, "").replace(/^"(.*)"$/, '$1');
+        token = token.replace(/^Bearer\s+/, "").replace(/^"(.*)"$/, "$1");
 
         const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
           method: "GET",
           headers: {
-            "Authorization": token,
-            "Content-Type": "application/json"
-          }
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
         });
 
         const respostaJson = await resposta.json();
@@ -52,7 +48,7 @@ export default function Perfil() {
           setUsuario({
             nome: usuarioData.nome || "",
             email: usuarioData.email || "",
-            ra: usuarioData.ra || ""
+            ra: usuarioData.ra || "",
           });
         } else {
           console.error("Erro:", respostaJson.erro || respostaJson.mensagem);
@@ -66,17 +62,21 @@ export default function Perfil() {
   }, []);
 
   const handleExcluirConta = async () => {
-    const confirmacao = window.confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão perdidos.");
+    const confirmacao = window.confirm(
+      "Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão perdidos.",
+    );
     if (!confirmacao) return;
 
     try {
-      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+      let token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
+      token = token.replace(/^Bearer\s+/, "").replace(/^"(.*)"$/, "$1");
       const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token
-        }
+          Authorization: token,
+        },
       });
       const dadosResposta = await resposta.json();
       if (resposta.ok) {
@@ -85,7 +85,10 @@ export default function Perfil() {
         sessionStorage.removeItem("token");
         window.location.href = "/";
       } else {
-        alert("Erro ao excluir conta: " + (dadosResposta.erro || "Falha desconhecida."));
+        alert(
+          "Erro ao excluir conta: " +
+            (dadosResposta.erro || "Falha desconhecida."),
+        );
       }
     } catch (erro) {
       console.error("Erro na requisição:", erro);
@@ -97,7 +100,7 @@ export default function Perfil() {
     const { name, value } = e.target;
     setUsuario({
       ...usuario,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -112,7 +115,6 @@ export default function Perfil() {
   const handleConfirmarSenha = async () => {
     const { novaSenha, confirmarSenha } = dadosSenha;
 
-    // Validações básicas no front-end antes de enviar
     if (!novaSenha || !confirmarSenha) {
       alert("Por favor, preencha todos os campos.");
       return;
@@ -124,16 +126,22 @@ export default function Perfil() {
     }
 
     try {
-      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+      let token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
 
-      const resposta = await fetch("http://localhost:5000/api/usuarios/me/senha", {
-        method: "PUT",
-        headers: {
-          "Authorization": token,
-          "Content-Type": "application/json",
+      token = token.replace(/^Bearer\s+/, "").replace(/^"(.*)"$/, "$1");
+
+      const resposta = await fetch(
+        "http://localhost:5000/api/usuarios/me/senha",
+        {
+          method: "PUT",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ novaSenha }),
         },
-        body: JSON.stringify({ novaSenha }),
-      });
+      );
 
       const dadosResposta = await resposta.json();
 
@@ -141,7 +149,6 @@ export default function Perfil() {
         alert("Senha alterada com sucesso!");
         fecharModalSenha();
       } else {
-        // Exibe o erro retornado pelo back-end (ex: senha fraca)
         alert(dadosResposta.erro || "Erro ao alterar a senha.");
       }
     } catch (erro) {
@@ -164,24 +171,27 @@ export default function Perfil() {
 
   const salvarDados = async () => {
     try {
-      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+      let token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
 
       if (!token) {
         alert("Sessão expirada. Faça login novamente.");
         return;
       }
 
+      token = token.replace(/^Bearer\s+/, "").replace(/^"(.*)"$/, "$1");
+
       const resposta = await fetch("http://localhost:5000/api/usuarios/me", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token
+          Authorization: token,
         },
         body: JSON.stringify({
           nome: usuario.nome,
           email: usuario.email,
-          ra: usuario.ra
-        })
+          ra: usuario.ra,
+        }),
       });
 
       const respostaJson = await resposta.json();
@@ -190,7 +200,9 @@ export default function Perfil() {
         alert(respostaJson.mensagem || "Dados atualizados com sucesso!");
         setEditando(false);
       } else {
-        alert("Erro ao atualizar: " + (respostaJson.erro || "Verifique os dados."));
+        alert(
+          "Erro ao atualizar: " + (respostaJson.erro || "Verifique os dados."),
+        );
       }
     } catch (erro) {
       console.error("Erro na requisição:", erro);
@@ -281,7 +293,10 @@ export default function Perfil() {
             </div>
           </div>
 
-          <button className="btn-senha" onClick={() => setModalSenhaAberto(true)}>
+          <button
+            className="btn-senha"
+            onClick={() => setModalSenhaAberto(true)}
+          >
             Alterar Senha
           </button>
         </section>
@@ -301,7 +316,6 @@ export default function Perfil() {
       {modalSenhaAberto && (
         <div className="modal-overlay">
           <div className="modal-content">
-
             <div className="modal-header-container">
               <h2>Alterar Senha</h2>
               <button className="btn-fechar-modal" onClick={fecharModalSenha}>
@@ -342,9 +356,15 @@ export default function Perfil() {
                 <button
                   type="button"
                   className="btn-toggle-password"
-                  onClick={() => setMostrarConfirmarSenha(!mostrarConfirmarSenha)}
+                  onClick={() =>
+                    setMostrarConfirmarSenha(!mostrarConfirmarSenha)
+                  }
                 >
-                  {mostrarConfirmarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {mostrarConfirmarSenha ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
                 </button>
               </div>
             </div>
@@ -357,11 +377,9 @@ export default function Perfil() {
                 Confirmar
               </button>
             </div>
-
           </div>
         </div>
       )}
-
     </Layout>
   );
 }
