@@ -69,9 +69,9 @@ createRoot(document.getElementById("root")).render(
           <Route
             path="/usuarios"
             element={
-              <RotaFuncionario>
+              <RotaProtegida>
                 <Usuarios />
-              </RotaFuncionario>
+              </RotaProtegida>
             }
           />
         </Routes>

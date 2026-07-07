@@ -19,14 +19,13 @@ router.post("/usuarios", criarUsuario);
 router.post("/login", login);
 router.get("/usuarios", listarUsuarios);
 router.get("/usuarios/pesquisa", pesquisarUsuarios);
+router.delete("/usuarios/:id", deletarUsuarioAdmin);
+router.put("/usuarios/:id", atualizarUsuarioAdmin);
+router.patch("/usuarios/:id/permissao", alterarPermissaoAdmin);
 
 router.get("/usuarios/me", verificarToken, buscarMeusDados);
 router.put("/usuarios/me", verificarToken, atualizarConta);
 router.delete("/usuarios/me", verificarToken, deletarConta);
 router.put("/usuarios/me/senha", verificarToken, alterarSenha);
-
-router.delete("/usuarios/:id", deletarUsuarioAdmin);
-router.put("/usuarios/:id", atualizarUsuarioAdmin);
-router.patch("/usuarios/:id/permissao", alterarPermissaoAdmin);
 
 export default router;
