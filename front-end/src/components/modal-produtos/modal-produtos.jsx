@@ -3,9 +3,13 @@ import "./modal-produtos.css";
 import { X, Minus, Plus, ShoppingCart } from "lucide-react";
 
 export default function ModalProduto({ produto, aberto, onClose, onAddCart }) {
-  const [quantidade, setQuantidade] = useState(1);
+  const [quantidade, setQuantidade] = useState(
+    produto && produto.quantidade_estoque > 0 ? 1 : 0,
+  );
 
   if (!aberto || !produto) return null;
+
+  const isEsgotado = produto.quantidade_estoque === 0;
 
   function aumentar() {
     if (quantidade < produto.quantidade_estoque) {
@@ -20,6 +24,7 @@ export default function ModalProduto({ produto, aberto, onClose, onAddCart }) {
   }
 
   function handleAdicionar() {
+    if (quantidade <= 0 || isEsgotado) return;
     onAddCart(produto, quantidade);
     onClose();
   }
@@ -47,21 +52,34 @@ export default function ModalProduto({ produto, aberto, onClose, onAddCart }) {
             <p>{produto.descricao}</p>
           </div>
 
-          <div className="modal-quantidade">
-            <button onClick={diminuir}>
-              <Minus size={18} />
-            </button>
+          {isEsgotado ? (
+            <span className="msg-indisponivel">
+              Produto indisponível no estoque
+            </span>
+          ) : (
+            <div className="modal-quantidade">
+              <button onClick={diminuir} disabled={quantidade <= 1}>
+                <Minus size={18} />
+              </button>
 
-            <span>{quantidade}</span>
+              <span>{quantidade}</span>
 
-            <button onClick={aumentar}>
-              <Plus size={18} />
-            </button>
-          </div>
+              <button
+                onClick={aumentar}
+                disabled={quantidade >= produto.quantidade_estoque}
+              >
+                <Plus size={18} />
+              </button>
+            </div>
+          )}
 
-          <button className="btn-carrinho" onClick={handleAdicionar}>
+          <button
+            className={`btn-carrinho ${isEsgotado ? "desabilitado" : ""}`}
+            onClick={handleAdicionar}
+            disabled={isEsgotado || quantidade === 0}
+          >
             <ShoppingCart size={18} />
-            Adicionar ao carrinho
+            {isEsgotado ? "Esgotado" : "Adicionar ao carrinho"}
           </button>
         </div>
       </div>
