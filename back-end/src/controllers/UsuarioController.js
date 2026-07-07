@@ -123,3 +123,16 @@ export const pesquisarUsuarios = async (req, res) => {
         return ResponseFactory.criarErro("Erro interno ao buscar dados.", 500).enviar(res);
     }
 };
+
+// DELETAR USUÁRIO POR ID (ADMIN)
+export const deletarUsuarioAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await deletarUsuarioService(id);
+
+        return ResponseFactory.criarSucesso("Usuário deletado com sucesso.").enviar(res);
+    } catch (erro) {
+        return ResponseFactory.criarErro(erro.message, 400).enviar(res);
+    }
+};
