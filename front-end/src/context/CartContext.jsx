@@ -3,14 +3,16 @@ import { CartContext } from "./cart-context.js";
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
-    const carrinhoSalvo = localStorage.getItem("carrinhoRU");
+    const carrinhoSalvo = localStorage.getItem("carrinhoRU") || sessionStorage.getItem("carrinhoRU");
     return carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
   });
+
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("carrinhoRU", JSON.stringify(cartItems));
+    sessionStorageStorage.setItem("carrinhoRU", JSON.stringify(cartItems));
   }, [cartItems]);
 
   function addToCart(produtoSelecionado, quantidadeSelecionada) {
