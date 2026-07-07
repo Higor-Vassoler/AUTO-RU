@@ -30,7 +30,7 @@ const Checkout = () => {
         <div className="success-container">
           <div className="success-card">
             <h2> Pedido Realizado!</h2>
-             <p>Sua compra foi processada com sucesso. Apresente o código abaixo na retirada do pedido.</p>
+            <p>Sua compra foi processada com sucesso. Apresente o código abaixo na retirada do pedido.</p>
             <div className="qr-code-wrapper">
               <img
                 src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Da nota pra gente professor😔"
