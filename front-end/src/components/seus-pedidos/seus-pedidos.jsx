@@ -16,12 +16,12 @@ function ItemPedido({ pedido, ativo, onSelecionar }) {
       onClick={onSelecionar}
     >
       <div className="pedido-item-info">
-        <span className="pedido-item-numero">Pedido #{pedido.numero}</span>
+        <span className="pedido-item-numero">Pedido #{pedido.id}</span>
         <span className="pedido-item-data">{formatarData(pedido.data)}</span>
       </div>
 
       <div className="pedido-item-lado-direito">
-        <span className="pedido-item-total">{formatarMoeda(pedido.total)}</span>
+        <span className="pedido-item-total">{formatarMoeda(pedido.preco_total)}</span>
         <ChevronRight size={18} className="pedido-item-seta" />
       </div>
     </button>

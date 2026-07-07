@@ -4,25 +4,29 @@ import {
   formatarDataHora,
 } from "../../utils/formatadores/formatadores";
 
-function calcularSubtotal(itens) {  
+function calcularSubtotal(itens) {
   return itens.reduce(
-    (soma, item) => soma + item.precoUnitario * item.quantidade,
+    (soma, item) => soma + Number(item.preco_unitario) * item.quantidade,
     0,
   );
 }
 
 function LinhaItemPedido({ item }) {
+  const nomeProduto = item.produto?.nome || "Produto não identificado";
+  const imagemProduto = item.produto?.imagem || "";
+  const precoUnitario = Number(item.preco_unitario);
+
   return (
     <tr>
       <td>
         <div className="detalhe-pedido-produto">
-          <img src={item.imagem} alt={item.nome} />
-          <span>{item.nome}</span>
+          {imagemProduto && <img src={imagemProduto} alt={nomeProduto} />}
+          <span>{nomeProduto}</span>
         </div>
       </td>
       <td>{item.quantidade}</td>
-      <td>{formatarMoeda(item.precoUnitario)}</td>
-      <td>{formatarMoeda(item.precoUnitario * item.quantidade)}</td>
+      <td>{formatarMoeda(precoUnitario)}</td>
+      <td>{formatarMoeda(precoUnitario * item.quantidade)}</td>
     </tr>
   );
 }
@@ -47,14 +51,16 @@ function ResumoPedido({ subtotal, taxaServico }) {
 }
 
 export default function DetalhePedido({ pedido }) {
-  const { numero, data, total, taxaServico = 0, itens } = pedido;
+  if (!pedido) return null;
+
+  const { id, data, preco_total, taxaServico = 0, itens = [] } = pedido;
   const subtotal = calcularSubtotal(itens);
 
   return (
     <section className="detalhe-pedido">
       <header className="detalhe-pedido-cabecalho">
         <div>
-          <h2 className="detalhe-pedido-numero">Pedido #{numero}</h2>
+          <h2 className="detalhe-pedido-numero">Pedido #{id}</h2>
           <p className="detalhe-pedido-data">
             Realizado em {formatarDataHora(data)}
           </p>
@@ -63,7 +69,7 @@ export default function DetalhePedido({ pedido }) {
         <div className="detalhe-pedido-total-cabecalho">
           <span className="detalhe-pedido-total-label">Total do pedido</span>
           <span className="detalhe-pedido-total-valor">
-            {formatarMoeda(total)}
+            {formatarMoeda(Number(preco_total))}
           </span>
         </div>
       </header>
