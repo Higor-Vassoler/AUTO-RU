@@ -57,15 +57,15 @@ export default function Usuarios() {
     setModalAberto("cadastro");
   };
 
-  const abrirModalEdicao = (user) => {
-    setUsuarioAtual({ ...user, senha: "" });
-    setModalAberto("edicao");
-  };
+  // const abrirModalEdicao = (user) => {
+  //   setUsuarioAtual({ ...user, senha: "" });
+  //   setModalAberto("edicao");
+  // };
 
-  const abrirModalPermissao = (user) => {
-    setUsuarioAtual({ ...user });
-    setModalAberto("permissao");
-  };
+  // const abrirModalPermissao = (user) => {
+  //   setUsuarioAtual({ ...user });
+  //   setModalAberto("permissao");
+  // };
 
   const fecharModal = () => {
     setModalAberto(null);
