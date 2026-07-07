@@ -12,7 +12,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("carrinhoRU", JSON.stringify(cartItems));
-    sessionStorage.setItem("carrinhoRU", JSON.stringify(cartItems));
+    sessionStorageStorage.setItem("carrinhoRU", JSON.stringify(cartItems));
   }, [cartItems]);
 
   function addToCart(produtoSelecionado, quantidadeSelecionada) {
