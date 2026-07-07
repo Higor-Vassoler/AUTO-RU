@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import "./informacoes-produto.css";
 import { ImagePlus, Package, Save, Upload, X } from "lucide-react";
+import {
+  determinarRequisicaoProduto,
+  obterMensagemSucesso,
+  obterTextoAcao,
+  montarFormDataProduto,
+} from "../../../utils/informacoes-produto/informacoes-produto.js";
 
 export default function InformacoesProduto({
   onProdutoSalvo,
@@ -13,7 +19,6 @@ export default function InformacoesProduto({
   const [categoria, setCategoria] = useState("");
   const [quantidade, setQuantidade] = useState("");
   const [descricao, setDescricao] = useState("");
-
   const [imagemArquivo, setImagemArquivo] = useState(null);
   const [productImage, setProductImage] = useState(null);
 
@@ -71,24 +76,18 @@ export default function InformacoesProduto({
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("nome", nome);
-    formData.append("codigo", codigo);
-    formData.append("preco", preco);
-    formData.append("categoria", categoria);
-    formData.append("quantidade", quantidade);
-    formData.append("descricao", descricao);
-
-    if (imagemArquivo) {
-      formData.append("imagem", imagemArquivo);
-    }
+    const formData = montarFormDataProduto({
+      nome,
+      codigo,
+      preco,
+      categoria,
+      quantidade,
+      descricao,
+      imagemArquivo,
+    });
 
     try {
-      const url = produtoEmEdicao
-        ? `http://localhost:5000/api/produtos/${produtoEmEdicao.id}`
-        : "http://localhost:5000/api/produtos";
-
-      const metodo = produtoEmEdicao ? "PUT" : "POST";
+      const { url, metodo } = determinarRequisicaoProduto(produtoEmEdicao);
 
       const response = await fetch(url, {
         method: metodo,
@@ -98,11 +97,7 @@ export default function InformacoesProduto({
       const data = await response.json();
 
       if (response.ok) {
-        alert(
-          produtoEmEdicao
-            ? "Produto atualizado com sucesso!"
-            : "Produto cadastrado com sucesso!",
-        );
+        alert(obterMensagemSucesso(produtoEmEdicao));
         handleReset();
 
         if (onProdutoSalvo) {
@@ -127,7 +122,7 @@ export default function InformacoesProduto({
           <h2>Informações do produto</h2>
           <p>
             Informe os dados do produto que será{" "}
-            {produtoEmEdicao ? "atualizado" : "cadastrado"}.
+            {obterTextoAcao(produtoEmEdicao)}.
           </p>
         </div>
       </div>
