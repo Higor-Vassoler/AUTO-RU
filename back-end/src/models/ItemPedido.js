@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 const ItemPedido = sequelize.define('ItemPedido', {
     id: {
@@ -10,19 +10,12 @@ const ItemPedido = sequelize.define('ItemPedido', {
     },
     id_pedido: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'pedidos',
-            key: 'id'
-        }
+        allowNull: false
     },
     id_produto: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'produtos',
-            key: 'id'
-        }
+        autoIncrement: false,
+        allowNull: false
     },
     quantidade: {
         type: DataTypes.INTEGER,
@@ -33,7 +26,7 @@ const ItemPedido = sequelize.define('ItemPedido', {
         allowNull: false
     }
 }, {
-    tableName: 'item_pedidos',
+    tableName: "itens_pedido",
     timestamps: true
 });
 

@@ -1,4 +1,4 @@
-import { FormadePagamento } from '../models/FormadePagamento.js';
+import { FormadePagamento } from '../models/index.js';
 
 export const listarFormasPagamentoService = async () => {
     return await FormadePagamento.findAll();

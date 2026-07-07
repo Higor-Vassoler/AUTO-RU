@@ -1,6 +1,5 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
-import { ItemPedido } from '../models/ItemPedido.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 const Pedido = sequelize.define('Pedido', {
     id: {
@@ -11,11 +10,11 @@ const Pedido = sequelize.define('Pedido', {
     },
     id_usuario: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'usuarios',
-            key: 'id'
-        }
+        allowNull: false
+    },
+    id_forma_pagamento: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     data: {
         type: DataTypes.DATE,
@@ -27,7 +26,7 @@ const Pedido = sequelize.define('Pedido', {
         allowNull: false
     }
 }, {
-    tableName: 'pedidos',
+    tableName: "pedidos",
     timestamps: true
 });
 

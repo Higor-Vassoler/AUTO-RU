@@ -1,19 +1,20 @@
 import { listarFormasPagamentoService, criarFormaPagamentoService } from '../services/FormadePagamentoService.js';
+import { ResponseFactory } from '../utils/ResponseFactory.js';
 
 export const listar = async (req, res) => {
     try {
         const formas = await listarFormasPagamentoService();
-        return res.status(200).json(formas);
+        return ResponseFactory.criarSucesso("Formas de pagamento listadas com sucesso.", formas).enviar(res);
     } catch (erro) {
-        return res.status(500).json({ mensagem: erro.message });
+        return ResponseFactory.criarErro(erro.message, 500).enviar(res);
     }
 };
 
 export const criar = async (req, res) => {
     try {
         const novaForma = await criarFormaPagamentoService(req.body);
-        return res.status(201).json(novaForma);
+        return ResponseFactory.criarSucesso("Forma de pagamento criada com sucesso.", novaForma, 201).enviar(res);
     } catch (erro) {
-        return res.status(400).json({ mensagem: erro.message });
+        return ResponseFactory.criarErro(erro.message, 400).enviar(res);
     }
 };

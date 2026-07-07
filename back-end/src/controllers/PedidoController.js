@@ -1,4 +1,5 @@
 import { finalizarPedidoService, buscarPedidoPorIdService } from '../services/PedidoService.js';
+import { ResponseFactory } from '../utils/ResponseFactory.js';
 
 export const criarPedido = async (req, res) => {
     try {
@@ -10,9 +11,9 @@ export const criarPedido = async (req, res) => {
             ra
         });
 
-        return res.status(201).json(resultado);
+        return ResponseFactory.criarSucesso("Pedido finalizado com sucesso.", resultado, 201).enviar(res);
     } catch (erro) {
-        return res.status(400).json({ mensagem: erro.message });
+        return ResponseFactory.criarErro(erro.message, 400).enviar(res);
     }
 };
 
@@ -20,11 +21,13 @@ export const obterPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const pedido = await buscarPedidoPorIdService(id);
+
         if (!pedido) {
-            return res.status(404).json({ mensagem: "Pedido não localizado." });
+            return ResponseFactory.criarErro("Pedido não localizado.", 404).enviar(res);
         }
-        return res.status(200).json(pedido);
+
+        return ResponseFactory.criarSucesso("Pedido encontrado.", pedido).enviar(res);
     } catch (erro) {
-        return res.status(500).json({ mensagem: erro.message });
+        return ResponseFactory.criarErro(erro.message, 500).enviar(res);
     }
 };

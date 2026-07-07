@@ -1,20 +1,14 @@
-import { listarItensPorPedidoService, criarItemPedidoService } from '../services/ItemPedidoService.js';
+import { obterItensPorPedidoService } from '../services/ItemPedidoService.js';
+import { ResponseFactory } from '../utils/ResponseFactory.js';
 
 export const listarPorPedido = async (req, res) => {
     try {
         const { id_pedido } = req.params;
-        const itens = await listarItensPorPedidoService(id_pedido);
-        return res.status(200).json(itens);
-    } catch (erro) {
-        return res.status(400).json({ mensagem: erro.message });
-    }
-};
 
-export const criar = async (req, res) => {
-    try {
-        const novoItem = await criarItemPedidoService(req.body);
-        return res.status(201).json(novoItem);
+        const itens = await obterItensPorPedidoService(id_pedido);
+
+        return ResponseFactory.criarSucesso("Itens do pedido listados com sucesso.", itens).enviar(res);
     } catch (erro) {
-        return res.status(400).json({ mensagem: erro.message });
+        return ResponseFactory.criarErro(erro.message, 400).enviar(res);
     }
 };

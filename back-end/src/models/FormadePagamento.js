@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 const FormadePagamento = sequelize.define('FormadePagamento', {
     id: {
@@ -13,9 +13,8 @@ const FormadePagamento = sequelize.define('FormadePagamento', {
         allowNull: false
     }
 }, {
-    tableName: 'formas_pagamento',
+    tableName: "formas_pagamento",
     timestamps: true
 });
 
-export { FormadePagamento };
 export default FormadePagamento;

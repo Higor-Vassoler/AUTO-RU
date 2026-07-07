@@ -1,10 +1,16 @@
-import { Pedido, ItemPedido, Produto } from '../models/index.js';
+import { Pedido, ItemPedido, Produto, Usuario } from '../models/index.js';
 import sequelize from '../config/database.js';
 
 export const finalizarPedidoService = async ({ id_forma_pagamento, itens, ra }) => {
     const t = await sequelize.transaction();
 
     try {
+        const usuario = await Usuario.findOne({ where: { ra }, transaction: t });
+
+        if (!usuario) {
+            throw new Error(`Nenhum usuário encontrado com o RA: ${ra}`);
+        }
+
         let preco_total_pedido = 0;
         const itensParaSalvar = [];
 
@@ -15,17 +21,17 @@ export const finalizarPedidoService = async ({ id_forma_pagamento, itens, ra }) 
             const produto = await Produto.findByPk(idProduto, { transaction: t });
 
             if (!produto) {
-                throw new Error(`Produto ID ${idProduto} nÃ£o foi encontrado.`);
+                throw new Error(`Produto ID ${idProduto} não foi encontrado.`);
             }
 
-            if (produto.quantidade_estoque < quantidadeItem) {
-                throw new Error(`Estoque insuficiente para o item: ${produto.nome}. Restam apenas ${produto.quantidade_estoque} unidades.`);
+            if (produto.quantidade < quantidadeItem) {
+                throw new Error(`Estoque insuficiente para o item: ${produto.nome}. Restam apenas ${produto.quantidade} unidades.`);
             }
 
-            produto.quantidade_estoque -= quantidadeItem;
+            produto.quantidade -= quantidadeItem;
             await produto.save({ transaction: t });
 
-            const precoUnitario = produto.preco_unitario || produto.preco;
+            const precoUnitario = produto.preco;
             const subtotal = precoUnitario * quantidadeItem;
             preco_total_pedido += subtotal;
 
@@ -37,7 +43,7 @@ export const finalizarPedidoService = async ({ id_forma_pagamento, itens, ra }) 
         }
 
         const novoPedido = await Pedido.create({
-            ra,
+            id_usuario: usuario.id,
             id_forma_pagamento,
             data: new Date(),
             preco_total: preco_total_pedido
@@ -45,7 +51,7 @@ export const finalizarPedidoService = async ({ id_forma_pagamento, itens, ra }) 
 
         const itensVinculados = itensParaSalvar.map(item => ({
             ...item,
-            id_pedido: novoPedido.id_pedido || novoPedido.id
+            id_pedido: novoPedido.id
         }));
 
         await ItemPedido.bulkCreate(itensVinculados, { transaction: t });
@@ -53,7 +59,7 @@ export const finalizarPedidoService = async ({ id_forma_pagamento, itens, ra }) 
         await t.commit();
 
         return {
-            ticket_id: novoPedido.id_pedido || novoPedido.id,
+            ticket_id: novoPedido.id,
             total: preco_total_pedido
         };
 
@@ -68,7 +74,11 @@ export const buscarPedidoPorIdService = async (id) => {
         include: [
             {
                 model: ItemPedido,
-                include: [{ model: Produto }]
+                as: 'itens',
+                include: [{
+                    model: Produto,
+                    as: 'produto'
+                }]
             }
         ]
     });

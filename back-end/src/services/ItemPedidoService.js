@@ -1,4 +1,4 @@
-import ItemPedido from '../models/ItemPedido.js';
+import { ItemPedido } from '../models/index.js';
 
 export const obterItensPorPedidoService = async (id_pedido) => {
     try {

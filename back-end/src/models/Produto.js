@@ -5,7 +5,8 @@ const Produto = sequelize.define('Produto', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     codigo: {
         type: DataTypes.STRING,
@@ -43,7 +44,17 @@ const Produto = sequelize.define('Produto', {
         defaultValue: true
     }
 }, {
-    tableName: "produtos"
+    tableName: "produtos",
+    timestamps: true
+});
+
+Object.defineProperty(Produto.prototype, 'quantidade_estoque', {
+    get() {
+        return this.quantidade;
+    },
+    set(value) {
+        this.quantidade = value;
+    }
 });
 
 export default Produto;
