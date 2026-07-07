@@ -20,7 +20,7 @@ export const criarUsuarioService = async (nome, email, senha, ra) => {
     const novoUsuario = await Usuario.create({
         nome,
         email,
-        senha,
+        senha, // Salvando em texto puro conforme solicitado
         ra
     });
 
@@ -35,6 +35,7 @@ export const listarUsuariosService = async () => {
 export const loginService = async (email, senha) => {
     const usuario = await Usuario.findOne({ where: { email } });
 
+    // Comparação direta em texto puro
     if (!usuario || usuario.senha !== senha) {
         throw new Error("E-mail ou senha incorretos.");
     }
@@ -111,6 +112,7 @@ export const alterarSenhaService = async (id, novaSenha) => {
         throw new Error("Sua nova senha deve ter pelo menos 8 caracteres, incluindo letras, números e símbolos.");
     }
 
+    // Atualização direta em texto puro
     await usuario.update({ senha: novaSenha });
 
     return true;

@@ -15,7 +15,7 @@ export function CartProvider({ children }) {
 
   function addToCart(produtoSelecionado, quantidadeSelecionada) {
     const itemExistente = cartItems.find(
-      (item) => item.id === produtoSelecionado.id_produto,
+      (item) => item.id === (produtoSelecionado.id_produto || produtoSelecionado.id),
     );
 
     if (itemExistente) {
@@ -38,7 +38,7 @@ export function CartProvider({ children }) {
 
         setCartItems((carrinhoAnterior) =>
           carrinhoAnterior.map((item) =>
-            item.id === produtoSelecionado.id_produto
+            item.id === (produtoSelecionado.id_produto || produtoSelecionado.id)
               ? { ...item, quantity: produtoSelecionado.quantidade_estoque }
               : item,
           ),
@@ -46,7 +46,7 @@ export function CartProvider({ children }) {
       } else {
         setCartItems((carrinhoAnterior) =>
           carrinhoAnterior.map((item) =>
-            item.id === produtoSelecionado.id_produto
+            item.id === (produtoSelecionado.id_produto || produtoSelecionado.id)
               ? { ...item, quantity: novaQuantidade }
               : item,
           ),
@@ -59,12 +59,12 @@ export function CartProvider({ children }) {
       setCartItems((carrinhoAnterior) => [
         ...carrinhoAnterior,
         {
-          id: produtoSelecionado.id_produto,
+          id: produtoSelecionado.id_produto || produtoSelecionado.id,
           name: produtoSelecionado.nome,
           image: produtoSelecionado.imagem,
-          price: produtoSelecionado.preco_unitario,
+          price: produtoSelecionado.preco_unitario || produtoSelecionado.preco,
           quantity: quantidadeSelecionada,
-          estoqueMaximo: produtoSelecionado.quantidade_estoque,
+          estoqueMaximo: produtoSelecionado.quantidade_estoque || produtoSelecionado.quantidade,
         },
       ]);
       alert(
@@ -96,6 +96,10 @@ export function CartProvider({ children }) {
     );
   }
 
+  function clearCart() {
+    setCartItems([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -104,6 +108,7 @@ export function CartProvider({ children }) {
         setIsCartOpen,
         addToCart,
         updateQuantity,
+        clearCart,
       }}
     >
       {children}

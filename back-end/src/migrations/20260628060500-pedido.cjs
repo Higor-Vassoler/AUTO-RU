@@ -16,12 +16,24 @@ module.exports = {
         references: {
           model: 'usuarios',
           key: 'id'
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      id_forma_pagamento: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'formas_pagamento',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
       },
       data: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       preco_total: {
         type: Sequelize.DECIMAL(10, 2),
