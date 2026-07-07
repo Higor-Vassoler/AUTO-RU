@@ -63,7 +63,6 @@ export default function Login() {
     <Layout showSidebar={false} showHeader={false}>
       <div className="login-container">
         <div className="login-card">
-          {/* ESQUERDA */}
 
           <div className="login-info">
             <div className="icone-principal">
@@ -98,7 +97,6 @@ export default function Login() {
             </div>
           </div>
 
-          {/* DIREITA */}
 
           <div className="login-formulario">
             <h2>Entrar</h2>
