@@ -21,6 +21,10 @@
 - [João Manoel Nascimento Ferreira](https://github.com/linux1234-boop)
 - [Pedro Antonio Siqueira](https://github.com/pas-pedroa)
 
+## Sobre o uso da IA:
+- Referências: Gemini Pro, ChatGpt, Claude Soneto 4.1
+- A IA foi crucial para o desenvolvimento do projeto como um todo, pois todo tipo de dúvida específica era direcionado à ela.
+
 ## Descrição do Projeto:
 
 O projeto se trata da criação de um sistema web de autoatendimento inspirado diretamente em totens de autoatendimento frequentemente encontrados nas redes de fast-food. Esta aplicação permite ao usuário que realize pedidos de maneira autônoma, isso incluí: seleção de produtos, customização e revisão do pedido. Após a finalização, o pedido é levado para o caixa físico onde ocorre a retirada do mesmo.
