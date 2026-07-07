@@ -1,22 +1,66 @@
+import React, { useState, useEffect } from "react";
 import "./minhas-compras.css";
-import { useState } from "react";
 import { ShoppingBag } from "lucide-react";
 import Layout from "../../components/layout/layout.jsx";
 import SeusPedidos from "../../components/seus-pedidos/seus-pedidos.jsx";
 import DetalhePedido from "../../components/detalhes-pedido/detalhes-pedidos.jsx";
-import { pedidosMock } from "./mocks/pedidos-mocks.js";
 
 export default function MinhasCompras() {
-  const [pedidos] = useState(pedidosMock);
-  const [pedidoSelecionadoId, setPedidoSelecionadoId] = useState(
-    pedidosMock[0]?.id ?? null,
-  );
+  const [pedidos, setPedidos] = useState([]);
+  const [pedidoSelecionadoId, setPedidoSelecionadoId] = useState(null);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    const buscarMeusPedidos = async () => {
+      try {
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+        const resposta = await fetch("http://localhost:5000/api/pedidos/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+        });
+
+        const data = await resposta.json();
+
+        if (data.sucesso) {
+          setPedidos(data.dados);
+
+          if (data.dados.length > 0) {
+            setPedidoSelecionadoId(data.dados[0].id);
+          }
+        } else {
+          console.error("Erro ao procurar pedidos:", data.mensagem);
+        }
+      } catch (erro) {
+        console.error("Erro de ligação:", erro);
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    buscarMeusPedidos();
+  }, []);
 
   const pedidoSelecionado = pedidos.find(
-    (pedido) => pedido.id === pedidoSelecionadoId,
+    (pedido) => pedido.id === pedidoSelecionadoId
   );
 
   const temPedidos = pedidos.length > 0;
+
+  if (carregando) {
+    return (
+      <Layout>
+        <div className="minhas-compras">
+          <p style={{ padding: "2rem", textAlign: "center", color: "var(--color-text-light)" }}>
+            A carregar os seus pedidos...
+          </p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -24,12 +68,13 @@ export default function MinhasCompras() {
         <header className="minhas-compras-cabecalho">
           <h1 className="minhas-compras-titulo">Minhas Compras</h1>
           <p className="minhas-compras-subtitulo">
-            Acompanhe seus pedidos e veja os detalhes das suas compras.
+            Acompanhe os seus pedidos e veja os detalhes das suas compras.
           </p>
         </header>
 
         {temPedidos ? (
           <div className="minhas-compras-grid">
+
             <SeusPedidos
               pedidos={pedidos}
               pedidoSelecionadoId={pedidoSelecionadoId}
@@ -37,6 +82,7 @@ export default function MinhasCompras() {
             />
 
             {pedidoSelecionado && <DetalhePedido pedido={pedidoSelecionado} />}
+
           </div>
         ) : (
           <div className="minhas-compras-vazio">
@@ -45,15 +91,11 @@ export default function MinhasCompras() {
             </div>
 
             <p className="minhas-compras-vazio-titulo">
-              Você ainda não fez nenhum pedido
+              Ainda não fez nenhum pedido
             </p>
             <p className="minhas-compras-vazio-descricao">
               Quando realizar uma compra, ela aparecerá aqui.
             </p>
-
-            <a className="minhas-compras-vazio-botao" href="/">
-              Ver produtos
-            </a>
           </div>
         )}
       </div>

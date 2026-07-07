@@ -1,4 +1,4 @@
-import { Pedido, ItemPedido, Produto, Usuario } from '../models/index.js';
+import { Pedido, ItemPedido, Produto, Usuario, FormadePagamento } from '../models/index.js';
 import sequelize from '../config/database.js';
 
 export const finalizarPedidoService = async ({ id_forma_pagamento, itens, ra }) => {
@@ -83,4 +83,27 @@ export const buscarPedidoPorIdService = async (id) => {
         ]
     });
     return pedido;
+};
+
+export const listarPedidosPorUsuarioService = async (id_usuario) => {
+    const pedidos = await Pedido.findAll({
+        where: { id_usuario },
+        include: [
+            {
+                model: ItemPedido,
+                as: 'itens',
+                include: [{
+                    model: Produto,
+                    as: 'produto'
+                }]
+            },
+            {
+                model: FormadePagamento,
+                as: 'formaPagamento'
+            }
+        ],
+        order: [['data', 'DESC']]
+    });
+
+    return pedidos;
 };

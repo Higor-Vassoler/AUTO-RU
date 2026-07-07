@@ -1,4 +1,4 @@
-import { finalizarPedidoService, buscarPedidoPorIdService } from '../services/PedidoService.js';
+import { finalizarPedidoService, buscarPedidoPorIdService, listarPedidosPorUsuarioService } from '../services/PedidoService.js';
 import { ResponseFactory } from '../utils/ResponseFactory.js';
 
 export const criarPedido = async (req, res) => {
@@ -27,6 +27,22 @@ export const obterPorId = async (req, res) => {
         }
 
         return ResponseFactory.criarSucesso("Pedido encontrado.", pedido).enviar(res);
+    } catch (erro) {
+        return ResponseFactory.criarErro(erro.message, 500).enviar(res);
+    }
+};
+
+export const listarMeusPedidos = async (req, res) => {
+    try {
+        const id_usuario = req.id_usuario;
+
+        if (!id_usuario) {
+            return ResponseFactory.criarErro("Usuário não autenticado.", 401).enviar(res);
+        }
+
+        const pedidos = await listarPedidosPorUsuarioService(id_usuario);
+
+        return ResponseFactory.criarSucesso("Pedidos carregados com sucesso.", pedidos).enviar(res);
     } catch (erro) {
         return ResponseFactory.criarErro(erro.message, 500).enviar(res);
     }
