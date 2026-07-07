@@ -134,3 +134,19 @@ export const pesquisarUsuariosService = async (termo) => {
 
     return usuarios;
 };
+
+export const alterarPermissaoService = async (id, isAdmin) => {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    await usuario.update({ is_admin: isAdmin });
+
+    return {
+        id: usuario.id,
+        nome: usuario.nome,
+        is_admin: usuario.is_admin
+    };
+};
