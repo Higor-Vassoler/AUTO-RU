@@ -82,9 +82,24 @@ export default function Usuarios() {
     fecharModal();
   };
 
-  const deletarUsuario = (id) => {
-    if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
-      setUsuarios(usuarios.filter((u) => u.id !== id));
+  const deletarUsuario = async (id) => {
+    if (window.confirm("Tem certeza que deseja excluir permanentemente este usuário?")) {
+      try {
+        const resposta = await fetch(`http://localhost:5000/api/usuarios/${id}`, {
+          method: "DELETE",
+        });
+
+        const data = await resposta.json();
+
+        if (data.sucesso) {
+          buscarUsuariosNoBanco(busca);
+        } else {
+          alert("Erro ao excluir: " + (data.erro || data.mensagem));
+        }
+      } catch (erro) {
+        console.error("Erro ao deletar usuário:", erro);
+        alert("Erro de conexão com o servidor.");
+      }
     }
   };
 
