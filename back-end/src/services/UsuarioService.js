@@ -1,5 +1,6 @@
 import { Usuario } from "../models/index.js";
 import jwt from "jsonwebtoken";
+import { Op } from "sequelize";
 
 export const criarUsuarioService = async (nome, email, senha, ra) => {
     if (!nome || !email || !senha || !ra) {
@@ -113,4 +114,23 @@ export const alterarSenhaService = async (id, novaSenha) => {
     await usuario.update({ senha: novaSenha });
 
     return true;
+};
+
+export const pesquisarUsuariosService = async (termo) => {
+    const condicoes = [
+        { nome: { [Op.like]: `%${termo}%` } },
+        { email: { [Op.like]: `%${termo}%` } }
+    ];
+
+    if (!isNaN(termo) && termo.trim() !== "") {
+        condicoes.push({ ra: termo });
+    }
+
+    const usuarios = await Usuario.findAll({
+        where: {
+            [Op.or]: condicoes
+        }
+    });
+
+    return usuarios;
 };

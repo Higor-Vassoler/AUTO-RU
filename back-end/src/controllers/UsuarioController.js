@@ -1,4 +1,4 @@
-import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService, alterarSenhaService } from "../services/UsuarioService.js";
+import { criarUsuarioService, listarUsuariosService, loginService, deletarUsuarioService, atualizarUsuarioService, buscarUsuarioPorIdService, alterarSenhaService, pesquisarUsuariosService } from "../services/UsuarioService.js";
 import { ResponseFactory } from "../utils/ResponseFactory.js";
 
 // CREATE
@@ -101,5 +101,25 @@ export const alterarSenha = async (req, res) => {
         return ResponseFactory.criarSucesso("Senha alterada com sucesso!").enviar(res);
     } catch (erro) {
         return ResponseFactory.criarErro(erro.message).enviar(res);
+    }
+};
+
+// FUNÇÃO DE PESQUISA
+export const pesquisarUsuarios = async (req, res) => {
+    try {
+        const termo = req.query.q;
+
+        let usuarios;
+
+        if (!termo) {
+            usuarios = await listarUsuariosService();
+        } else {
+            usuarios = await pesquisarUsuariosService(termo);
+        }
+
+        return ResponseFactory.criarSucesso("Busca realizada com sucesso.", usuarios).enviar(res);
+    } catch (erro) {
+        console.error(`Erro ao pesquisar usuários: ${erro}`);
+        return ResponseFactory.criarErro("Erro interno ao buscar dados.", 500).enviar(res);
     }
 };
