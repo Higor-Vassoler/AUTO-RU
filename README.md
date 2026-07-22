@@ -5,7 +5,7 @@
 ![Sequelize](https://img.shields.io/badge/ORM-Sequelize-52B0E7)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1)
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Status](https://img.shields.io/badge/status-Finalizado-yellow)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ---
 
